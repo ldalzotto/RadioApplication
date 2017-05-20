@@ -2,7 +2,30 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ExternalAPI.iml" filepath="$PROJECT_DIR$/.idea/modules/ExternalAPI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/ExternalAPI-client.iml" filepath="$PROJECT_DIR$/.idea/modules/client/ExternalAPI-client.iml" group="ExternalAPI-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/ExternalAPI-client_main.iml" filepath="$PROJECT_DIR$/.idea/modules/client/ExternalAPI-client_main.iml" group="ExternalAPI-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client/ExternalAPI-client_test.iml" filepath="$PROJECT_DIR$/.idea/modules/client/ExternalAPI-client_test.iml" group="ExternalAPI-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ExternalAPI_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ExternalAPI_main.iml" group="ExternalAPI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ExternalAPI_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ExternalAPI_test.iml" group="ExternalAPI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ExternalAPI/ExternalApi.iml" filepath="$PROJECT_DIR$/.idea/modules/ExternalAPI/ExternalApi.iml" group="ExternalApi" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ExternalAPI/ExternalApi_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ExternalAPI/ExternalApi_main.iml" group="ExternalApi" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ExternalAPI/ExternalApi_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ExternalAPI/ExternalApi_test.iml" group="ExternalApi" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicManagerAPI.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicManagerAPI.iml" group="MusicManagerAPI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicManagerAPI-client/MusicManagerAPI-MusicManagerAPI-client.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicManagerAPI-client/MusicManagerAPI-MusicManagerAPI-client.iml" group="MusicManagerAPI-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicManagerAPI-client/MusicManagerAPI-MusicManagerAPI-client_main.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicManagerAPI-client/MusicManagerAPI-MusicManagerAPI-client_main.iml" group="MusicManagerAPI-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicManagerAPI-client/MusicManagerAPI-MusicManagerAPI-client_test.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicManagerAPI-client/MusicManagerAPI-MusicManagerAPI-client_test.iml" group="MusicManagerAPI-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicManagerAPI_main.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicManagerAPI_main.iml" group="MusicManagerAPI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MusicManagerAPI_test.iml" filepath="$PROJECT_DIR$/.idea/modules/MusicManagerAPI_test.iml" group="MusicManagerAPI" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/RadioApplication.iml" filepath="$PROJECT_DIR$/.idea/modules/RadioApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RadioApplication_main.iml" filepath="$PROJECT_DIR$/.idea/modules/RadioApplication_main.iml" group="RadioApplication" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RadioApplication_test.iml" filepath="$PROJECT_DIR$/.idea/modules/RadioApplication_test.iml" group="RadioApplication" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/converter-container-common.iml" filepath="$PROJECT_DIR$/.idea/modules/converter-container-common.iml" group="converter-container-common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/converter-container-common_main.iml" filepath="$PROJECT_DIR$/.idea/modules/converter-container-common_main.iml" group="converter-container-common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/converter-container-common_test.iml" filepath="$PROJECT_DIR$/.idea/modules/converter-container-common_test.iml" group="converter-container-common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/custom-validation-common.iml" filepath="$PROJECT_DIR$/.idea/modules/custom-validation-common.iml" group="custom-validation-common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/custom-validation-common_main.iml" filepath="$PROJECT_DIR$/.idea/modules/custom-validation-common_main.iml" group="custom-validation-common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/custom-validation-common_test.iml" filepath="$PROJECT_DIR$/.idea/modules/custom-validation-common_test.iml" group="custom-validation-common" />
     </modules>
   </component>
 </project>

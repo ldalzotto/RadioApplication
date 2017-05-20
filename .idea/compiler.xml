@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="client_main" target="1.8" />
+      <module name="client_test" target="1.8" />
+      <module name="converter-container-common_main" target="1.8" />
+      <module name="converter-container-common_test" target="1.8" />
+      <module name="custom-validation-common_main" target="1.8" />
+      <module name="custom-validation-common_test" target="1.8" />
+      <module name="ExternalAPI-client_main" target="1.8" />
+      <module name="ExternalAPI-client_test" target="1.8" />
+      <module name="ExternalAPI_client" target="1.8" />
+      <module name="ExternalAPI_main" target="1.8" />
+      <module name="ExternalApi_main" target="1.8" />
+      <module name="ExternalApi_test" target="1.8" />
+      <module name="ExternalAPI_test" target="1.8" />
+      <module name="ExternalAPIClient_main" target="1.8" />
+      <module name="ExternalAPIClient_test" target="1.8" />
+      <module name="MusicManager_main" target="1.8" />
+      <module name="MusicManager_test" target="1.8" />
+      <module name="MusicManagerAPI-client_main" target="1.8" />
+      <module name="MusicManagerAPI-client_test" target="1.8" />
+      <module name="MusicManagerAPI-MusicManagerAPI-client_main" target="1.8" />
+      <module name="MusicManagerAPI-MusicManagerAPI-client_test" target="1.8" />
+      <module name="MusicManagerAPI_main" target="1.8" />
+      <module name="MusicManagerAPI_test" target="1.8" />
+      <module name="RadioApplication_main" target="1.8" />
+      <module name="RadioApplication_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

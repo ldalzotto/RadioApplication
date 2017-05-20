@@ -1,0 +1,4 @@
+rootProject.name = 'MusicManagerAPI-client'
+
+include(':custom-validation-common')
+project(':custom-validation-common').projectDir = new File("C:\\Users\\loicd\\IdeaProjects\\RadioApplication\\custom-validation-common")
