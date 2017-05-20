@@ -1,17 +1,17 @@
 rootProject.name = 'MusicManagerAPI'
 
 include(':ExternalAPI-client')
-project(':ExternalAPI-client').projectDir = new File("C:\\Users\\loicd\\IdeaProjects\\RadioApplication\\ExternalAPI\\client")
+project(':ExternalAPI-client').projectDir = new File("../ExternalAPI/client")
 
 
 include(':custom-validation-common')
-project(':custom-validation-common').projectDir = new File("C:\\Users\\loicd\\IdeaProjects\\RadioApplication\\custom-validation-common")
+project(':custom-validation-common').projectDir = new File("../custom-validation-common")
 
 
 include(':converter-container-common')
-project(':converter-container-common').projectDir = new File("C:\\Users\\loicd\\IdeaProjects\\RadioApplication\\converter-container-common")
+project(':converter-container-common').projectDir = new File("../converter-container-common")
 
 include(':MusicManagerAPI-client')
-project(':MusicManagerAPI-client').projectDir = new File("C:\\Users\\loicd\\IdeaProjects\\RadioApplication\\MusicManagerAPI\\MusicManagerAPI-client")
+project(':MusicManagerAPI-client').projectDir = new File("/MusicManagerAPI-client")
 
 

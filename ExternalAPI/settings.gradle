@@ -1,4 +1,4 @@
 rootProject.name = 'ExternalAPI'
 
 include(':ExternalAPI-client')
-project(':ExternalAPI-client').projectDir = new File("C:\\Users\\loicd\\IdeaProjects\\RadioApplication\\ExternalAPI\\client")
+project(':ExternalAPI-client').projectDir = new File("/client")
