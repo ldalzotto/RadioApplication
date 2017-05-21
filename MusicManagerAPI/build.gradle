@@ -36,8 +36,8 @@ dependencies {
 	
 	compile project(':custom-validation-common')
 	compile project(':converter-container-common')
-	compile project(':ExternalAPI-client')
 	compile project(':MusicManagerAPI-client')
+	compile project(':ExternalAPI-client')
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.2.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.2.RELEASE'
