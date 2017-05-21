@@ -1,19 +1,19 @@
 rootProject.name = 'RadioApplication'
 
 include(':ExternalApi')
-project(':ExternalApi').projectDir = new File("/ExternalAPI")
+project(':ExternalApi').projectDir = new File('ExternalAPI')
 
 include(':ExternalAPI-client')
-project(':ExternalAPI-client').projectDir = new File("/ExternalAPI/client")
+project(':ExternalAPI-client').projectDir = new File("ExternalAPI\\client")
 
 include(':MusicManagerAPI')
-project(':MusicManagerAPI').projectDir = new File("/MusicManagerAPI")
+project(':MusicManagerAPI').projectDir = new File("MusicManagerAPI")
 
 include(':MusicManagerAPI-client')
-project(':MusicManagerAPI-client').projectDir = new File("/MusicManagerAPI/MusicManagerAPI-client")
+project(':MusicManagerAPI-client').projectDir = new File("MusicManagerAPI\\MusicManagerAPI-client")
 
 include(':custom-validation-common')
-project(':custom-validation-common').projectDir = new File("/custom-validation-common")
+project(':custom-validation-common').projectDir = new File("custom-validation-common")
 
 include(':converter-container-common')
-project(':converter-container-common').projectDir = new File("/converter-container-common")
+project(':converter-container-common').projectDir = new File("converter-container-common")
