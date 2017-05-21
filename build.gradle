@@ -6,6 +6,7 @@ buildscript {
         springBootVersion = '1.5.2.RELEASE'
     }
     repositories {
+        mavenLocal()
         mavenCentral()
     }
     dependencies {
@@ -14,6 +15,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -29,13 +31,30 @@ repositories {
     mavenCentral()
 }
 
-task stage(dependsOn: ['bootRepackage', 'clean'])
-bootRepackage.mustRunAfter clean
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+publishing {
+    repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            url "$buildDir/repo"
+        }
+    }
+}
+
+tasks.bootRepackage.doFirst {
+    //tasks.publishToMavenLocal.execute()
+}
 
 dependencies {
 
-    //compile group: 'ExternalAPI', name:'ExternalAPI', version: '1.0-SNAPSHOT', configuration: 'compile'
-    //compile "MusicManagerAPI:MusicManagerAPI:1.0-SNAPSHOT"
+    compile group: 'ExternalAPI', name:'ExternalApi', version: '1.0-SNAPSHOT', configuration: 'compile'
+    compile "MusicManagerAPI:MusicManagerAPI:1.0-SNAPSHOT"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.2.RELEASE'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka', version: '1.3.0.RELEASE'
 

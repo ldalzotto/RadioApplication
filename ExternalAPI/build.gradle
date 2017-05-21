@@ -3,17 +3,12 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'maven-publish'
-configurations { copyDeployable }
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenLocal()
     mavenCentral()
-}
-
-configurations {
-  compile
 }
 
 publishing {
@@ -34,7 +29,6 @@ publishing {
 
 
 dependencies {
-
     compile "ExternalAPI-client:ExternalAPI-client:1.0-SNAPSHOT"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
