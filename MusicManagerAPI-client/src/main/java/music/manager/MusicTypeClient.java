@@ -11,19 +11,24 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient("music-manager-api")
 public interface MusicTypeClient {
 
-    @RequestMapping(method = RequestMethod.POST, path = "/user")
-    public ResponseEntity<?> postUser(@RequestBody UserMusicStatusDTO userMusicStatusDTO);
+    @RequestMapping(method = RequestMethod.POST, path = "/music/user")
+    public ResponseEntity<?> postUser(
+            @RequestBody UserMusicStatusDTO userMusicStatusDTO);
 
-    @RequestMapping(method = RequestMethod.GET, path = "/user/username/{username}")
-    public ResponseEntity<UserMusicStatusDTO> getUserFromUsername(@PathVariable("username") String username);
+    @RequestMapping(method = RequestMethod.GET, path = "/music/user/username/{username}")
+    public ResponseEntity<UserMusicStatusDTO> getUserFromUsername(
+            @PathVariable("username") String username);
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/user/username/{username}")
-    public ResponseEntity<?> deleteUser(@PathVariable("username") String username);
+    @RequestMapping(method = RequestMethod.DELETE, path = "/music/user/username/{username}")
+    public ResponseEntity<?> deleteUser(
+            @PathVariable("username") String username);
 
     @RequestMapping(method = RequestMethod.GET, path = "/music/musicplatform/{musicplatform}/ressource-url")
-    public ResponseEntity<String> getRessourceUrlFromUrlAndMusicplatform(@RequestParam("url") String url, @PathVariable("musicplatform") String musicplatform);
+    public ResponseEntity<String> getRessourceUrlFromUrlAndMusicplatform(
+            @RequestParam("url") String url, @PathVariable("musicplatform") String musicplatform);
 
     @RequestMapping(method = RequestMethod.POST, path = "/music/username/{username}/from-source-url")
-    public ResponseEntity<Boolean> postMusicFromSiteurl(@PathVariable("username") String username, @RequestParam("sourceurl") String sourceUrl);
+    public ResponseEntity<Boolean> postMusicFromSiteurl(
+            @PathVariable("username") String username, @RequestParam("sourceurl") String sourceUrl);
 
 }

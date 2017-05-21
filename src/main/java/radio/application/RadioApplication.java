@@ -13,13 +13,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @EnableFeignClients
 @SpringBootApplication
-@EnableEurekaClient
-@EntityScan(basePackages = {"music.manager.model"})
-@EnableJpaRepositories(basePackages = {"music.manager.repository"})
-@ComponentScan({"external.api", "music.manager", "converter.container"})
+@EntityScan(basePackages = {
+        "music.manager.model", "identifier.Model.model"})
+@EnableJpaRepositories(basePackages = {
+        "music.manager.repository", "identifier.repository"})
+@ComponentScan({"external.api", "music.manager",
+        "converter.container", "token", "identifier", "project"})
 public class RadioApplication {
 
-    public static void main(String[] argc){
+    public static void main(String[] argc) {
         SpringApplication.run(RadioApplication.class, argc);
     }
 

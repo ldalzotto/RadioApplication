@@ -33,10 +33,6 @@ publishing {
 
 
 dependencies {
-    //compile "custom-validation-common:custom-validation-common:1.0-SNAPSHOT"
-    //compile "converter-container-common:converter-container-common:1.0-SNAPSHOT"
-    //compile "ExternalAPI-client:ExternalAPI-client:1.0-SNAPSHOT"
-    //compile "MusicManagerAPI-client:MusicManagerAPI-client:1.0-SNAPSHOT"
 	
 	compile project(':custom-validation-common')
 	compile project(':converter-container-common')

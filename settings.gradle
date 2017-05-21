@@ -17,3 +17,18 @@ project(':custom-validation-common').projectDir = new File("custom-validation-co
 
 include(':converter-container-common')
 project(':converter-container-common').projectDir = new File("converter-container-common")
+
+include(':TokenManagerAPI')
+project(':TokenManagerAPI').projectDir = new File("TokenManagerAPI")
+
+include(':TokenManagerAPI-client')
+project(':TokenManagerAPI-client').projectDir = new File("TokenManagerAPI-client")
+
+include(':IdentifierAPI')
+project(':IdentifierAPI').projectDir = new File("IdentifierAPI")
+
+include(':IdentifierAPI-client')
+project(':IdentifierAPI-client').projectDir = new File("IdentifierAPI-client")
+
+include(':YoutubeRadioApplication')
+project(':YoutubeRadioApplication').projectDir = new File("YoutubeRadioApplication")

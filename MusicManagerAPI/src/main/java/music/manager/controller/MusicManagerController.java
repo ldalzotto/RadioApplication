@@ -29,9 +29,7 @@ public class MusicManagerController implements MusicTypeClient {
     @Autowired
     ConverterContainer converterContainer;
 
-    @RequestMapping(method = RequestMethod.POST, path = "/user")
-    public ResponseEntity<?> postUser(
-            @RequestBody @Valid UserMusicStatusDTO userMusicStatusDTO) {
+    public ResponseEntity<?> postUser(@RequestBody @Valid UserMusicStatusDTO userMusicStatusDTO) {
         UserMusicStatusBO userMusicStatusBO =
                 converterContainer.convert(userMusicStatusDTO, UserMusicStatusBO.class);
         try {
@@ -48,25 +46,24 @@ public class MusicManagerController implements MusicTypeClient {
         return ResponseEntity.created(location).build();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/user/username/{username}")
     @Override
     public ResponseEntity<UserMusicStatusDTO> getUserFromUsername(
             @PathVariable(name = "username") String username) {
         UserMusicStatusBO userMusicStatusBO = iMusicManagerService.getMusicStatusFromUsername(username);
-        UserMusicStatusDTO userMusicStatusDTO = converterContainer.convert(userMusicStatusBO, UserMusicStatusDTO.class);
+        UserMusicStatusDTO userMusicStatusDTO =
+                converterContainer.convert(userMusicStatusBO, UserMusicStatusDTO.class);
         return ResponseEntity.ok(userMusicStatusDTO);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/user/username/{username}")
     @Override
     public ResponseEntity<?> deleteUser(@PathVariable(name = "username") String username) {
         iMusicManagerService.deleteUserMusicStatusFromUsername(username);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/music/musicplatform/{musicplatform}/ressource-url")
     @Override
-    public ResponseEntity<String> getRessourceUrlFromUrlAndMusicplatform(@RequestParam("url") String url, @PathVariable("musicplatform") String musicplatform) {
+    public ResponseEntity<String> getRessourceUrlFromUrlAndMusicplatform(@RequestParam("url") String url,
+                                                                         @PathVariable("musicplatform") String musicplatform) {
 
         MusicTypes musicTypes = MusicTypes.valueOf(musicplatform);
         String sourceUrl = iMusicManagerService.getSourceurlFromUrlAndMusicType(url, musicTypes);
@@ -74,9 +71,9 @@ public class MusicManagerController implements MusicTypeClient {
         return ResponseEntity.ok(sourceUrl);
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/music/username/{username}/from-source-url")
     @Override
-    public ResponseEntity<Boolean> postMusicFromSiteurl(@PathVariable("username") String username, @RequestParam("sourceurl") String sourceUrl) {
+    public ResponseEntity<Boolean> postMusicFromSiteurl(@PathVariable("username") String username,
+                                                        @RequestParam("sourceurl") String sourceUrl) {
 
         boolean isCreated = iMusicManagerService.postMusicFromUsernameAndSourceurl(username, sourceUrl);
 

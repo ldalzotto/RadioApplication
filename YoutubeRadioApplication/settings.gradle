@@ -1,0 +1,10 @@
+rootProject.name = 'YoutubeRadioApplication'
+
+include(':MusicManagerAPI-client')
+project(':MusicManagerAPI-client').projectDir = new File("MusicManagerAPI-client")
+
+include(':TokenManagerAPI-client')
+project(':TokenManagerAPI-client').projectDir = new File("TokenManagerAPI-client")
+
+include(':IdentifierAPI-client')
+project(':IdentifierAPI-client').projectDir = new File("IdentifierAPI-client")

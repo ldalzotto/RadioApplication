@@ -1,0 +1,7 @@
+rootProject.name = 'TokenManagerAPI'
+
+include(':converter-container-common')
+project(':converter-container-common').projectDir = new File("converter-container-common")
+
+include(':TokenManagerAPI-client')
+project(':TokenManagerAPI-client').projectDir = new File("TokenManagerAPI-client")
