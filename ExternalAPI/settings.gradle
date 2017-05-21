@@ -1,4 +1,3 @@
 rootProject.name = 'ExternalAPI'
 
-include(':ExternalAPI-client')
-project(':ExternalAPI-client').projectDir = new File("/client")
+include('client')
