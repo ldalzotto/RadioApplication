@@ -4,7 +4,7 @@ include(':ExternalApi')
 project(':ExternalApi').projectDir = new File('ExternalAPI')
 
 include(':ExternalAPI-client')
-project(':ExternalAPI-client').projectDir = new File("ExternalAPI\\client")
+project(':ExternalAPI-client').projectDir = new File("ExternalAPI-client")
 
 include(':MusicManagerAPI')
 project(':MusicManagerAPI').projectDir = new File("MusicManagerAPI")

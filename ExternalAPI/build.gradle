@@ -29,6 +29,7 @@ publishing {
 
 
 dependencies {
-    compile "ExternalAPI-client:ExternalAPI-client:1.0-SNAPSHOT"
+    compile project(':ExternalAPI-client')
+    //compile "ExternalAPI-client:ExternalAPI-client:1.0-SNAPSHOT"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
