@@ -10,7 +10,7 @@ include(':MusicManagerAPI')
 project(':MusicManagerAPI').projectDir = new File("MusicManagerAPI")
 
 include(':MusicManagerAPI-client')
-project(':MusicManagerAPI-client').projectDir = new File("MusicManagerAPI\\MusicManagerAPI-client")
+project(':MusicManagerAPI-client').projectDir = new File("MusicManagerAPI-client")
 
 include(':custom-validation-common')
 project(':custom-validation-common').projectDir = new File("custom-validation-common")

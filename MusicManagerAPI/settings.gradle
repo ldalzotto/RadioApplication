@@ -12,4 +12,4 @@ include(':converter-container-common')
 project(':converter-container-common').projectDir = new File('converter-container-common')
 
 include(':MusicManagerAPI-client')
-project(':MusicManagerAPI-client').projectDir = new File("MusicManagerAPI\\MusicManagerAPI-client")
+project(':MusicManagerAPI-client').projectDir = new File('MusicManagerAPI-client')
