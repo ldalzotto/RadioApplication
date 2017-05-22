@@ -139,7 +139,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'GET',
-          url: 'http://localhost:9000/user/current/ipaddress/' + userInfo.ip + '/',
+          url: 'https://localhost:9000/user/current/ipaddress/' + userInfo.ip + '/',
           success: function (userdetails) {
             currentUserDetail = userdetails
             if (userdetails != null) {
@@ -162,7 +162,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: 'http://localhost:9000/login',
+          url: 'https://localhost:9000/login',
           data: {
             username: username,
             password: password,
@@ -184,7 +184,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: 'http://localhost:9000/register/user',
+          url: 'https://localhost:9000/register/user',
           data: {
             username: username,
             password: password,
@@ -206,7 +206,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: 'http://localhost:9000/logout',
+          url: 'https://localhost:9000/logout',
           data: {
             username: currentUserDetail.username,
             password: currentUserDetail.password,
@@ -265,7 +265,7 @@ var MusicView = (function () {
   var refreshMusicListPanel = function () {
     $.ajax({
       method: 'GET',
-      url: 'http://localhost:9000/music/all',
+      url: 'https://localhost:9000/music/all',
       success: function (musicManagerType) {
         $('#music-panel-list').empty()
         var listMusicType = musicManagerType.musicTypeDTO
@@ -281,7 +281,7 @@ var MusicView = (function () {
   var addMusicFromPlatform = function (url, platform) {
     $.ajax({
       method: 'POST',
-      url: 'http://localhost:9000/music/musicplatform/' + platform,
+      url: 'https://localhost:9000/music/musicplatform/' + platform,
       data: {
         url: url
       },
