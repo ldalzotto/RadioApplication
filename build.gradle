@@ -47,9 +47,8 @@ publishing {
     }
 }
 
-tasks.bootRepackage.doFirst {
-    //tasks.publishToMavenLocal.execute()
-}
+task stage(dependsOn: ['bootRepackage', 'clean'])
+bootRepackage.mustRunAfter clean
 
 dependencies {
 
