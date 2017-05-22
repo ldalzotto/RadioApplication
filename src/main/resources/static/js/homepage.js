@@ -29,44 +29,6 @@ $(document).ready(function () {
 })
 
 // header navigation
-$(document).ready(function () {
-  function hideAllNavBarContentBut (nothidedNavbar) {
-    var navbarElements = $('#tabs').find('.ui-button').toArray()
-    for (i = 0; i < navbarElements.length; i++) {
-      if (navbarElements[i].id != nothidedNavbar) {
-        var elementToHideId = navbarElements[i].id + '-content'
-        $('#' + elementToHideId).hide()
-      } else {
-        var elementToHideId = navbarElements[i].id + '-content'
-        $('#' + elementToHideId).show()
-      }
-    }
-  }
-
-  $('#tabs').find('#dashboard-navbar').click(function () {
-    hideAllNavBarContentBut('dashboard-navbar')
-  })
-  $('#tabs').find('#music-navbar').click(function () {
-    hideAllNavBarContentBut('music-navbar')
-  })
-  $('#tabs').find('#platforms-navbar').click(function () {
-    hideAllNavBarContentBut('platforms-navbar')
-  })
-
-  $('#tabs').find('#logout-header-link').click(function () {
-    CurrentUser.logout()
-  })
-
-  $('#music-navbar-content').hide()
-
-  $('#login-header-link').click(function (event) {
-    $('#login-modal').show()
-    $('#login-modal').position({
-      my: 'left+3 bottom-3',
-      of: event
-    })
-  })
-})
 
 var NavBar = (function () {
   var hideAllNavBarContentBut = function (nothidedNavbar) {

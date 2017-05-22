@@ -1,6 +1,8 @@
 package com.ldz.token.manager.controller;
 
 import com.ldz.token.manager.service.inter.ITokenCacheService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ import java.util.Map;
  */
 @Controller
 public class TokenManagerController implements TokenManagerClient {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TokenManagerController.class.getName());
 
     @Autowired
     ITokenCacheService iTokenCacheService;
@@ -35,6 +39,7 @@ public class TokenManagerController implements TokenManagerClient {
     }
 
     public ResponseEntity<?> deleteTokenFromIpaddress(@PathVariable(name = "ipaddress") String ipaddress) {
+        LOGGER.info("DELETE token called");
         iTokenCacheService.deleteTokenFromIpaddress(ipaddress);
         return ResponseEntity.ok().build();
     }

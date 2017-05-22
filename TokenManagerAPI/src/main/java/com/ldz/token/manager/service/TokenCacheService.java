@@ -1,45 +1,56 @@
 package com.ldz.token.manager.service;
 
+import com.ldz.token.manager.model.Token;
+import com.ldz.token.manager.repository.TokenRepository;
 import com.ldz.token.manager.service.inter.ITokenCacheService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 /**
  * Created by ldalzotto on 17/05/2017.
  */
+@Transactional
 @Service
 public class TokenCacheService implements ITokenCacheService {
 
-    private Map<String, Map<String, String>> tokenCache = new HashMap<>();
+    @Autowired
+    private TokenRepository tokenRepository;
 
     @Override
     public void addCacheDataFromIpaddress(String ipaddress, Map<String, String> data) {
 
-        Map<String, Map<String, String>> bufferMap = new HashMap<>();
+        final Map<String, String> bufferMap = new HashMap<>();
 
         //check if data is not already present
-        tokenCache.entrySet().stream().filter(listMapEntry -> {
-            if (listMapEntry.getKey().equals(ipaddress)) {
-                return true;
-            }
-            return false;
-        }).forEach(listMapEntry -> {
-            //contruction clé
-            String tempIp = listMapEntry.getKey().toString();
-            Map<String, String> tempData = new HashMap<>(listMapEntry.getValue());
-            tempData.putAll(data);
-            bufferMap.put(tempIp, tempData);
-        });
+        Token token = tokenRepository.findOne(ipaddress);
+        if(token != null){
+            if(token.getIpaddress().equals(ipaddress)){
+                token.getDataCached().forEach((key, value) -> {
+                    bufferMap.put(key, value);
+                });
+                bufferMap.putAll(data);
 
-        if (bufferMap.isEmpty()) {
-            //new value
-            String tempIp = ipaddress.toString();
-            Map<String, String> tempData = new HashMap<>(data);
-            bufferMap.put(tempIp, tempData);
+                token.setDataCached(bufferMap);
+                tokenRepository.save(token);
+            }
+
+            bufferMap.putAll(data);
+            token.setDataCached(bufferMap);
+            tokenRepository.save(token);
+
+        } else {
+            bufferMap.putAll(data);
+            token = new Token();
+            token.setIpaddress(ipaddress);
+            token.setDataCached(bufferMap);
+            tokenRepository.save(token);
         }
 
-        tokenCache.putAll(bufferMap);
+
+
     }
 
     @Override
@@ -47,29 +58,24 @@ public class TokenCacheService implements ITokenCacheService {
 
         Map<String, Map<String, String>> bufferMap = new HashMap<>();
 
-        Map.Entry<String, Map<String, String>> entry = tokenCache.entrySet().stream().filter(listMapEntry -> {
-            if (listMapEntry.getKey().equals(ipaddress)) {
-                return true;
-            }
-            return false;
-        }).findAny().orElse(null);
+        Token token = tokenRepository.findOne(ipaddress);
 
-        if (entry != null) {
-            if (entry.getKey() != null && entry.getValue() != null) {
-                bufferMap.put(entry.getKey(), entry.getValue());
+        if(token != null){
+            if(token.getIpaddress().equals(ipaddress)){
+                Map<String, String> dataMap = new HashMap<>();
+                token.getDataCached().forEach((s, s2) -> {
+                    dataMap.put(s, s2);
+                });
+                bufferMap.put(ipaddress, dataMap);
             }
         }
-
 
         return bufferMap;
     }
 
     @Override
     public void deleteTokenFromIpaddress(String ipaddress) {
-        Map<String, Map<String, String>> dataFromIpAddress = getCacheDataFromIpAddress(ipaddress);
-        Map.Entry<String, Map<String, String>> listMapEntry = dataFromIpAddress.entrySet().iterator().next();
-        if (listMapEntry.getKey().equals(ipaddress)) {
-            tokenCache.remove(listMapEntry.getKey());
-        }
+
+        tokenRepository.delete(ipaddress);
     }
 }

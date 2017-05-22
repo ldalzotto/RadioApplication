@@ -20,18 +20,29 @@ public class JdbcConnection {
 
     @Bean
     public DriverManagerDataSource dataSource() throws URISyntaxException {
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-        //dbUrl += "?sslmode=require&user=loic.dalzotto@hotmail.fr&password=Abc01234";
 
         DriverManagerDataSource basicDataSource = new DriverManagerDataSource();
-        basicDataSource.setUrl(dbUrl);
-        basicDataSource.setDriverClassName(Driver.class.getName());
-        basicDataSource.setUsername(username);
-        basicDataSource.setPassword(password);
+
+        if(System.getenv("LOCAL").equals("true")){
+
+            basicDataSource.setUrl("jdbc:h2:./mem");
+            basicDataSource.setDriverClassName(org.h2.Driver.class.getName());
+            basicDataSource.setUsername("sa");
+            basicDataSource.setPassword("");
+
+        } else {
+            URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+            String username = dbUri.getUserInfo().split(":")[0];
+            String password = dbUri.getUserInfo().split(":")[1];
+            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+            //dbUrl += "?sslmode=require&user=loic.dalzotto@hotmail.fr&password=Abc01234";
+
+            basicDataSource.setUrl(dbUrl);
+            basicDataSource.setDriverClassName(Driver.class.getName());
+            basicDataSource.setUsername(username);
+            basicDataSource.setPassword(password);
+        }
 
         return basicDataSource;
     }

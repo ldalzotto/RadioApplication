@@ -59,7 +59,8 @@ dependencies {
     compile project(':YoutubeRadioApplication')
     compile project(':IdentifierAPI')
     compile project(':converter-container-common')
-
+    //for local purpose only
+    compile group: 'com.h2database', name: 'h2', version: '1.4.195'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.2.RELEASE'
     testCompile group: 'junit', name: 'junit', version: '4.12'
