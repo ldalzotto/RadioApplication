@@ -158,7 +158,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'GET',
-          url: '/user/current/ipaddress/' + userInfo.ip + '/',
+          url: '/user/current/ipaddress/' +  userInfo.ip + '/',
           success: function (userdetails) {
             currentUserDetail = userdetails
             if (userdetails != null) {

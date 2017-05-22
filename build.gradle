@@ -47,8 +47,8 @@ publishing {
     }
 }
 
-task stage(dependsOn: ['bootRepackage', 'clean'])
-bootRepackage.mustRunAfter clean
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
 
 dependencies {
 
