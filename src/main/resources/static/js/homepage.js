@@ -1,4 +1,23 @@
 
+var HostName = (function(){
+    var host = undefined;
+    var port = undefined;
+    var protocol = undefined;
+
+    $(document).ready(function(){
+        protocol = window.location.protocol;
+        host = window.location.hostname;
+        port = window.location.port;
+    })
+
+    return {
+        getSourceUrl: function(){
+            return protocol + host + port;
+        }
+    }
+
+})()
+
 // header animation
 $(document).ready(function () {
   $('.alert').addClass('in').fadeOut(4500)
@@ -139,7 +158,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'GET',
-          url: 'https://localhost:9000/user/current/ipaddress/' + userInfo.ip + '/',
+          url: HostName.getSourceUrl() +'/user/current/ipaddress/' + userInfo.ip + '/',
           success: function (userdetails) {
             currentUserDetail = userdetails
             if (userdetails != null) {
@@ -162,7 +181,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: 'https://localhost:9000/login',
+          url: HostName.getSourceUrl() + '/login',
           data: {
             username: username,
             password: password,
@@ -184,7 +203,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: 'https://localhost:9000/register/user',
+          url: HostName.getSourceUrl() + '/register/user',
           data: {
             username: username,
             password: password,
@@ -206,7 +225,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: 'https://localhost:9000/logout',
+          url: HostName.getSourceUrl() + '/logout',
           data: {
             username: currentUserDetail.username,
             password: currentUserDetail.password,
@@ -265,7 +284,7 @@ var MusicView = (function () {
   var refreshMusicListPanel = function () {
     $.ajax({
       method: 'GET',
-      url: 'https://localhost:9000/music/all',
+      url: HostName.getSourceUrl() + '/music/all',
       success: function (musicManagerType) {
         $('#music-panel-list').empty()
         var listMusicType = musicManagerType.musicTypeDTO
@@ -281,7 +300,7 @@ var MusicView = (function () {
   var addMusicFromPlatform = function (url, platform) {
     $.ajax({
       method: 'POST',
-      url: 'https://localhost:9000/music/musicplatform/' + platform,
+      url: HostName.getSourceUrl() + '/music/musicplatform/' + platform,
       data: {
         url: url
       },
