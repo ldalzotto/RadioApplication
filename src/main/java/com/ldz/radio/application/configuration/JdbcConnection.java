@@ -23,7 +23,7 @@ public class JdbcConnection {
 
         DriverManagerDataSource basicDataSource = new DriverManagerDataSource();
 
-        if(System.getenv("LOCAL").equals("true")){
+        if(System.getenv("LOCAL") != null && System.getenv("LOCAL") .equals("true")){
 
             basicDataSource.setUrl("jdbc:h2:./mem");
             basicDataSource.setDriverClassName(org.h2.Driver.class.getName());
