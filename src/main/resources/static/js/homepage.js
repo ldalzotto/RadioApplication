@@ -158,7 +158,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'GET',
-          url: HostName.getSourceUrl() +'/user/current/ipaddress/' + userInfo.ip + '/',
+          url: '/user/current/ipaddress/' + userInfo.ip + '/',
           success: function (userdetails) {
             currentUserDetail = userdetails
             if (userdetails != null) {
@@ -181,7 +181,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: HostName.getSourceUrl() + '/login',
+          url: '/login',
           data: {
             username: username,
             password: password,
@@ -203,7 +203,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: HostName.getSourceUrl() + '/register/user',
+          url: '/register/user',
           data: {
             username: username,
             password: password,
@@ -225,7 +225,7 @@ var CurrentUser = (function () {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
-          url: HostName.getSourceUrl() + '/logout',
+          url: '/logout',
           data: {
             username: currentUserDetail.username,
             password: currentUserDetail.password,
@@ -284,7 +284,7 @@ var MusicView = (function () {
   var refreshMusicListPanel = function () {
     $.ajax({
       method: 'GET',
-      url: HostName.getSourceUrl() + '/music/all',
+      url: '/music/all',
       success: function (musicManagerType) {
         $('#music-panel-list').empty()
         var listMusicType = musicManagerType.musicTypeDTO
@@ -300,7 +300,7 @@ var MusicView = (function () {
   var addMusicFromPlatform = function (url, platform) {
     $.ajax({
       method: 'POST',
-      url: HostName.getSourceUrl() + '/music/musicplatform/' + platform,
+      url: '/music/musicplatform/' + platform,
       data: {
         url: url
       },

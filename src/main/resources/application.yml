@@ -1,6 +1,6 @@
 server.port: 9000
 
-base.package: music.manager
+base.package: com.ldz
 
 logging.level.root: WARN
 logging.level.org.springframework.web: DEBUG
