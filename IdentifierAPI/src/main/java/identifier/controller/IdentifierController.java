@@ -5,7 +5,6 @@ import identifier.Model.bo.UserBO;
 import identifier.model.UserDTO;
 import identifier.clients.IdentifierClient;
 import identifier.service.IIdentifierService;
-import org.h2.jdbc.JdbcSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class IdentifierController implements IdentifierClient {
             returnBool = IIdentifierService.addUser(converterContainer.convert(userDTO, UserBO.class));
         } catch (Exception e) {
             //if client existe déjà
-            if (e.getCause() != null && e.getCause().getCause() instanceof JdbcSQLException) {
+            if (e.getCause() != null) {
                 return ResponseEntity.status(HttpStatus.LOCKED).build();
             } else
                 throw e;

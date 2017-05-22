@@ -6,7 +6,6 @@ import music.manager.constants.MusicTypes;
 import music.manager.model.UserMusicStatusDTO;
 import music.manager.model.bo.UserMusicStatusBO;
 import music.manager.service.IMusicManagerService;
-import org.h2.jdbc.JdbcSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +35,7 @@ public class MusicManagerController implements MusicTypeClient {
             iMusicManagerService.addUserMusicStatus(userMusicStatusBO);
         } catch (Exception e) {
             //if client existe déjà
-            if (e.getCause() != null && e.getCause().getCause() instanceof JdbcSQLException) {
+            if (e.getCause() != null) {
                 return ResponseEntity.status(HttpStatus.LOCKED).build();
             } else
                 throw e;

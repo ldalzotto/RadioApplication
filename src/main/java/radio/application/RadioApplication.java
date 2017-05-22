@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = {
         "music.manager.repository", "identifier.repository"})
 @ComponentScan({"external.api", "music.manager",
-        "converter.container", "token", "identifier", "project"})
+        "converter.container", "token", "identifier", "project", "radio"})
 public class RadioApplication {
 
     public static void main(String[] argc) {
