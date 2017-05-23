@@ -1,16 +1,16 @@
 package com.ldz.identifier.controller;
 
+import com.ldz.converter.container.ConverterContainer;
 import com.ldz.identifier.Model.bo.UserBO;
 import com.ldz.identifier.clients.IdentifierClient;
 import com.ldz.identifier.model.UserDTO;
-import com.ldz.converter.container.ConverterContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -54,17 +54,7 @@ public class IdentifierController implements IdentifierClient {
 
     @Override
     public ResponseEntity<Object> postUser(@RequestBody @Valid UserDTO userDTO) {
-        Boolean returnBool = null;
-        try {
-            returnBool = IIdentifierService.addUser(converterContainer.convert(userDTO, UserBO.class));
-        } catch (Exception e) {
-            //if client existe déjà
-            if (e.getCause() != null) {
-                return ResponseEntity.status(HttpStatus.LOCKED).build();
-            } else
-                throw e;
-        }
-
+        IIdentifierService.addUser(converterContainer.convert(userDTO, UserBO.class));
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
         return ResponseEntity.created(location).build();
     }

@@ -5,6 +5,7 @@ import com.ldz.project.service.userregister.inter.IUserRegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,13 @@ public class GreetingController {
     public ResponseEntity<?> login(@Valid UserRegister userRegister) {
         UserRegister registeredUser = iUserRegisterService.loginUserFromUsernameAndPasswordAndIpaddress(userRegister.getUsername(),
                 userRegister.getPassword(), userRegister.getIpaddress());
-        return ResponseEntity.ok(registeredUser);
+
+        if(registeredUser != null){
+            return ResponseEntity.ok(registeredUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
@@ -61,12 +68,21 @@ public class GreetingController {
     @RequestMapping(value = "/register/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserRegister> register(@Valid UserRegister userRegister) {
-        iUserRegisterService
-                .registerUserFromUserDetails(userRegister.getUsername(), userRegister.getPassword(),
-                        userRegister.getIpaddress(), userRegister.getCountry());
+        try {
+            iUserRegisterService
+                    .registerUserFromUserDetails(userRegister.getUsername(), userRegister.getPassword(),
+                            userRegister.getIpaddress(), userRegister.getCountry());
+        } catch (DataIntegrityViolationException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.LOCKED).build();
+        }
         //login after register
-        iUserRegisterService.loginUserFromUsernameAndPasswordAndIpaddress(userRegister.getUsername(),
+        UserRegister userRegister1 = iUserRegisterService.loginUserFromUsernameAndPasswordAndIpaddress(userRegister.getUsername(),
                 userRegister.getPassword(), userRegister.getIpaddress());
+
+        if(userRegister1 == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
         return ResponseEntity.created(location).body(userRegister);

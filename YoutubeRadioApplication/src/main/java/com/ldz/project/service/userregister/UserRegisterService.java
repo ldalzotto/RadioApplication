@@ -47,32 +47,37 @@ public class UserRegisterService implements IUserRegisterService {
     public UserRegister loginUserFromUsernameAndPasswordAndIpaddress(String username, String password, String ipaddress) {
         UserDTO identifierAPIUser = identifierAPIClient.getPersonFromUsernameAndPassword(username, password).getBody();
 
-        //assert that input ip correspond
-        UserDetailDTO identifierAPIUserDetailFound = null;
-        if (identifierAPIUser.getUserDetailDTOS() != null) {
-            identifierAPIUserDetailFound = identifierAPIUser.getUserDetailDTOS().stream().filter(identifierAPIUserDetail -> {
-                return identifierAPIUserDetail.getIpaddress().equals(ipaddress);
-            }).findAny().orElse(null);
+        if(identifierAPIUser != null){
+            //assert that input ip correspond
+            UserDetailDTO identifierAPIUserDetailFound = null;
+            if (identifierAPIUser.getUserDetailDTOS() != null) {
+                identifierAPIUserDetailFound = identifierAPIUser.getUserDetailDTOS().stream().filter(identifierAPIUserDetail -> {
+                    return identifierAPIUserDetail.getIpaddress().equals(ipaddress);
+                }).findAny().orElse(null);
+            }
+
+            if (identifierAPIUserDetailFound == null) {
+                throw new RuntimeException("User IP not recognized !");
+            }
+
+            //set login token
+            Map<String, String> genericInfoToPut = new HashMap<>();
+            genericInfoToPut.put(TokenManagerMapKeys.USERNAME.name(), username);
+            genericInfoToPut.put(TokenManagerMapKeys.PASSWORD.name(), password);
+            genericInfoToPut.put(TokenManagerMapKeys.IPADDRESS.name(), identifierAPIUserDetailFound.getIpaddress());
+            genericInfoToPut.put(TokenManagerMapKeys.COUNTRY.name(), identifierAPIUserDetailFound.getCountry());
+            tokenManagerAPIClient.postTokenWithIpaddress(identifierAPIUserDetailFound.getIpaddress(), genericInfoToPut);
+
+            UserRegister userRegister = new UserRegister();
+            userRegister.setUsername(identifierAPIUser.getUserName());
+            userRegister.setPassword(identifierAPIUser.getPassword());
+            userRegister.setIpaddress(ipaddress);
+
+            return userRegister;
+        } else {
+            return null;
         }
 
-        if (identifierAPIUserDetailFound == null) {
-            throw new RuntimeException("User IP not recognized !");
-        }
-
-        //set login token
-        Map<String, String> genericInfoToPut = new HashMap<>();
-        genericInfoToPut.put(TokenManagerMapKeys.USERNAME.name(), username);
-        genericInfoToPut.put(TokenManagerMapKeys.PASSWORD.name(), password);
-        genericInfoToPut.put(TokenManagerMapKeys.IPADDRESS.name(), identifierAPIUserDetailFound.getIpaddress());
-        genericInfoToPut.put(TokenManagerMapKeys.COUNTRY.name(), identifierAPIUserDetailFound.getCountry());
-        tokenManagerAPIClient.postTokenWithIpaddress(identifierAPIUserDetailFound.getIpaddress(), genericInfoToPut);
-
-        UserRegister userRegister = new UserRegister();
-        userRegister.setUsername(identifierAPIUser.getUserName());
-        userRegister.setPassword(identifierAPIUser.getPassword());
-        userRegister.setIpaddress(ipaddress);
-
-        return userRegister;
     }
 
     @Override
