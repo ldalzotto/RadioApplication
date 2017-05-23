@@ -1,12 +1,10 @@
 package com.ldz.token.manager.client;
 
 import com.ldz.token.manager.model.TokenDTO;
-import org.joda.time.DateTime;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.QueryParam;
 import java.util.List;
 import java.util.Map;
 

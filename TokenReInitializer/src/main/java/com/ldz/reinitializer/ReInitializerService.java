@@ -29,4 +29,7 @@ public class ReInitializerService {
         scheduler.scheduleAtFixedRate(reInitializerProcess, Long.valueOf(intervalTimeInMs), Long.valueOf(intervalTimeInMs), TimeUnit.MILLISECONDS);
     }
 
+    public void manualTrigger(){
+        scheduler.execute(reInitializerProcess);
+    }
 }
