@@ -16,10 +16,10 @@ import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by loicd on 23/05/2017.
+ * Created by Loic on 23/05/2017.
  */
 @Component
-public class ReInitializerProcess implements Runnable {
+public class InstantReinitializerProcess implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReInitializerProcess.class.getName());
 
@@ -38,8 +38,8 @@ public class ReInitializerProcess implements Runnable {
     @Override
     public void run() {
 
-        DateTime nowMinusPeriod = DateTime.now().minusMillis(Integer.valueOf(intervalTimeInMs));
-       List<TokenDTO> tokenDTOS = tokenManagerClient.getAllTokenFromTs(DateTimeFormat.forPattern(parserFormat).print(nowMinusPeriod)).getBody();
+        DateTime now = DateTime.now();
+        List<TokenDTO> tokenDTOS = tokenManagerClient.getAllTokenFromTs(DateTimeFormat.forPattern(parserFormat).print(now)).getBody();
 
         //creation of process
         List<DeletionProcess> deletionProcesses = tokenDTOS.stream().map(tokenDTO -> new DeletionProcess(tokenManagerClient, tokenDTO.getId())).collect(Collectors.toList());
@@ -64,4 +64,5 @@ public class ReInitializerProcess implements Runnable {
 
 
     }
+
 }

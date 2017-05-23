@@ -21,6 +21,9 @@ public class ReInitializerService {
     @Autowired
     private ReInitializerProcess reInitializerProcess;
 
+    @Autowired
+    private InstantReinitializerProcess instantReinitializerProcess;
+
     private ScheduledExecutorService scheduler;
 
     @PostConstruct
@@ -30,6 +33,6 @@ public class ReInitializerService {
     }
 
     public void manualTrigger(){
-        scheduler.execute(reInitializerProcess);
+        scheduler.execute(instantReinitializerProcess);
     }
 }
