@@ -1,5 +1,7 @@
 package com.ldz.token.manager.service.inter;
 
+import com.ldz.token.manager.model.TokenDTO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,5 +15,7 @@ public interface ITokenCacheService {
     public Map<String, Map<String, String>> getCacheDataFromIpAddress(String ipaddress);
 
     public void deleteTokenFromIpaddress(String ipaddress);
+
+    public List<TokenDTO> getAllTokenBeforeTs(String ts);
 
 }

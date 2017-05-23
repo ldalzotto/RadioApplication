@@ -2,3 +2,4 @@ rootProject.name = 'TokenManagerAPI-client'
 
 include(':TokenManagerAPI-client')
 project(':TokenManagerAPI-client').projectDir = new File("TokenManagerAPI-client")
+

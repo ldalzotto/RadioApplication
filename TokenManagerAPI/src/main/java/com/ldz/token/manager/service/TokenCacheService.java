@@ -1,13 +1,19 @@
 package com.ldz.token.manager.service;
 
+import com.ldz.converter.container.inter.IConverter;
 import com.ldz.token.manager.model.Token;
+import com.ldz.token.manager.model.TokenDTO;
 import com.ldz.token.manager.repository.TokenRepository;
 import com.ldz.token.manager.service.inter.ITokenCacheService;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by ldalzotto on 17/05/2017.
@@ -16,8 +22,14 @@ import java.util.*;
 @Service
 public class TokenCacheService implements ITokenCacheService {
 
+    @Value("${parser.date-time-format}")
+    private String parserFormat;
+
     @Autowired
     private TokenRepository tokenRepository;
+
+    @Autowired
+    private IConverter<Token, TokenDTO> tokenTokenDTOIConverter;
 
     @Override
     public void addCacheDataFromIpaddress(String ipaddress, Map<String, String> data) {
@@ -33,11 +45,13 @@ public class TokenCacheService implements ITokenCacheService {
                 });
                 bufferMap.putAll(data);
 
+                token.setTs(DateTime.now());
                 token.setDataCached(bufferMap);
                 tokenRepository.save(token);
             }
 
             bufferMap.putAll(data);
+            token.setTs(DateTime.now());
             token.setDataCached(bufferMap);
             tokenRepository.save(token);
 
@@ -45,6 +59,7 @@ public class TokenCacheService implements ITokenCacheService {
             bufferMap.putAll(data);
             token = new Token();
             token.setIpaddress(ipaddress);
+            token.setTs(DateTime.now());
             token.setDataCached(bufferMap);
             tokenRepository.save(token);
         }
@@ -75,7 +90,12 @@ public class TokenCacheService implements ITokenCacheService {
 
     @Override
     public void deleteTokenFromIpaddress(String ipaddress) {
-
         tokenRepository.delete(ipaddress);
+    }
+
+    @Override
+    public List<TokenDTO> getAllTokenBeforeTs(String ts) {
+        List<Token> tokens = tokenRepository.findAllBytsBefore(DateTime.parse(ts, DateTimeFormat.forPattern(parserFormat)));
+        return tokens.stream().map(token -> tokenTokenDTOIConverter.apply(token)).collect(Collectors.toList());
     }
 }

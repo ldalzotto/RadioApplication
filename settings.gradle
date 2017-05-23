@@ -32,3 +32,6 @@ project(':IdentifierAPI-client').projectDir = new File("IdentifierAPI-client")
 
 include(':YoutubeRadioApplication')
 project(':YoutubeRadioApplication').projectDir = new File("YoutubeRadioApplication")
+
+include(':TokenReInitializer')
+project(':TokenReInitializer').projectDir = new File("TokenReInitializer")

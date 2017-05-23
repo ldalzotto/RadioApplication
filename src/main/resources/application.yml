@@ -9,3 +9,5 @@ logging.level.org.springframework.security: DEBUG
 #prevent from deleting database
 spring.jpa.hibernate.ddl-auto: create-drop
 spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
+parser.date-time-format: "dd/MM/yyyy HH:mm:ss"

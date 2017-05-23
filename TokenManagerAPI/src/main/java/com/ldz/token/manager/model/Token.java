@@ -1,6 +1,8 @@
 package com.ldz.token.manager.model;
 
 
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.util.Map;
 
@@ -14,6 +16,9 @@ public class Token {
     @Id
     @Column(name = "ipaddress")
     private String ipaddress;
+
+    @Column(name = "ts")
+    private DateTime ts;
 
     @ElementCollection(targetClass = String.class)
     @MapKeyColumn(name = "dataCached")
@@ -34,6 +39,14 @@ public class Token {
 
     public void setIpaddress(String ipaddress) {
         this.ipaddress = ipaddress;
+    }
+
+    public DateTime getTs() {
+        return ts;
+    }
+
+    public void setTs(DateTime ts) {
+        this.ts = ts;
     }
 
     public Map<String, String> getDataCached() {

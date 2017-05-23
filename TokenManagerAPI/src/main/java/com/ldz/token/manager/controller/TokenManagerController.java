@@ -1,6 +1,9 @@
 package com.ldz.token.manager.controller;
 
+import com.ldz.token.manager.model.TokenDTO;
 import com.ldz.token.manager.service.inter.ITokenCacheService;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.ldz.token.manager.client.TokenManagerClient;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,5 +47,11 @@ public class TokenManagerController implements TokenManagerClient {
         LOGGER.info("DELETE token called");
         iTokenCacheService.deleteTokenFromIpaddress(ipaddress);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<List<TokenDTO>> getAllTokenFromTs(@RequestParam("ts") String ts) {
+        List<TokenDTO> tokenDTOS = iTokenCacheService.getAllTokenBeforeTs(ts);
+        return ResponseEntity.ok(tokenDTOS);
     }
 }
