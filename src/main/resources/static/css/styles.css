@@ -2,6 +2,20 @@
   margin-bottom:20px;
 }
 
+.ui-inline {
+  display: inline-block;
+}
+
+.ui-padding-box {
+  padding: 3px 10px 10px 5px;
+}
+
+.ui-widget-bottom-error {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
 i {
   font-size:16px;
 }
@@ -9,7 +23,7 @@ i {
 .nav > li > a {
   color:#787878;
 }
-  
+
 footer {
   margin-top:20px;
   padding-top:20px;

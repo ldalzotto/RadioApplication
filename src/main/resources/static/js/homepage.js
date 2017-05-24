@@ -80,11 +80,7 @@ var NavBar = (function () {
     $('#music-navbar-content').hide()
 
     $('#login-header-link').click(function (event) {
-      $('#login-modal').show('puff', 1000)
-      $('#login-modal').position({
-        my: 'left+3 bottom-3',
-        of: event
-      })
+      CurrentUser.showModalOnEvent(event);
     })
   })
 })()
@@ -155,8 +151,9 @@ var CurrentUser = (function () {
             isLogInDispaly()
           },
           error: function (jqXHR, error, errorThrown) {
-            console.error(jqXHR.responseText)
-            isLogOutDispaly()
+            console.error(jqXHR.responseText);
+            $('#login-modal').find('#login-error-box').show("drop");
+            //isLogOutDispaly()
           }
         })
       })
@@ -210,6 +207,14 @@ var CurrentUser = (function () {
       } else {
         return true
       }
+    },
+    showModalOnEvent: function(event) {
+      $('#login-modal').show('puff', 300)
+      $('#login-modal').find('#login-error-box').hide();
+      $('#login-modal').position({
+        my: 'left+3 bottom-3',
+        of: event
+      })
     }
   }
 })()
