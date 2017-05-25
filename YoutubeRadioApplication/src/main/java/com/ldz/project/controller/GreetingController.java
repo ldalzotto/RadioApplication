@@ -1,5 +1,7 @@
 package com.ldz.project.controller;
 
+import com.ldz.identifier.constants.IdentifierColumnNames;
+import com.ldz.identifier.constants.IdentifierTableNames;
 import com.ldz.project.model.UserRegister;
 import com.ldz.project.service.userregister.inter.IUserRegisterService;
 import org.slf4j.Logger;
@@ -10,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -68,14 +68,9 @@ public class GreetingController {
     @RequestMapping(value = "/register/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserRegister> register(@Valid UserRegister userRegister) {
-        try {
             iUserRegisterService
                     .registerUserFromUserDetails(userRegister.getUsername(), userRegister.getPassword(),
                             userRegister.getIpaddress(), userRegister.getCountry());
-        } catch (DataIntegrityViolationException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.LOCKED).build();
-        }
         //login after register
         UserRegister userRegister1 = iUserRegisterService.loginUserFromUsernameAndPasswordAndIpaddress(userRegister.getUsername(),
                 userRegister.getPassword(), userRegister.getIpaddress());
@@ -86,6 +81,26 @@ public class GreetingController {
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
         return ResponseEntity.created(location).body(userRegister);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity handleDataIntegrity(DataIntegrityViolationException e){
+        Throwable throwable = e.getMostSpecificCause();
+        String errorMessage = throwable.getMessage();
+
+        String errorCode = "AN_ERROR_OCCURED";
+
+        //build error regex
+        String ipaddressRegex = IdentifierTableNames.USER_DETAIL + "(" + IdentifierColumnNames.IPADDRESS + ")";
+        String usernameRegex = IdentifierTableNames.USERS + "(" + IdentifierColumnNames.USERNAME + ")";
+
+        if(errorMessage.contains(ipaddressRegex)){
+            errorCode = "IPADDRESS_ALREADY_EXIST";
+        } else if(errorMessage.contains(usernameRegex)){
+            errorCode = "USERNAME_ALREADY_EXIST";
+        }
+
+        return ResponseEntity.status(HttpStatus.LOCKED).body(errorCode);
     }
 
 }

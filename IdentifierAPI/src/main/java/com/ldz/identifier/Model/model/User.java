@@ -1,5 +1,8 @@
 package com.ldz.identifier.Model.model;
 
+import com.ldz.identifier.constants.IdentifierColumnNames;
+import com.ldz.identifier.constants.IdentifierTableNames;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -8,11 +11,11 @@ import java.util.Set;
  */
 @Entity
 @IdClass(UserId.class)
-@Table(name = "users")
+@Table(name = IdentifierTableNames.USERS, uniqueConstraints = @UniqueConstraint(columnNames = {IdentifierColumnNames.USERNAME}))
 public class User {
 
     @Id
-    @Column(name = "username")
+    @Column(name = IdentifierColumnNames.USERNAME)
     private String username;
 
     @Id
