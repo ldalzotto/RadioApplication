@@ -1,27 +1,24 @@
 var CurrentUser = (function () {
-  var currentUserDetail
 
-  var loginModal = undefined;
-  var loginModalHeightWithoutErrorMessage = undefined;
+  var cutomModal = undefined;
+
+
+  var loginModalElement = undefined;
+  var currentUserDetail
 
   var loginForm = undefined;
   var loginSubmitButton = undefined;
   var registerSubmitButton = undefined;
 
-  var errorBottomMessage = undefined;
-
   // check user status when document is ready
   $(document).ready(function () {
-      // initiate login form
-     loginModal = $('#login-modal');
-     loginModalHeightWithoutErrorMessage = loginModal.height();
-     loginForm = loginModal.find('#login-form');
+    // initiate login form
+     loginModalElement = $('#login-modal');
+     cutomModal = new CustomModal(loginModalElement);
+
+     loginForm = loginModalElement.find('#login-form');
      loginSubmitButton = loginForm.find('#login-submit');
      registerSubmitButton = loginForm.find('#register-submit');
-
-     errorBottomMessage = loginModal.find('#login-error-box');
-
-     loginModal.draggable().resizable();
 
       // get current user
     CurrentUser.retrieveCurrentUser();
@@ -41,47 +38,16 @@ var CurrentUser = (function () {
     })
   })
 
-  var errorBottomPopUp = function (message) {
-     errorBottomMessage.text(message);
-
-     if(!errorBottomMessage.is(":visible")){
-       //adjust size of loginModal
-       loginModalHeightWithoutErrorMessage = loginModal.height();
-       var errorMessageHeight = errorBottomMessage.height();
-       //loginModal.css("height", currentLoginModalheight + errorMessageHeight);
-       loginModal.animate({
-         height: loginModalHeightWithoutErrorMessage + errorMessageHeight
-       }, 100, "swing", function(){
-         errorBottomMessage.show("shake", "",400, function(){
-           setTimeout(function(){
-             errorBottomPopOut();
-           }, 2000)
-         });
-       });
-     } else {
-       errorBottomMessage.effect("shake");
-     }
-  }
-
-  var errorBottomPopOut = function () {
-    errorBottomMessage.hide("fade", "", 400);
-
-    //retrieve original loginModal height
-    loginModal.animate({
-      height: loginModalHeightWithoutErrorMessage
-    }, 100, "swing");
-  }
-
   var isLogOutDispaly = function () {
     $('#logout-header-link').hide()
     $('#login-header-link').show()
-    loginModal.hide()
+    cutomModal.hideModal()
   }
 
   var isLogInDispaly = function () {
     $('#logout-header-link').show()
     $('#login-header-link').hide()
-    loginModal.hide()
+    cutomModal.hideModal()
   }
 
   var fromCurrentIp = function (successCallback, errorCallback) {
@@ -135,8 +101,7 @@ var CurrentUser = (function () {
           },
           error: function (jqXHR, error, errorThrown) {
             console.error(jqXHR.responseText);
-            errorBottomPopUp("An error occured on login.");
-            //isLogOutDispaly()
+            cutomModal.errorPopUp("An error occured on login.");
           }
         })
       })
@@ -164,7 +129,7 @@ var CurrentUser = (function () {
             } else if(jqXHR.responseText == "USERNAME_ALREADY_EXIST"){
               errorMessage = "The username already exists";
             }
-            errorBottomPopUp(errorMessage);
+            cutomModal.errorPopUp(errorMessage);
             //isLogOutDispaly()
           }
         })
@@ -199,12 +164,7 @@ var CurrentUser = (function () {
       }
     },
     showModalOnEvent: function(event) {
-      loginModal.show('puff', 300)
-      errorBottomMessage.hide();
-      loginModal.position({
-        my: 'left+3 bottom-3',
-        of: event
-      })
+      cutomModal.showModal(event);
     }
   }
 })();

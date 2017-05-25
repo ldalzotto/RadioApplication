@@ -1,12 +1,15 @@
 package com.ldz.identifier.Model.model;
 
+import com.ldz.identifier.constants.IdentifierColumnNames;
+import com.ldz.identifier.constants.IdentifierTableNames;
+
 import javax.persistence.*;
 
 /**
  * Created by ldalzotto on 15/05/2017.
  */
 @Entity
-@Table(name = "user_detail", uniqueConstraints = @UniqueConstraint(columnNames = {"ipaddress"}))
+@Table(name = IdentifierTableNames.USER_DETAIL, uniqueConstraints = @UniqueConstraint(columnNames = {IdentifierColumnNames.IPADDRESS}))
 public class UserDetail {
 
     @Id
@@ -14,7 +17,7 @@ public class UserDetail {
     @Column(name = "detail_user_id")
     private long id;
 
-    @Column(name = "ipaddress")
+    @Column(name = IdentifierColumnNames.IPADDRESS)
     private String ipaddress;
 
     @Column(name = "country")

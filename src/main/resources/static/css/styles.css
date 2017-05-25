@@ -10,12 +10,6 @@
   padding: 3px 10px 10px 5px;
 }
 
-.ui-widget-bottom-error {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-}
-
 i {
   font-size:16px;
 }
