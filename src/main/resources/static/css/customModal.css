@@ -3,3 +3,10 @@
   bottom: 0px;
   width: 100%;
 }
+
+.ui-widget-close-button {
+  position: absolute;
+  right: 0px;
+  top: 4px;
+  opacity: 0.6;
+}

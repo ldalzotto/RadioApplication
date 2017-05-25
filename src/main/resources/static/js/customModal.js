@@ -2,13 +2,27 @@ var CustomModal = function(modalElementToCustom){
 
   var modalElement = modalElementToCustom;
   var errorMessageElement = $("<div></div>").addClass("ui-widget-bottom-error").addClass("ui-state-error");
+  var closeButton = $("<span></span>").addClass("ui-widget-close-button").addClass("ui-icon").addClass("ui-icon-closethick");
 
   errorMessageElement.appendTo(modalElement);
   errorMessageElement.hide();
+  closeButton.appendTo(modalElement);
 
   var modalHeightWithoutErrorMessage = modalElement.height();
 
   modalElement.draggable().resizable();
+  closeButton.click(function(){
+    modalElement.hide();
+  });
+  closeButton.hover(function(){
+    closeButton.animate({
+      opacity: 1
+    })
+  }, function(){
+    closeButton.animate({
+      opacity: 0.6
+    })
+  });
 
   var errorBottomPopUp = function (message) {
      errorMessageElement.text(message);

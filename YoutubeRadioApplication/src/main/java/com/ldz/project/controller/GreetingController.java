@@ -85,6 +85,9 @@ public class GreetingController {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity handleDataIntegrity(DataIntegrityViolationException e){
+
+        e.printStackTrace();
+
         Throwable throwable = e.getMostSpecificCause();
         String errorMessage = throwable.getMessage();
 

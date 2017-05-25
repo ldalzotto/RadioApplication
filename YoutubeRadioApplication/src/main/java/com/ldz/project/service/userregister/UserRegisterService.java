@@ -1,9 +1,5 @@
 package com.ldz.project.service.userregister;
 
-import com.ldz.project.constants.TokenManagerMapKeys;
-import com.ldz.project.model.UserRegister;
-import com.ldz.project.service.userregister.inter.IUserRegisterService;
-import feign.FeignException;
 import com.ldz.identifier.clients.IdentifierClient;
 import com.ldz.identifier.constants.UserRoles;
 import com.ldz.identifier.model.UserDTO;
@@ -11,12 +7,15 @@ import com.ldz.identifier.model.UserDetailDTO;
 import com.ldz.identifier.model.UserRoleDTO;
 import com.ldz.music.manager.MusicTypeClient;
 import com.ldz.music.manager.model.UserMusicStatusDTO;
+import com.ldz.project.constants.TokenManagerMapKeys;
+import com.ldz.project.model.UserRegister;
+import com.ldz.project.service.userregister.inter.IUserRegisterService;
+import com.ldz.token.manager.client.TokenManagerClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import com.ldz.token.manager.client.TokenManagerClient;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -109,8 +108,7 @@ public class UserRegisterService implements IUserRegisterService {
             return true;
         } catch (Exception e) {
 
-            if ((e instanceof FeignException) && e.getMessage()
-                    .contains(String.valueOf(HttpStatus.LOCKED.value())))
+            if ((e instanceof DataIntegrityViolationException))
                 throw e;
 
             //rollback
