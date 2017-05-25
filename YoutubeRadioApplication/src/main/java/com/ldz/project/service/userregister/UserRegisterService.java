@@ -8,6 +8,7 @@ import com.ldz.identifier.model.UserRoleDTO;
 import com.ldz.music.manager.MusicTypeClient;
 import com.ldz.music.manager.model.UserMusicStatusDTO;
 import com.ldz.project.constants.TokenManagerMapKeys;
+import com.ldz.project.exception.LoginWithUnknownIPException;
 import com.ldz.project.model.UserRegister;
 import com.ldz.project.service.userregister.inter.IUserRegisterService;
 import com.ldz.token.manager.client.TokenManagerClient;
@@ -44,6 +45,7 @@ public class UserRegisterService implements IUserRegisterService {
 
     @Override
     public UserRegister loginUserFromUsernameAndPasswordAndIpaddress(String username, String password, String ipaddress) {
+
         UserDTO identifierAPIUser = identifierAPIClient.getPersonFromUsernameAndPassword(username, password).getBody();
 
         if(identifierAPIUser != null){
@@ -56,7 +58,7 @@ public class UserRegisterService implements IUserRegisterService {
             }
 
             if (identifierAPIUserDetailFound == null) {
-                throw new RuntimeException("User IP not recognized !");
+                throw new LoginWithUnknownIPException("User IP not recognized !", null);
             }
 
             //set login token
@@ -77,6 +79,27 @@ public class UserRegisterService implements IUserRegisterService {
             return null;
         }
 
+    }
+
+    @Override
+    public UserRegister addUserFromexisting(UserRegister userRegister) {
+        UserDetailDTO userDetailDTO = new UserDetailDTO();
+        userDetailDTO.setIpaddress(userRegister.getIpaddress());
+        userDetailDTO.setCountry(userRegister.getCountry());
+
+        identifierAPIClient.addUserIpaddressFromUsernaem(userRegister.getUsername(), userDetailDTO);
+
+        //create token
+        Map<String, String> genericData = new HashMap<>();
+        genericData.put(TokenManagerMapKeys.USERNAME.name(), userRegister.getUsername());
+        genericData.put(TokenManagerMapKeys.PASSWORD.name(), userRegister.getPassword());
+        genericData.put(TokenManagerMapKeys.IPADDRESS.name(), userRegister.getIpaddress());
+        genericData.put(TokenManagerMapKeys.COUNTRY.name(), userRegister.getCountry());
+
+        tokenManagerAPIClient.postTokenWithIpaddress(userRegister.getIpaddress(), genericData);
+
+
+        return userRegister;
     }
 
     @Override

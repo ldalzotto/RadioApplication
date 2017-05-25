@@ -1,6 +1,7 @@
 package com.ldz.identifier.clients;
 
 import com.ldz.identifier.model.UserDTO;
+import com.ldz.identifier.model.UserDetailDTO;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,10 @@ public interface IdentifierClient {
 
     @RequestMapping(method = RequestMethod.POST, path = "/user")
     ResponseEntity<Object> postUser(@RequestBody UserDTO userDTO);
+
+    @RequestMapping(method = RequestMethod.POST, path = "/user/add/username/{username}")
+    ResponseEntity<UserDTO> addUserIpaddressFromUsernaem(@PathVariable("username") String username,
+                                                         @RequestBody UserDetailDTO userDetailDTO);
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/user/username/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable("username") String username);

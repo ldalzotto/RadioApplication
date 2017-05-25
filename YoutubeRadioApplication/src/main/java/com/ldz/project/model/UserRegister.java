@@ -3,6 +3,7 @@ package com.ldz.project.model;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by ldalzotto on 15/04/2017.
@@ -11,9 +12,11 @@ import javax.validation.constraints.NotNull;
 public class UserRegister {
 
     @NotNull
+    @Size(min = 4)
     private String username;
 
     @NotNull
+    @Size(min = 4)
     private String password;
 
     @NotNull

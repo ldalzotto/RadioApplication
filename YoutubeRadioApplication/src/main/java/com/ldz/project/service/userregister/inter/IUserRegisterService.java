@@ -13,6 +13,8 @@ public interface IUserRegisterService {
 
     public UserRegister getCurrentUserFromIpaddress(String ipaddress);
 
+    public UserRegister addUserFromexisting(UserRegister userRegister);
+
     public void logoutUserFromIpaddress(String ipaddress);
 
     public UserRegister loginUserFromUsernameAndPasswordAndIpaddress(String username, String password,

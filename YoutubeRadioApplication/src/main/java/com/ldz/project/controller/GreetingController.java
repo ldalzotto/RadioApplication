@@ -2,6 +2,7 @@ package com.ldz.project.controller;
 
 import com.ldz.identifier.constants.IdentifierColumnNames;
 import com.ldz.identifier.constants.IdentifierTableNames;
+import com.ldz.project.exception.LoginWithUnknownIPException;
 import com.ldz.project.model.UserRegister;
 import com.ldz.project.service.userregister.inter.IUserRegisterService;
 import org.slf4j.Logger;
@@ -70,7 +71,7 @@ public class GreetingController {
     public ResponseEntity<UserRegister> register(@Valid UserRegister userRegister) {
             iUserRegisterService
                     .registerUserFromUserDetails(userRegister.getUsername(), userRegister.getPassword(),
-                            userRegister.getIpaddress(), userRegister.getCountry());
+                userRegister.getIpaddress(), userRegister.getCountry());
         //login after register
         UserRegister userRegister1 = iUserRegisterService.loginUserFromUsernameAndPasswordAndIpaddress(userRegister.getUsername(),
                 userRegister.getPassword(), userRegister.getIpaddress());
@@ -81,6 +82,19 @@ public class GreetingController {
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
         return ResponseEntity.created(location).body(userRegister);
+    }
+
+    @RequestMapping(value = "/register/add/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserRegister> addUser(@Valid UserRegister userRegister){
+        UserRegister userRegister1 = iUserRegisterService.addUserFromexisting(userRegister);
+
+        if(userRegister1 != null) {
+            return ResponseEntity.ok(userRegister1);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        }
+
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -104,6 +118,20 @@ public class GreetingController {
         }
 
         return ResponseEntity.status(HttpStatus.LOCKED).body(errorCode);
+    }
+
+    @ExceptionHandler(LoginWithUnknownIPException.class)
+    public ResponseEntity handleLoginWithUnknownIp(LoginWithUnknownIPException e){
+        e.printStackTrace();
+
+        String errorCode = "LOGIN_UNKNOWN_IP";
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorCode);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity handleOtherExeption(Exception e){
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
     }
 
 }

@@ -1,7 +1,9 @@
 package com.ldz.identifier.service.impl;
 
 import com.ldz.identifier.Model.bo.UserBO;
+import com.ldz.identifier.Model.bo.UserDetailBO;
 import com.ldz.identifier.Model.model.User;
+import com.ldz.identifier.Model.model.UserDetail;
 import com.ldz.identifier.model.UserDTO;
 import com.ldz.identifier.repository.UserRepository;
 import com.ldz.converter.container.ConverterContainer;
@@ -9,6 +11,9 @@ import com.ldz.identifier.service.IIdentifierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by ldalzotto on 14/04/2017.
@@ -57,6 +62,30 @@ public class IdentifierServiceImpl implements IIdentifierService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public UserDTO addUserDetailFromUsername(String username, UserDetailBO userDetailBO) {
+        User user = userRepository.findUserByUsername(username);
+
+        //add the user detail
+       UserDetail userDetail = converterContainer.convert(userDetailBO, UserDetail.class);
+       userDetail.setUser(user);
+
+       if(user != null){
+           if(user.getUserDetails() != null){
+               user.getUserDetails().add(userDetail);
+           } else {
+               Set<UserDetail> userDetails = new HashSet<>();
+               userDetails.add(userDetail);
+               user.setUserDetails(userDetails);
+           }
+       }
+
+       //save
+        User userSaved = userRepository.save(user);
+        UserDTO userDTO = converterContainer.convert(converterContainer.convert(userSaved, UserBO.class), UserDTO.class);
+        return userDTO;
     }
 
     @Override

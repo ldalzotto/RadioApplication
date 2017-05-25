@@ -2,8 +2,10 @@ package com.ldz.identifier.controller;
 
 import com.ldz.converter.container.ConverterContainer;
 import com.ldz.identifier.Model.bo.UserBO;
+import com.ldz.identifier.Model.bo.UserDetailBO;
 import com.ldz.identifier.clients.IdentifierClient;
 import com.ldz.identifier.model.UserDTO;
+import com.ldz.identifier.model.UserDetailDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,20 @@ public class IdentifierController implements IdentifierClient {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Override
+    public ResponseEntity<UserDTO> addUserIpaddressFromUsernaem(@PathVariable("username") String username,
+                                                                @RequestBody @Valid UserDetailDTO userDetailDTO) {
+        UserDetailBO userDetailBO = converterContainer.convert(userDetailDTO, UserDetailBO.class);
+        UserDTO userDTO = IIdentifierService.addUserDetailFromUsername(username, userDetailBO);
+
+        if(userDTO != null){
+            return ResponseEntity.ok(userDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @Override
