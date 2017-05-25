@@ -101,7 +101,12 @@ var CurrentUser = (function () {
           },
           error: function (jqXHR, error, errorThrown) {
             console.error(jqXHR.responseText);
-            cutomModal.errorPopUp("An error occured on login.");
+            if(jqXHR.responseText == "LOGIN_UNKNOWN_IP"){
+              //display new popup for adding
+              cutomModal.errorPopUp("You are trying to login with an unknown IP.");
+            } else {
+              cutomModal.errorPopUp("An error occured on login.");
+            }
           }
         })
       })
