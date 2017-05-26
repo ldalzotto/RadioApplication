@@ -142,7 +142,9 @@ public class GreetingController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleOtherExeption(Exception e){
         e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+
+        String errorCode = "AN_ERROR_OCCURED";
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorCode);
     }
 
 }

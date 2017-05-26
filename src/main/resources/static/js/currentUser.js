@@ -156,8 +156,10 @@ var CurrentUser = (function () {
             country: userInfo.country
           },
           success: function(){
-            //TODO gestion succes
-            console.log("add OK");
+            AddIpModal.resetAndHide();
+            cutomModal.hideModal();
+            //do login with the newly added IP
+            CurrentUser.login(username, password);
           },
           error: function(){
             //TODO gestion erreur
@@ -206,7 +208,7 @@ var CurrentUser = (function () {
             //récupération de la liste des ip
             var listIp = []
             for (var i = 0; i < listuserDetail.length; i++) {
-                listIp.push(listuserDetail[0].ipaddress);
+                listIp.push(listuserDetail[i].ipaddress);
             }
             returlListIp = listIp;
 

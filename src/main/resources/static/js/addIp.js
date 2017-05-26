@@ -6,6 +6,11 @@ var AddIpModal = (function () {
   var ipAddressList;
   var ipAddressButton;
 
+  //initial elements
+  var initialIpAddressText;
+  var initialIpAddressList;
+  var initialIpAddressButton;
+
   $(document).ready(function () {
     addIpModalElement = $('#add-ip-modal')
     //addIpModalElement.hide()
@@ -17,6 +22,12 @@ var AddIpModal = (function () {
     ipAddressText = $('#ip-address-dialog')
     ipAddressList = $('#ip-address-list')
     ipAddressButton = $('#ip-address-button')
+
+    initialIpAddressText = ipAddressText.html();
+    initialIpAddressList = ipAddressList.html();
+    initialIpAddressButton = ipAddressButton.html();
+
+    addIpModalElement.hide();
   })
 
   return {
@@ -24,6 +35,7 @@ var AddIpModal = (function () {
       customModal.showModal(event)
     },
     showModalWithListIp: function(listIp, currentIp, addingUser){
+      AddIpModal.resetElements();
       ipAddressText.text(ipAddressText.text().replace("$!ipaddress", currentIp));
 
       for (var i = 0; i < listIp.length; i++){
@@ -36,7 +48,21 @@ var AddIpModal = (function () {
         addingUser();
         console.log("register");
       })
+      addIpModalElement.show();
         console.log(listIp);
+    },
+    resetAndHide: function(){
+      AddIpModal.resetElements();
+      addIpModalElement.hide();
+    },
+    resetElements: function(){
+      ipAddressButton.unbind();
+      ipAddressText.html(initialIpAddressText);
+      ipAddressList.html(initialIpAddressList);
+      ipAddressButton.html(initialIpAddressButton);
+    },
+    errorPopUp: function(message){
+      customModal.errorPopUp(message);
     }
   }
 
