@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by ldalzotto on 15/04/2017.
@@ -144,6 +146,23 @@ public class UserRegisterService implements IUserRegisterService {
 
     }
 
+    @Override
+    public List<UserRegister> getDetailsFromusername(String username) {
+        UserDTO userDTO = identifierAPIClient.getPersonFromUsername(username).getBody();
+
+        String password = userDTO.getPassword();
+
+        List<UserRegister>  userRegisters = userDTO.getUserDetailDTOS().stream().map(userDetailDTO -> {
+            UserRegister userRegister = new UserRegister();
+            userRegister.setUsername(username);
+            userRegister.setPassword(password);
+            userRegister.setIpaddress(userDetailDTO.getIpaddress());
+            userRegister.setCountry(userDetailDTO.getCountry());
+            return userRegister;
+        }).collect(Collectors.toList());
+
+        return userRegisters;
+    }
 
     private boolean registerIdentifier(String username, String password, String ipaddress, String country) {
         LOGGER.info("Start executing identifier registering.");

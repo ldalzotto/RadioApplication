@@ -1,27 +1,25 @@
 var CurrentUser = (function () {
+  var cutomModal
 
-  var cutomModal = undefined;
-
-
-  var loginModalElement = undefined;
+  var loginModalElement
   var currentUserDetail
 
-  var loginForm = undefined;
-  var loginSubmitButton = undefined;
-  var registerSubmitButton = undefined;
+  var loginForm
+  var loginSubmitButton
+  var registerSubmitButton
 
   // check user status when document is ready
   $(document).ready(function () {
     // initiate login form
-     loginModalElement = $('#login-modal');
-     cutomModal = new CustomModal(loginModalElement);
+    loginModalElement = $('#login-modal')
+    cutomModal = new CustomModal(loginModalElement)
 
-     loginForm = loginModalElement.find('#login-form');
-     loginSubmitButton = loginForm.find('#login-submit');
-     registerSubmitButton = loginForm.find('#register-submit');
+    loginForm = loginModalElement.find('#login-form')
+    loginSubmitButton = loginForm.find('#login-submit')
+    registerSubmitButton = loginForm.find('#register-submit')
 
       // get current user
-    CurrentUser.retrieveCurrentUser();
+    CurrentUser.retrieveCurrentUser()
 
     loginSubmitButton.click(function () {
       // get form values
@@ -62,27 +60,29 @@ var CurrentUser = (function () {
 
   return {
     retrieveCurrentUser: function () {
-      fromCurrentIp(function (userInfo) {
-        $.ajax({
-          method: 'GET',
-          url: '/user/current/ipaddress/' +  userInfo.ip + '/',
-          success: function (userdetails) {
-            currentUserDetail = userdetails
-            if (userdetails != null) {
-              if (userdetails.userName != null && userdetails.password != null) {
-                isLogOutDispaly()
+      if(currentUserDetail == undefined){
+        fromCurrentIp(function (userInfo) {
+          $.ajax({
+            method: 'GET',
+            url: '/user/current/ipaddress/' + userInfo.ip + '/',
+            success: function (userdetails) {
+              currentUserDetail = userdetails
+              if (userdetails != null) {
+                if (userdetails.userName != null && userdetails.password != null) {
+                  isLogOutDispaly()
+                } else {
+                  isLogInDispaly()
+                }
               } else {
-                isLogInDispaly()
+                isLogOutDispaly()
               }
-            } else {
+            },
+            error: function () {
               isLogOutDispaly()
             }
-          },
-          error: function () {
-            isLogOutDispaly()
-          }
+          })
         })
-      })
+      }
     },
     login: function (username, password) {
       fromCurrentIp(function (userInfo) {
@@ -100,12 +100,16 @@ var CurrentUser = (function () {
             isLogInDispaly()
           },
           error: function (jqXHR, error, errorThrown) {
-            console.error(jqXHR.responseText);
-            if(jqXHR.responseText == "LOGIN_UNKNOWN_IP"){
-              //display new popup for adding
-              cutomModal.errorPopUp("You are trying to login with an unknown IP.");
+            console.error(jqXHR.responseText)
+            if (jqXHR.responseText == 'LOGIN_UNKNOWN_IP') {
+              // display new popup for adding
+              cutomModal.errorPopUp('You are trying to login with an unknown IP.')
+              //show modal
+              CurrentUser.getIpList(username, AddIpModal.showModalWithListIp, function(){
+                CurrentUser.addUser(username, password);
+              });
             } else {
-              cutomModal.errorPopUp("An error occured on login.");
+              cutomModal.errorPopUp('An error occured on login.')
             }
           }
         })
@@ -127,15 +131,37 @@ var CurrentUser = (function () {
             isLogInDispaly()
           },
           error: function (jqXHR, error, errorThrown) {
-            var errorMessage = "An error occured on register.";
+            var errorMessage = 'An error occured on register.'
             console.error(jqXHR.responseText)
-            if(jqXHR.responseText == "IPADDRESS_ALREADY_EXIST"){
-              errorMessage = "Your ip address is already registered.";
-            } else if(jqXHR.responseText == "USERNAME_ALREADY_EXIST"){
-              errorMessage = "The username already exists";
+            if (jqXHR.responseText == 'IPADDRESS_ALREADY_EXIST') {
+              errorMessage = 'Your ip address is already registered.'
+            } else if (jqXHR.responseText == 'USERNAME_ALREADY_EXIST') {
+              errorMessage = 'The username already exists'
             }
-            cutomModal.errorPopUp(errorMessage);
-            //isLogOutDispaly()
+            cutomModal.errorPopUp(errorMessage)
+            // isLogOutDispaly()
+          }
+        })
+      })
+    },
+    addUser: function (username, password) {
+      fromCurrentIp(function(userInfo){
+        $.ajax({
+          method: 'POST',
+          url: '/register/add/user',
+          data: {
+            username: username,
+            password: password,
+            ipaddress: userInfo.ip,
+            country: userInfo.country
+          },
+          success: function(){
+            //TODO gestion succes
+            console.log("add OK");
+          },
+          error: function(){
+            //TODO gestion erreur
+            console.log("add KO");
           }
         })
       })
@@ -168,8 +194,31 @@ var CurrentUser = (function () {
         return true
       }
     },
-    showModalOnEvent: function(event) {
-      cutomModal.showModal(event);
-    }
+    showModalOnEvent: function (event) {
+      cutomModal.showModal(event)
+    },
+    getIpList: function(username, actionOnList, addingUser){
+        var returlListIp;
+        $.ajax({
+          method: 'GET',
+          url: ('/user/details/username/' + username ),
+          success: function (listuserDetail) {
+            //récupération de la liste des ip
+            var listIp = []
+            for (var i = 0; i < listuserDetail.length; i++) {
+                listIp.push(listuserDetail[0].ipaddress);
+            }
+            returlListIp = listIp;
+
+            if(actionOnList != undefined){
+              fromCurrentIp(function(userInfo){
+                actionOnList(returlListIp, userInfo.ip, addingUser);
+              })
+            }
+          }
+        })
+
+        return returlListIp;
+      }
   }
-})();
+})()

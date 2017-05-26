@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 /**
  * Created by ldalzotto on 12/04/2017.
@@ -95,6 +96,16 @@ public class GreetingController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         }
 
+    }
+
+    @RequestMapping(value = "/user/details/username/{username}", method = RequestMethod.GET)
+    public ResponseEntity<List<UserRegister>> getUserdetailsFromUsername(@PathVariable("username") String username){
+        List<UserRegister> userRegisters = iUserRegisterService.getDetailsFromusername(username);
+        if(userRegisters != null){
+            return ResponseEntity.ok(userRegisters);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        }
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

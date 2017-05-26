@@ -20,6 +20,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/customModal.js"></script>
     <script src="js/currentUser.js"></script>
+    <script src="js/addIp.js"></script>
     <script src="js/homepage.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
@@ -137,7 +138,14 @@
         <button id="login-submit" class="btn btn-default">Login</button>
         <button id="register-submit" class="btn btn-default">Register</button>
     </div>
+</div>
 
+<div class="ui-widget ui-front ui-widget-content ui-corner-all ui-inline" id="add-ip-modal">
+  <p id="ip-address-dialog">We have found that you are trying to login with an unknown ipaddress : $!ipaddress</p>
+  <p>Current ipaddress registered to the account are : </p>
+  <ul id="ip-address-list">
+  </ul>
+  <button id="ip-address-button"> Add $!ipaddress </button>
 </div>
 
 <div class="modal fade" id="music-imported-modal" role="dialog">
