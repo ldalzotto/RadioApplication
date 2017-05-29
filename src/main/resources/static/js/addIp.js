@@ -48,7 +48,11 @@ var AddIpModal = (function () {
         addingUser();
         console.log("register");
       })
-      addIpModalElement.show();
+      //show at middle of window
+      customModal.showModalFromAbsoluteCoordinates({
+        x: window.innerWidth/2,
+        y: window.innerHeight/2
+      })
         console.log(listIp);
     },
     resetAndHide: function(){

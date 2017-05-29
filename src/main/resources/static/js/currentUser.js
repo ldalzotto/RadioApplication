@@ -108,6 +108,8 @@ var CurrentUser = (function () {
               CurrentUser.getIpList(username, AddIpModal.showModalWithListIp, function(){
                 CurrentUser.addUser(username, password);
               });
+            } else if (jqXHR.responseText == 'LOGIN_UNKNOWN_USER') {
+              cutomModal.errorPopUp('Unknown user.')
             } else {
               cutomModal.errorPopUp('An error occured on login.')
             }
@@ -133,10 +135,8 @@ var CurrentUser = (function () {
           error: function (jqXHR, error, errorThrown) {
             var errorMessage = 'An error occured on register.'
             console.error(jqXHR.responseText)
-            if (jqXHR.responseText == 'IPADDRESS_ALREADY_EXIST') {
-              errorMessage = 'Your ip address is already registered.'
-            } else if (jqXHR.responseText == 'USERNAME_ALREADY_EXIST') {
-              errorMessage = 'The username already exists'
+            if (jqXHR.responseText == 'ALREADY_REGISTERED') {
+              errorMessage = 'The user ' + username + ' is already registered.'
             }
             cutomModal.errorPopUp(errorMessage)
             // isLogOutDispaly()

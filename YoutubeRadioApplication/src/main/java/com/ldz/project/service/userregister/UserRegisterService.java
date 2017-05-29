@@ -8,7 +8,9 @@ import com.ldz.identifier.model.UserRoleDTO;
 import com.ldz.music.manager.MusicTypeClient;
 import com.ldz.music.manager.model.UserMusicStatusDTO;
 import com.ldz.project.constants.TokenManagerMapKeys;
+import com.ldz.project.exception.AlreadyRegistered;
 import com.ldz.project.exception.LoginWithUnknownIPException;
+import com.ldz.project.exception.LoginWithUnkownUser;
 import com.ldz.project.model.UserRegister;
 import com.ldz.project.service.userregister.inter.IUserRegisterService;
 import com.ldz.token.manager.client.TokenManagerClient;
@@ -78,13 +80,14 @@ public class UserRegisterService implements IUserRegisterService {
 
             return userRegister;
         } else {
-            return null;
+            throw new LoginWithUnkownUser("User not recognized !", null);
         }
 
     }
 
     @Override
     public UserRegister addUserFromexisting(UserRegister userRegister) {
+
         UserDetailDTO userDetailDTO = new UserDetailDTO();
         userDetailDTO.setIpaddress(userRegister.getIpaddress());
         userDetailDTO.setCountry(userRegister.getCountry());
@@ -127,10 +130,16 @@ public class UserRegisterService implements IUserRegisterService {
     public boolean registerUserFromUserDetails(String username, String password, String ipaddress,
                                                String country) {
 
+        //récupération des détails du client
+        List<UserRegister>  userRegisters = getDetailsFromusername(username);
+        if(userRegisters != null && !userRegisters.isEmpty()){
+            throw new AlreadyRegistered("The couple username : " + username + ", ipaddress : " + ipaddress +
+                    " is already registered", null);
+        }
+
         try {
             registerIdentifier(username, password, ipaddress, country);
             registerMusic(username);
-            return true;
         } catch (Exception e) {
 
             if ((e instanceof DataIntegrityViolationException))
@@ -144,22 +153,28 @@ public class UserRegisterService implements IUserRegisterService {
             throw e;
         }
 
+        return true;
     }
 
     @Override
     public List<UserRegister> getDetailsFromusername(String username) {
         UserDTO userDTO = identifierAPIClient.getPersonFromUsername(username).getBody();
+        List<UserRegister>  userRegisters = null;
+        if(userDTO != null){
+            String password = userDTO.getPassword();
 
-        String password = userDTO.getPassword();
+            if(userDTO.getUserDetailDTOS() != null){
+                userRegisters = userDTO.getUserDetailDTOS().stream().map(userDetailDTO -> {
+                    UserRegister userRegister = new UserRegister();
+                    userRegister.setUsername(username);
+                    userRegister.setPassword(password);
+                    userRegister.setIpaddress(userDetailDTO.getIpaddress());
+                    userRegister.setCountry(userDetailDTO.getCountry());
+                    return userRegister;
+                }).collect(Collectors.toList());
+            }
+        }
 
-        List<UserRegister>  userRegisters = userDTO.getUserDetailDTOS().stream().map(userDetailDTO -> {
-            UserRegister userRegister = new UserRegister();
-            userRegister.setUsername(username);
-            userRegister.setPassword(password);
-            userRegister.setIpaddress(userDetailDTO.getIpaddress());
-            userRegister.setCountry(userDetailDTO.getCountry());
-            return userRegister;
-        }).collect(Collectors.toList());
 
         return userRegisters;
     }

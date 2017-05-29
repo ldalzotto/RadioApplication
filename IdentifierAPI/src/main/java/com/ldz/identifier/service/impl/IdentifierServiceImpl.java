@@ -1,16 +1,15 @@
 package com.ldz.identifier.service.impl;
 
+import com.ldz.converter.container.ConverterContainer;
 import com.ldz.identifier.Model.bo.UserBO;
 import com.ldz.identifier.Model.bo.UserDetailBO;
 import com.ldz.identifier.Model.model.User;
 import com.ldz.identifier.Model.model.UserDetail;
 import com.ldz.identifier.model.UserDTO;
 import com.ldz.identifier.repository.UserRepository;
-import com.ldz.converter.container.ConverterContainer;
 import com.ldz.identifier.service.IIdentifierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +18,6 @@ import java.util.Set;
  * Created by ldalzotto on 14/04/2017.
  */
 @Service
-@Transactional
 public class IdentifierServiceImpl implements IIdentifierService {
 
     @Autowired
@@ -84,7 +82,9 @@ public class IdentifierServiceImpl implements IIdentifierService {
 
        //save
         User userSaved = userRepository.save(user);
-        UserDTO userDTO = converterContainer.convert(converterContainer.convert(userSaved, UserBO.class), UserDTO.class);
+        if(userSaved != null){
+            UserDTO userDTO = converterContainer.convert(converterContainer.convert(userSaved, UserBO.class), UserDTO.class);
+        }
         return userDTO;
     }
 

@@ -1,19 +1,21 @@
 package com.ldz.project.controller;
 
-import com.ldz.identifier.constants.IdentifierColumnNames;
-import com.ldz.identifier.constants.IdentifierTableNames;
+import com.ldz.project.exception.AlreadyRegistered;
 import com.ldz.project.exception.LoginWithUnknownIPException;
+import com.ldz.project.exception.LoginWithUnkownUser;
 import com.ldz.project.model.UserRegister;
 import com.ldz.project.service.userregister.inter.IUserRegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -108,34 +110,27 @@ public class GreetingController {
         }
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity handleDataIntegrity(DataIntegrityViolationException e){
-
-        e.printStackTrace();
-
-        Throwable throwable = e.getMostSpecificCause();
-        String errorMessage = throwable.getMessage();
-
-        String errorCode = "AN_ERROR_OCCURED";
-
-        //build error regex
-        String ipaddressRegex = IdentifierTableNames.USER_DETAIL + "(" + IdentifierColumnNames.IPADDRESS + ")";
-        String usernameRegex = IdentifierTableNames.USERS + "(" + IdentifierColumnNames.USERNAME + ")";
-
-        if(errorMessage.contains(ipaddressRegex)){
-            errorCode = "IPADDRESS_ALREADY_EXIST";
-        } else if(errorMessage.contains(usernameRegex)){
-            errorCode = "USERNAME_ALREADY_EXIST";
-        }
-
-        return ResponseEntity.status(HttpStatus.LOCKED).body(errorCode);
-    }
-
     @ExceptionHandler(LoginWithUnknownIPException.class)
     public ResponseEntity handleLoginWithUnknownIp(LoginWithUnknownIPException e){
         e.printStackTrace();
 
         String errorCode = "LOGIN_UNKNOWN_IP";
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorCode);
+    }
+
+    @ExceptionHandler(AlreadyRegistered.class)
+    public ResponseEntity handleAlreadyRegistered(AlreadyRegistered alreadyRegistered){
+        alreadyRegistered.printStackTrace();
+
+        String errorCode = "ALREADY_REGISTERED";
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorCode);
+    }
+
+    @ExceptionHandler(LoginWithUnkownUser.class)
+    public ResponseEntity handleLoginUnknown(LoginWithUnkownUser loginWithUnkownUser){
+        loginWithUnkownUser.printStackTrace();
+
+        String errorCode = "LOGIN_UNKNOWN_USER";
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorCode);
     }
 

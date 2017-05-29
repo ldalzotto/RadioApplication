@@ -1,6 +1,7 @@
 
 var CustomModal = function (modalElementToCustom, config) {
   var modalElement = modalElementToCustom
+  modalElement.addClass('ui-absolute')
   var errorMessageElement = $('<div></div>').addClass('ui-widget-bottom-error').addClass('ui-state-error')
 
   errorMessageElement.appendTo(modalElement)
@@ -89,15 +90,15 @@ var CustomModal = function (modalElementToCustom, config) {
     }, 100, 'swing')
   }
 
+  var showAnimation = function(element){
+    element.show('puff', 300)
+  }
+
   var displayModal = function (event) {
     errorMessageElement.hide()
-    modalElement.show('puff', 300, function () {
-      modalElement.position({
-        my: 'left+3 top-3',
-        of: event,
-        collision: 'none'
-      })
-    })
+    modalElement.css('top', event.clientY)
+    modalElement.css('left', event.clientX)
+    showAnimation(modalElement)
   }
 
   var hideModal = function () {
@@ -107,12 +108,22 @@ var CustomModal = function (modalElementToCustom, config) {
     })
   }
 
+  var displayModalFromAbsolute = function(coord) {
+    errorMessageElement.hide()
+    modalElement.css('top', coord.y)
+    modalElement.css('left', coord.x)
+    showAnimation(modalElement)
+  }
+
   return {
     errorPopUp: function (message) {
       errorBottomPopUp(message)
     },
     showModal: function (event) {
       displayModal(event)
+    },
+    showModalFromAbsoluteCoordinates: function(coord){
+      displayModalFromAbsolute(coord)
     },
     hideModal: function () {
       hideModal()
