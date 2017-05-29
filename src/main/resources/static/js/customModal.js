@@ -6,38 +6,38 @@ var CustomModal = function (modalElementToCustom, config) {
   errorMessageElement.appendTo(modalElement)
   errorMessageElement.hide()
 
-  var setDefaultConfigValue = function(currentConfig){
-    var returnConfig;
+  var setDefaultConfigValue = function (currentConfig) {
+    var returnConfig
     if (currentConfig == undefined) {
       returnConfig = {
         closable: true,
         resizable: true
       }
     } else {
-      if(currentConfig.closable == undefined){
-        returnConfig.closable = true;
+      if (currentConfig.closable == undefined) {
+        returnConfig.closable = true
       }
-      if(currentConfig.resizable == undefined){
-        returnConfig.resizable = true;
+      if (currentConfig.resizable == undefined) {
+        returnConfig.resizable = true
       }
     }
 
-    if(returnConfig == undefined){
-      returnConfig = currentConfig;
+    if (returnConfig == undefined) {
+      returnConfig = currentConfig
     }
 
-    return returnConfig;
+    return returnConfig
   }
 
   // default values
-  config = setDefaultConfigValue(config);
+  config = setDefaultConfigValue(config)
 
   if (config.closable == true) {
     var closeButton = $('<span></span>').addClass('ui-widget-close-button').addClass('ui-icon').addClass('ui-icon-closethick')
     closeButton.appendTo(modalElement)
 
     closeButton.click(function () {
-      modalElement.hide()
+      hideModal()
     })
     closeButton.hover(function () {
       closeButton.animate({
@@ -90,23 +90,32 @@ var CustomModal = function (modalElementToCustom, config) {
   }
 
   var displayModal = function (event) {
-    modalElement.show('puff', 300)
     errorMessageElement.hide()
-    modalElement.position({
-      my: 'left+3 bottom-3',
-      of: event
+    modalElement.show('puff', 300, function () {
+      modalElement.position({
+        my: 'left+3 top-3',
+        of: event,
+        collision: 'none'
+      })
     })
   }
 
-return{
-  errorPopUp : function (message) {
-      errorBottomPopUp(message)
-  },
-  showModal : function (event) {
-    displayModal(event)
-  },
-  hideModal : function () {
-    modalElement.hide()
+  var hideModal = function () {
+    errorMessageElement.hide('puff', 300)
+    modalElement.hide('puff', 300, function () {
+      modalElement.css('top', '0px').css('left', '0px')
+    })
   }
-}
+
+  return {
+    errorPopUp: function (message) {
+      errorBottomPopUp(message)
+    },
+    showModal: function (event) {
+      displayModal(event)
+    },
+    hideModal: function () {
+      hideModal()
+    }
+  }
 }
