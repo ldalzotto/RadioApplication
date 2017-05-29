@@ -82,8 +82,9 @@ public class IdentifierServiceImpl implements IIdentifierService {
 
        //save
         User userSaved = userRepository.save(user);
+        UserDTO userDTO = null;
         if(userSaved != null){
-            UserDTO userDTO = converterContainer.convert(converterContainer.convert(userSaved, UserBO.class), UserDTO.class);
+            userDTO = converterContainer.convert(converterContainer.convert(userSaved, UserBO.class), UserDTO.class);
         }
         return userDTO;
     }
