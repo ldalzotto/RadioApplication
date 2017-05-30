@@ -27,24 +27,27 @@
 </head>
 <body>
 
-</div>
 
-<div id="tabs">
-    <ul>
-        <a id="dashboard-navbar" class="ui-button ui-corner-all ui-widget" href="#">Dashboard</a>
-        <a id="music-navbar" class="ui-button ui-corner-all ui-widget">Music</a>
-        <a id="platforms-navbar" class="ui-button ui-corner-all ui-widget" href="#">Platforms</a>
-
-        <div id="logout-header-link">
-            <li><a> Logout</a></li>
-        </div>
-        <div id="login-header-link">
-            <li><a> Login</a>
-            </li>
-        </div>
-
-    </ul>
-</div>
+<header class = "header">
+  <nav>
+    <div class = "container">
+        <ul id = "tabs" class = "menu">
+          <li><a id="dashboard-navbar">Dashboard</a></li>
+          <li><a id="music-navbar">Music</a></li>
+          <li><a id="platforms-navbar">Platforms</a></li>
+        </ul>
+    </div>
+  </nav>
+  <h1 class = "head-color">
+    RadioApplication
+    <span>by LDZ<span>
+  </h1>
+  <h2 class = "login-register">
+    <button id="login-header-link" class="btn btn-primary">Login</button>
+    <button id="logout-header-link" class="btn btn-primary">Logout</button>
+    <button class="btn btn-primary">Register</button>
+  </h2>
+</header>
 
 <!-- Music TAG -->
 <div id="music-navbar-content">
@@ -91,38 +94,6 @@
 <!-- End greeting message -->
 
 <!-- MODAL -->
-<!-- Login modal
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Login form</h4>
-            </div>
-            <div class="modal-body">
-                <p>Login with you username and password.</p>
-            </div>
-
-            <div id="login-form">
-                <div class="form-group">
-                    <label>User name :</label>
-                    <input type="text" class="form-control" id="username"></input>
-                </div>
-                <div class="form-group">
-                    <label>Password :</label>
-                    <input type="text" class="form-control" id="password"></input>
-                </div>
-                <button id="login-submit" class="btn btn-default">Login</button>
-                <button id="register-submit" class="btn btn-default">Register</button>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
-</div>
 <!-- end login modal -->
 
 
@@ -145,10 +116,6 @@
 <!-- END MODAL -->
 
 <!-- /.modal -->
-</body>
-
-</html>
-
 <div class="ui-widget ui-front ui-widget-content ui-corner-all ui-inline" id="login-modal">
     <div class="ui-padding-box" id="login-form">
         <div class="form-group">
@@ -163,3 +130,6 @@
         <button id="register-submit" class="btn btn-default">Register</button>
     </div>
 </div>
+</body>
+
+</html>

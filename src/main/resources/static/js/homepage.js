@@ -18,21 +18,11 @@ var HostName = (function(){
 
 })()
 
-// header animation
-$(document).ready(function () {
-  $('.alert').addClass('in').fadeOut(4500)
-    /* swap open/close side menu icons */
-  $('[data-toggle=collapse]').click(function () {
-        // toggle icon
-    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-down')
-  })
-})
-
 // header navigation
 
 var NavBar = (function () {
   var hideAllNavBarContentBut = function (nothidedNavbar) {
-    var navbarElements = $('#tabs').find('.ui-button').toArray()
+    var navbarElements = $('#tabs').find('a').toArray()
     for (i = 0; i < navbarElements.length; i++) {
       if (nothidedNavbar == 'ALL') {
         var elementToHideId = navbarElements[i].id + '-content'
@@ -73,7 +63,7 @@ var NavBar = (function () {
       }
     })
 
-    $('#tabs').find('#logout-header-link').click(function () {
+    $('#logout-header-link').click(function () {
       CurrentUser.logout()
     })
 

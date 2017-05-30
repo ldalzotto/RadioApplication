@@ -22,6 +22,77 @@ i {
   color:#787878;
 }
 
+html {
+  height: 100%
+}
+
+html body {
+  min-height: 100%
+}
+
+body {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+  color: #6C7E92;
+  background: #1bbb9b;
+  background: -moz-linear-gradient(top, #1bbb9b 0%, #53839a 100%);
+  background: -webkit-linear-gradient(top, #1bbb9b 0%,#53839a 100%);
+  background: linear-gradient(to bottom, #1bbb9b 0%,#53839a 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1bbb9b', endColorstr='#53839a',GradientType=0 );
+}
+
+.header {
+  margin-bottom: 50px;
+  text-align: center;
+  background-color: #2d343c;
+  padding-bottom: 50px;
+}
+
+.conainer {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.menu {
+  display: block;
+  list-style-type: disc;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 40px;
+}
+
+.head-color {
+      color: #1bbb9b;
+}
+
+.head-color span {
+  font-size: 15px
+}
+
+.menu li {
+  display: inline;
+  height: 50px;
+  margin: 0 15px;
+  list-style: none;
+}
+
+.menu li a {
+  line-height: 50px;
+  padding: 0 30px;
+  color: #9caea8;
+}
+
+.header nav {
+  background: #313942;
+  position: relative;
+  border-bottom: 2px solid #3c4650;
+}
+
 footer {
   margin-top:20px;
   padding-top:20px;

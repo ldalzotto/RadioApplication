@@ -96,9 +96,15 @@ var CustomModal = function (modalElementToCustom, config) {
 
   var displayModal = function (event) {
     errorMessageElement.hide()
-    modalElement.css('top', event.clientY)
-    modalElement.css('left', event.clientX)
-    showAnimation(modalElement)
+    modalElement.position({
+      my: 'left+3 top-3',
+      of: event,
+      using: function(css, calc){
+        modalElement.animate(css, 200, "linear");
+        showAnimation(modalElement)
+      },
+      collision: 'none'
+    })
   }
 
   var hideModal = function () {
