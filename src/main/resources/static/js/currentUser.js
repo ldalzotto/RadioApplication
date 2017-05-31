@@ -98,6 +98,7 @@ var CurrentUser = (function () {
           success: function (userdetails) {
             currentUserDetail = userdetails
             isLogInDispaly()
+            EventRoller.pushEvent("Login success !")
           },
           error: function (jqXHR, error, errorThrown) {
             console.error(jqXHR.responseText)
@@ -131,6 +132,7 @@ var CurrentUser = (function () {
           success: function (userdetails) {
             currentUserDetail = userdetails
             isLogInDispaly()
+            EventRoller.pushEvent("Register success !")
           },
           error: function (jqXHR, error, errorThrown) {
             var errorMessage = 'An error occured on register.'
@@ -160,6 +162,7 @@ var CurrentUser = (function () {
             cutomModal.hideModal();
             //do login with the newly added IP
             CurrentUser.login(username, password);
+            EventRoller.pushEvent("User successfully added !")
           },
           error: function(){
             //TODO gestion erreur
@@ -182,6 +185,7 @@ var CurrentUser = (function () {
           success: function () {
             currentUserDetail = undefined
             isLogOutDispaly()
+            EventRoller.pushEvent("Logout success !")
           },
           error: function () {
             isLogInDispaly()

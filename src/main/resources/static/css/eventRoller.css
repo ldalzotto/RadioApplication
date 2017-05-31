@@ -1,0 +1,10 @@
+.ui-event-roller {
+  position: absolute;
+  max-width: 200px;
+  top: 90%;
+  color: #2d343c;
+}
+
+.ui-event {
+  position: absolute;
+}

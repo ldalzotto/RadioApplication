@@ -60,11 +60,12 @@ var CustomModal = function (modalElementToCustom, config) {
   modalElement.draggable()
 
   var errorBottomPopUp = function (message) {
+    modalHeightWithoutErrorMessage = parseInt(modalElement.css('height').replace('px', ''));
     errorMessageElement.text(message)
 
     if (!errorMessageElement.is(':visible')) {
        // adjust size of loginModal
-      modalHeightWithoutErrorMessage = modalElement.height()
+
       var errorMessageHeight = errorMessageElement.height()
        // loginModal.css("height", currentLoginModalheight + errorMessageHeight);
       modalElement.animate({
@@ -82,7 +83,8 @@ var CustomModal = function (modalElementToCustom, config) {
   }
 
   var errorBottomPopOut = function () {
-    errorMessageElement.hide('fade', '', 400)
+
+    errorMessageElement.hide('fade', '', 100)
 
     // retrieve original loginModal height
     modalElement.animate({
