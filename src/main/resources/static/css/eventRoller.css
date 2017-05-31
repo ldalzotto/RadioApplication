@@ -2,9 +2,14 @@
   position: absolute;
   max-width: 200px;
   top: 90%;
-  color: #2d343c;
+  color: #1bbb9b;
+  font-size: 20px;
 }
 
-.ui-event {
+.ui-event-roller .ui-event {
+  color: #1bbb9b;
+  background-color:  #2d343c;
   position: absolute;
+  padding-left: 10px;
+  box-shadow: 0 3px 3px #313942;
 }

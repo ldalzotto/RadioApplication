@@ -3,7 +3,7 @@ var EventRoller = (function(){
   var eventRollerElement
   var eventRollerMaxWidth;
 
-  var uiEventTemplateElement = $('<div><div>').addClass('ui-event').addClass('ui-state-highlight').addClass('ui-corner-all')
+  var uiEventTemplateElement = $('<div><div>').addClass('ui-event');
 
   $(document).ready(function(){
     eventRollerElement = $('.ui-event-roller');
@@ -16,7 +16,7 @@ var EventRoller = (function(){
     uiEventTemplateElement.text(message)
     eventRollerElement.append(uiEventTemplateElement);
     uiEventTemplateElement.animate({
-      left: 3
+      left: 0
     })
     setTimeout(function(){
       popOutEvent(uiEventTemplateElement)

@@ -66,6 +66,33 @@ body {
   -webkit-padding-start: 40px;
 }
 
+.login-register button {
+  background-color: rgb(71, 83, 97);
+  border-color: #23bb9b;
+}
+
+.login-register button:hover {
+  background-color: rgb(71, 83, 97);
+  border-color: #23bb9b;
+  color: #23bb9b;
+}
+
+.login-form .login-buttons {
+
+}
+
+.ui-widget button {
+  background-color: rgb(71, 83, 97);
+  border-color: #23bb9b;
+  color: white;
+}
+
+.ui-widget button:hover {
+  background-color: rgb(71, 83, 97);
+  border-color: #23bb9b;
+  color: #23bb9b;
+}
+
 .head-color {
       color: #1bbb9b;
 }
