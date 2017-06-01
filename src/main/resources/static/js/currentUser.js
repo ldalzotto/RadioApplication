@@ -12,7 +12,11 @@ var CurrentUser = (function () {
   $(document).ready(function () {
     // initiate login form
     loginModalElement = $('#login-modal')
-    cutomModal = new CustomModal(loginModalElement)
+    cutomModal = new CustomModal(loginModalElement, {
+      closable: true,
+      resizable: false,
+      draggable: false
+    })
 
     loginForm = loginModalElement.find('#login-form')
     loginSubmitButton = loginForm.find('#login-submit')
@@ -83,6 +87,7 @@ var CurrentUser = (function () {
           })
         })
       }
+      return currentUserDetail;
     },
     login: function (username, password) {
       fromCurrentIp(function (userInfo) {

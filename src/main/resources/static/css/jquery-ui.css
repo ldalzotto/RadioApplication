@@ -890,13 +890,24 @@ body .ui-tooltip {
 .ui-widget .ui-widget {
 	font-size: 1em;
 }
-.ui-widget input,
-.ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
 	font-family: Gill Sans,Arial,sans-serif;
 	font-size: 1em;
 }
+.ui-widget select{
+	font-family: Gill Sans,Arial,sans-serif;
+	font-size: 1em;
+	background: rgb(71, 83, 97);
+	color: white;
+}
+.ui-widget input{
+	font-family: Gill Sans,Arial,sans-serif;
+	font-size: 1em;
+	background: rgb(71, 83, 97);
+	color: white;
+}
+
 .ui-widget.ui-widget-content {
 	border: 1px solid #93c3cd;
 }

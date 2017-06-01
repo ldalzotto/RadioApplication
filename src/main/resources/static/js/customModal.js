@@ -8,11 +8,13 @@ var CustomModal = function (modalElementToCustom, config) {
   errorMessageElement.hide()
 
   var setDefaultConfigValue = function (currentConfig) {
-    var returnConfig
+    var returnConfig = currentConfig
+
     if (currentConfig == undefined) {
       returnConfig = {
         closable: true,
-        resizable: true
+        resizable: true,
+        draggable: true
       }
     } else {
       if (currentConfig.closable == undefined) {
@@ -21,10 +23,9 @@ var CustomModal = function (modalElementToCustom, config) {
       if (currentConfig.resizable == undefined) {
         returnConfig.resizable = true
       }
-    }
-
-    if (returnConfig == undefined) {
-      returnConfig = currentConfig
+      if (currentConfig.draggable == undefined) {
+        returnConfig.draggable = true
+      }
     }
 
     return returnConfig
@@ -57,7 +58,9 @@ var CustomModal = function (modalElementToCustom, config) {
 
   var modalHeightWithoutErrorMessage = modalElement.height()
 
-  modalElement.draggable()
+  if(config.draggable == true) {
+      modalElement.draggable()
+  }
 
   var errorBottomPopUp = function (message) {
     modalHeightWithoutErrorMessage = parseInt(modalElement.css('height').replace('px', ''));
@@ -99,8 +102,9 @@ var CustomModal = function (modalElementToCustom, config) {
   var displayModal = function (event) {
     errorMessageElement.hide()
     modalElement.position({
-      my: 'left+3 top-3',
-      of: event,
+      my: 'center',
+      at: 'center',
+      of: window,
       using: function(css, calc){
         modalElement.animate(css, 200, "linear");
         showAnimation(modalElement)

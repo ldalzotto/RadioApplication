@@ -22,6 +22,8 @@
     <script src="js/currentUser.js"></script>
     <script src="js/eventRoller.js"></script>
     <script src="js/addIp.js"></script>
+    <script src="js/music/addMusic.js"></script>
+    <script src="js/music/musicNavigation.js"></script>
     <script src="js/homepage.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
@@ -54,7 +56,7 @@
 <div id="music-navbar-content">
 
     <!-- Add Music Form -->
-    <div>
+    <div class="ui-widget ui-front ui-widget-content ui-corner-all ui-inline" id="add-music-modal">
         <div class="form-group">
             <label for="siteURL">Music URL :</label>
             <input type="text" class="form-control" id="siteURL"/>
@@ -71,19 +73,10 @@
     <!-- End Add Music Form -->
 
     <!-- Display Music -->
-    <ul id="music-panel-list" class="list-unstyled">
+    <ul id="music-panel-list">
         <!-- music-panel-info inserted here -->
     </ul>
     <!-- End display Music -->
-
-    <!-- iFrame music modal -->
-    <li id="music-panel-info" class="panel panel-info custom-panel">
-        <div class="panel-heading">You can drag this panel.</div>
-        <div class="panel-body">
-            <iframe id="music-iframe"></iframe>
-        </div>
-    </li>
-    <!-- End iFrame music modal -->
 
 </div>
 <!-- END Music TAB -->
@@ -97,8 +90,6 @@
 <!-- MODAL -->
 <!-- end login modal -->
 
-
-
 <div class="ui-widget ui-front ui-widget-content ui-corner-all ui-inline" id="add-ip-modal">
   <p id="ip-address-dialog">We have found that you are trying to login with an unknown ipaddress : $!ipaddress</p>
   <p>Current ipaddress registered to the account are : </p>
@@ -107,14 +98,15 @@
   <button id="ip-address-button"> Add $!ipaddress </button>
 </div>
 
-<div class="modal fade" id="music-imported-modal" role="dialog">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <p> Music loaded successfully ! </p>
-        </div>
-    </div>
-</div>
 <!-- END MODAL -->
+
+<!-- iFrame music modal template -->
+<li id="music-panel-info" class="panel panel-info custom-panel">
+    <div class="panel-heading">You can drag this panel.</div>
+    <div class="panel-body">
+        <iframe id="music-iframe"></iframe>
+    </div>
+</li>
 
 <!-- /.modal -->
 <div class="ui-widget ui-front ui-widget-content ui-corner-all ui-inline" id="login-modal">

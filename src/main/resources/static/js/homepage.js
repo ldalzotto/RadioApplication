@@ -50,7 +50,7 @@ var NavBar = (function () {
     $('#tabs').find('#music-navbar').click(function () {
       if (CurrentUser.isIdentified()) {
         hideAllNavBarContentBut('music-navbar')
-        MusicView.refreshMusicPanel()
+        MusicView.displayMusicPanel()
       } else {
         hideAllNavBarContentBut('ALL')
       }
@@ -75,54 +75,6 @@ var NavBar = (function () {
   })
 })()
 
-
-// Music View
-var MusicView = (function () {
-  var refreshMusicListPanel = function () {
-    $.ajax({
-      method: 'GET',
-      url: '/music/all',
-      success: function (musicManagerType) {
-        $('#music-panel-list').empty()
-        var listMusicType = musicManagerType.musicTypeDTO
-        for (i = 0; i < listMusicType.length; i++) {
-          var musicPanelInfo = $('#music-panel-info').clone()
-          musicPanelInfo.find('#music-iframe').attr('src', listMusicType[i].sourceUrl)
-          $('#music-panel-list').append(musicPanelInfo)
-        }
-      }
-    })
-  }
-
-  var addMusicFromPlatform = function (url, platform) {
-    $.ajax({
-      method: 'POST',
-      url: '/music/musicplatform/' + platform,
-      data: {
-        url: url
-      },
-      success: function (iframeUrl) {
-        $('#music-imported-modal').modal()
-        $('#music-navbar').trigger('refreshMusic')
-      }
-    })
-  }
-
-  $(document).ready(function () {
-    $('#music-navbar-content').find('#add-music-submit').click(function () {
-      // get form values
-      var url = $('#music-navbar-content').find('#siteURL').val()
-      var platform = $('#music-navbar-content').find('#musicplatform').val()
-      addMusicFromPlatform(url, platform)
-    })
-  })
-
-  return {
-    refreshMusicPanel: function () {
-      refreshMusicListPanel()
-    }
-  }
-})()
 
 // END Music View
 jQuery(function ($) {
