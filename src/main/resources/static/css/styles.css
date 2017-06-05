@@ -66,6 +66,10 @@ body {
   -webkit-padding-start: 40px;
 }
 
+#minimized-menu {
+  float: left;
+}
+
 .login-register button {
   background-color: rgb(71, 83, 97);
   border-color: #23bb9b;
@@ -79,6 +83,18 @@ body {
 
 .login-form .login-buttons {
 
+}
+
+body button {
+  background-color: rgb(71, 83, 97);
+  border-color: #23bb9b;
+  color: white;
+}
+
+body button:hover {
+  background-color: rgb(71, 83, 97);
+  border-color: #23bb9b;
+  color: #23bb9b;
 }
 
 .ui-widget button {

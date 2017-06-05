@@ -24,6 +24,9 @@ var NavBar = (function () {
 
   var maximumNavBarLenght
 
+  var maximizedMenuElement;
+  var minimizedMenuElement;
+
   // determine navbar max horizontal length
   var determineMaximumNavBarLength = function () {
     var length = 0
@@ -56,12 +59,22 @@ var NavBar = (function () {
     tabsElement = $('#tabs')
     maximumNavBarLenght = determineMaximumNavBarLength()
 
+    maximizedMenuElement = $('#maximized-menu')
+    minimizedMenuElement = $('#minimized-menu')
+
+    maximizedMenuElement.show()
+    minimizedMenuElement.hide()
+
     // resize event
     $(window).resize(function () {
       if ($(window).width() <= maximumNavBarLenght) {
         console.log('minimize')
+        maximizedMenuElement.hide()
+        minimizedMenuElement.show()
       } else {
         console.log('maximize')
+        maximizedMenuElement.show()
+        minimizedMenuElement.hide()
       }
     })
 

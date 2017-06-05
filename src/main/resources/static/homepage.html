@@ -34,11 +34,28 @@
 <header class = "header">
   <nav>
     <div class = "container">
-        <ul id = "tabs" class = "menu">
-            <li><a id="dashboard-navbar">Dashboard</a></li>
-            <li><a id="music-navbar">Music</a></li>
-            <li><a id="platforms-navbar">Platforms</a></li>
-        </ul>
+        <div id = "maximized-menu">
+          <ul id = "tabs" class = "menu">
+              <li><a id="dashboard-navbar">Dashboard</a></li>
+              <li><a id="music-navbar">Music</a></li>
+              <li><a id="platforms-navbar">Platforms</a></li>
+          </ul>
+        </div>
+
+        <div id = "minimized-menu">
+          <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button id = "main-menu-button" type="button" aria-label="Left Align" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="main-menu-button">
+              <ul id = "tabs" class = "menu">
+                  <li><a class="dropdown-item" id="dashboard-navbar">Dashboard</a></li>
+                  <li><a class="dropdown-item" id="music-navbar">Music</a></li>
+                  <li><a class="dropdown-item" id="platforms-navbar">Platforms</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
     </div>
   </nav>
   <h1 class = "head-color">
