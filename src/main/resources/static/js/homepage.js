@@ -1,28 +1,41 @@
 
-var HostName = (function(){
-    var host = undefined;
-    var port = undefined;
-    var protocol = undefined;
+var HostName = (function () {
+  var host
+  var port
+  var protocol
 
-    $(document).ready(function(){
-        protocol = window.location.protocol;
-        host = window.location.hostname;
-        port = window.location.port;
-    })
+  $(document).ready(function () {
+    protocol = window.location.protocol
+    host = window.location.hostname
+    port = window.location.port
+  })
 
-    return {
-        getSourceUrl: function(){
-            return protocol + host + port;
-        }
+  return {
+    getSourceUrl: function () {
+      return protocol + host + port
     }
-
+  }
 })()
 
 // header navigation
 
 var NavBar = (function () {
+  var tabsElement
+
+  var maximumNavBarLenght
+
+  // determine navbar max horizontal length
+  var determineMaximumNavBarLength = function () {
+    var length = 0
+    var navbarElements = tabsElement.find('a').toArray()
+    for (i = 0; i < navbarElements.length; i++) {
+      length = length + $(navbarElements[i]).width()
+    }
+    return length * 2
+  }
+
   var hideAllNavBarContentBut = function (nothidedNavbar) {
-    var navbarElements = $('#tabs').find('a').toArray()
+    var navbarElements = tabsElement.find('a').toArray()
     for (i = 0; i < navbarElements.length; i++) {
       if (nothidedNavbar == 'ALL') {
         var elementToHideId = navbarElements[i].id + '-content'
@@ -40,6 +53,18 @@ var NavBar = (function () {
   }
 
   $(document).ready(function () {
+    tabsElement = $('#tabs')
+    maximumNavBarLenght = determineMaximumNavBarLength()
+
+    // resize event
+    $(window).resize(function () {
+      if ($(window).width() <= maximumNavBarLenght) {
+        console.log('minimize')
+      } else {
+        console.log('maximize')
+      }
+    })
+
     $('#tabs').find('#dashboard-navbar').click(function () {
       if (CurrentUser.isIdentified()) {
         hideAllNavBarContentBut('dashboard-navbar')
@@ -70,11 +95,10 @@ var NavBar = (function () {
     $('#music-navbar-content').hide()
 
     $('#login-header-link').click(function (event) {
-      CurrentUser.showModalOnEvent(event);
+      CurrentUser.showModalOnEvent(event)
     })
   })
 })()
-
 
 // END Music View
 jQuery(function ($) {

@@ -7,6 +7,13 @@ var CustomModal = function (modalElementToCustom, config) {
   errorMessageElement.appendTo(modalElement)
   errorMessageElement.hide()
 
+  // resize event
+  $(window).resize(function () {
+    if (modalElement.is(':visible')) {
+      displayModal(true)
+    }
+  })
+
   var setDefaultConfigValue = function (currentConfig) {
     var returnConfig = currentConfig
 
@@ -58,12 +65,12 @@ var CustomModal = function (modalElementToCustom, config) {
 
   var modalHeightWithoutErrorMessage = modalElement.height()
 
-  if(config.draggable == true) {
-      modalElement.draggable()
+  if (config.draggable == true) {
+    modalElement.draggable()
   }
 
   var errorBottomPopUp = function (message) {
-    modalHeightWithoutErrorMessage = parseInt(modalElement.css('height').replace('px', ''));
+    modalHeightWithoutErrorMessage = parseInt(modalElement.css('height').replace('px', ''))
     errorMessageElement.text(message)
 
     if (!errorMessageElement.is(':visible')) {
@@ -86,7 +93,6 @@ var CustomModal = function (modalElementToCustom, config) {
   }
 
   var errorBottomPopOut = function () {
-
     errorMessageElement.hide('fade', '', 100)
 
     // retrieve original loginModal height
@@ -95,22 +101,35 @@ var CustomModal = function (modalElementToCustom, config) {
     }, 100, 'swing')
   }
 
-  var showAnimation = function(element){
+  var showAnimation = function (element) {
     element.show('puff', 300)
   }
 
-  var displayModal = function (event) {
-    errorMessageElement.hide()
-    modalElement.position({
-      my: 'center',
-      at: 'center',
-      of: window,
-      using: function(css, calc){
-        modalElement.animate(css, 200, "linear");
-        showAnimation(modalElement)
-      },
-      collision: 'none'
-    })
+  var displayModal = function (onResize) {
+    if (onResize == undefined) {
+      onResize = false
+    }
+
+    if (!onResize) {
+      errorMessageElement.hide()
+      modalElement.position({
+        my: 'center',
+        at: 'center',
+        of: window,
+        using: function (css, calc) {
+          modalElement.animate(css, 200, 'linear')
+          showAnimation(modalElement)
+        },
+        collision: 'none'
+      })
+    } else {
+      modalElement.position({
+        my: 'center',
+        at: 'center',
+        of: window,
+        collision: 'none'
+      })
+    }
   }
 
   var hideModal = function () {
@@ -120,7 +139,7 @@ var CustomModal = function (modalElementToCustom, config) {
     })
   }
 
-  var displayModalFromAbsolute = function(coord) {
+  var displayModalFromAbsolute = function (coord) {
     errorMessageElement.hide()
     modalElement.css('top', coord.y)
     modalElement.css('left', coord.x)
@@ -132,9 +151,9 @@ var CustomModal = function (modalElementToCustom, config) {
       errorBottomPopUp(message)
     },
     showModal: function (event) {
-      displayModal(event)
+      displayModal()
     },
-    showModalFromAbsoluteCoordinates: function(coord){
+    showModalFromAbsoluteCoordinates: function (coord) {
       displayModalFromAbsolute(coord)
     },
     hideModal: function () {
