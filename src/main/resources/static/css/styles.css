@@ -143,6 +143,15 @@ footer {
   background-color:#efefef;
 }
 
+.out-of-bound {
+  position: absolute;
+  top: -999px
+}
+
+.music-panel-list {
+  display: inline-block;
+}
+
 /* count indicator near icons */
 .nav>li .count {
   position: absolute;
