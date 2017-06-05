@@ -1,5 +1,7 @@
 package com.ldz.identifier.model;
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,6 +20,10 @@ public class UserDTO {
     private String password;
 
     @NotNull
+    @Email
+    private String email;
+
+    @NotNull
     @Size(max = 1, message = "The number of details to instert must not be > 1")
     @Valid
     private List<UserDetailDTO> userDetailDTOS;
@@ -31,9 +37,18 @@ public class UserDTO {
         return "UserDTO{" +
                 "userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", userDetailDTOS=" + userDetailDTOS +
                 ", userRoleDTO=" + userRoleDTO +
                 '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public UserRoleDTO getUserRoleDTO() {

@@ -1,5 +1,6 @@
 package com.ldz.project.model;
 
+import org.hibernate.validator.constraints.Email;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,10 @@ public class UserRegister {
     @NotNull
     @Size(min = 4)
     private String password;
+
+    @NotNull
+    @Email
+    private String email;
 
     @NotNull
     private String ipaddress;
@@ -55,5 +60,13 @@ public class UserRegister {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

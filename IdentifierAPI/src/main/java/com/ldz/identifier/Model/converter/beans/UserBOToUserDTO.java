@@ -41,6 +41,7 @@ public class UserBOToUserDTO implements IConverter<UserBO, UserDTO> {
 
         userDTO.setPassword(userBO.getPassword());
         userDTO.setUserName(userBO.getUserName());
+        userDTO.setEmail(userBO.getEmail());
         userDTO.setUserDetailDTOS(userDetailDTOS);
         return userDTO;
     }

@@ -27,8 +27,8 @@ public class IdentifierServiceImpl implements IIdentifierService {
     ConverterContainer converterContainer;
 
     @Override
-    public UserDTO getUserByUsernemeAndPassword(String username, String password) {
-        User user = userRepository.findUserByUsernameAndPassword(username, password);
+    public UserDTO getUserByEmailAndPassWord(String email, String password) {
+        User user = userRepository.findUserByEmailAndPassword(email, password);
 
         if (user == null)
             return null;

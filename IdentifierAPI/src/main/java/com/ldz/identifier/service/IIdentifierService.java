@@ -9,7 +9,7 @@ import com.ldz.identifier.model.UserDTO;
  */
 public interface IIdentifierService {
 
-    UserDTO getUserByUsernemeAndPassword(String username, String password);
+    UserDTO getUserByEmailAndPassWord(String email, String password);
 
     UserDTO getUserByUsername(String username);
 

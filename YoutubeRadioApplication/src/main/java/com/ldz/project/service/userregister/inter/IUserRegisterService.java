@@ -10,8 +10,7 @@ import java.util.List;
  */
 public interface IUserRegisterService {
 
-    public boolean registerUserFromUserDetails(String username, String password, String ipAddress,
-                                               String country);
+    public boolean registerUserFromUserDetails(UserRegister userRegister);
 
     public List<UserRegister> getDetailsFromusername(String username);
 
@@ -21,6 +20,6 @@ public interface IUserRegisterService {
 
     public void logoutUserFromIpaddress(String ipaddress);
 
-    public UserRegister loginUserFromUsernameAndPasswordAndIpaddress(String username, String password,
+    public UserRegister loginUserFromEmailAndPasswordAndIpaddress(String email, String password,
                                                                      String ipaddress);
 }

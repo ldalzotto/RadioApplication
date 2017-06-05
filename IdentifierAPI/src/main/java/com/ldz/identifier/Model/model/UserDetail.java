@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by ldalzotto on 15/05/2017.
  */
 @Entity
-@Table(name = IdentifierTableNames.USER_DETAIL, uniqueConstraints = @UniqueConstraint(columnNames = {IdentifierColumnNames.IPADDRESS}))
+@Table(name = IdentifierTableNames.USER_DETAIL)
 public class UserDetail {
 
     @Id

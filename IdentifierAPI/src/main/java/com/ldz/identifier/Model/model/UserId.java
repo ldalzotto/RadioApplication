@@ -10,6 +10,7 @@ public class UserId implements Serializable {
 
     private String username;
     private String password;
+    private String email;
 
     public String getUsername() {
         return username;
@@ -32,7 +33,16 @@ public class UserId implements Serializable {
         return "UserId{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

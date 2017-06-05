@@ -48,9 +48,9 @@ public class UserRegisterService implements IUserRegisterService {
     }
 
     @Override
-    public UserRegister loginUserFromUsernameAndPasswordAndIpaddress(String username, String password, String ipaddress) {
+    public UserRegister loginUserFromEmailAndPasswordAndIpaddress(String email, String password, String ipaddress) {
 
-        UserDTO identifierAPIUser = identifierAPIClient.getPersonFromUsernameAndPassword(username, password).getBody();
+        UserDTO identifierAPIUser = identifierAPIClient.getPersonFromEmailAndPassword(email, password).getBody();
 
         if(identifierAPIUser != null){
             //assert that input ip correspond
@@ -67,7 +67,7 @@ public class UserRegisterService implements IUserRegisterService {
 
             //set login token
             Map<String, String> genericInfoToPut = new HashMap<>();
-            genericInfoToPut.put(TokenManagerMapKeys.USERNAME.name(), username);
+            genericInfoToPut.put(TokenManagerMapKeys.USERNAME.name(), identifierAPIUser.getUserName());
             genericInfoToPut.put(TokenManagerMapKeys.PASSWORD.name(), password);
             genericInfoToPut.put(TokenManagerMapKeys.IPADDRESS.name(), identifierAPIUserDetailFound.getIpaddress());
             genericInfoToPut.put(TokenManagerMapKeys.COUNTRY.name(), identifierAPIUserDetailFound.getCountry());
@@ -127,8 +127,13 @@ public class UserRegisterService implements IUserRegisterService {
     }
 
     @Override
-    public boolean registerUserFromUserDetails(String username, String password, String ipaddress,
-                                               String country) {
+    public boolean registerUserFromUserDetails(UserRegister userRegister) {
+
+        String username = userRegister.getUsername();
+        String password = userRegister.getPassword();
+        String ipaddress = userRegister.getIpaddress();
+        String country = userRegister.getCountry();
+        String email = userRegister.getEmail();
 
         //récupération des détails du client
         List<UserRegister>  userRegisters = getDetailsFromusername(username);
@@ -138,14 +143,14 @@ public class UserRegisterService implements IUserRegisterService {
         }
 
         try {
-            registerIdentifier(username, password, ipaddress, country);
+            registerIdentifier(username, password, ipaddress, email, country);
             registerMusic(username);
         } catch (Exception e) {
 
             if ((e instanceof DataIntegrityViolationException))
                 throw e;
 
-            //rollback
+            //rollbackf
             deleteIdentifierApi(username);
             deleteMusicManagerClient(username);
             LOGGER.info("End executing error handling.");
@@ -179,12 +184,13 @@ public class UserRegisterService implements IUserRegisterService {
         return userRegisters;
     }
 
-    private boolean registerIdentifier(String username, String password, String ipaddress, String country) {
+    private boolean registerIdentifier(String username, String password, String ipaddress, String email, String country) {
         LOGGER.info("Start executing identifier registering.");
 
         UserDTO identifierAPIUser = new UserDTO();
         identifierAPIUser.setPassword(password);
         identifierAPIUser.setUserName(username);
+        identifierAPIUser.setEmail(email);
 
         UserRoleDTO identifierAPIUserRole = new UserRoleDTO();
         identifierAPIUserRole.setRole(UserRoles.ROLE_USER.getRole());

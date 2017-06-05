@@ -7,5 +7,6 @@ public class IdentifierColumnNames {
 
     public static final String IPADDRESS = "IPADDRESS";
     public static final String USERNAME = "USERNAME";
+    public static final String EMAIL = "EMAIL";
 
 }

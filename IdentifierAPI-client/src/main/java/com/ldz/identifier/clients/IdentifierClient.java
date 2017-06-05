@@ -18,8 +18,8 @@ public interface IdentifierClient {
     @RequestMapping(method = RequestMethod.GET, path = "/user/username/{username}")
     ResponseEntity<UserDTO> getPersonFromUsername(@PathVariable("username") String username);
 
-    @RequestMapping(method = RequestMethod.GET, path = "/user/username/{username}/password/{password}")
-    ResponseEntity<UserDTO> getPersonFromUsernameAndPassword(@PathVariable("username") String username, @PathVariable("password") String password);
+    @RequestMapping(method = RequestMethod.GET, path = "/user/email/{email}/password/{password}")
+    ResponseEntity<UserDTO> getPersonFromEmailAndPassword(@PathVariable("email") String email, @PathVariable("password") String password);
 
     @RequestMapping(method = RequestMethod.POST, path = "/user")
     ResponseEntity<Object> postUser(@RequestBody UserDTO userDTO);

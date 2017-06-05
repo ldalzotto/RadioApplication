@@ -11,12 +11,16 @@ import java.util.Set;
  */
 @Entity
 @IdClass(UserId.class)
-@Table(name = IdentifierTableNames.USERS, uniqueConstraints = @UniqueConstraint(columnNames = {IdentifierColumnNames.USERNAME}))
+@Table(name = IdentifierTableNames.USERS, uniqueConstraints = @UniqueConstraint(columnNames = {IdentifierColumnNames.USERNAME, IdentifierColumnNames.EMAIL}))
 public class User {
 
     @Id
     @Column(name = IdentifierColumnNames.USERNAME)
     private String username;
+
+    @Id
+    @Column(name = IdentifierColumnNames.EMAIL)
+    private String email;
 
     @Id
     @Column(name = "password")
@@ -36,10 +40,19 @@ public class User {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", userDetails=" + userDetails +
                 ", userRole=" + userRole +
                 '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {

@@ -44,9 +44,9 @@ public class IdentifierController implements IdentifierClient {
     }
 
     @Override
-    public ResponseEntity<UserDTO> getPersonFromUsernameAndPassword(@PathVariable("username") String username,
+    public ResponseEntity<UserDTO> getPersonFromEmailAndPassword(@PathVariable("email") String email,
                                                                     @PathVariable("password") String password) {
-        UserDTO userDTO = IIdentifierService.getUserByUsernemeAndPassword(username, password);
+        UserDTO userDTO = IIdentifierService.getUserByEmailAndPassWord(email, password);
         if (userDTO != null) {
             return ResponseEntity.ok(userDTO);
         } else {

@@ -41,7 +41,7 @@ public class GreetingController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@Valid UserRegister userRegister) {
-        UserRegister registeredUser = iUserRegisterService.loginUserFromUsernameAndPasswordAndIpaddress(userRegister.getUsername(),
+        UserRegister registeredUser = iUserRegisterService.loginUserFromEmailAndPasswordAndIpaddress(userRegister.getEmail(),
                 userRegister.getPassword(), userRegister.getIpaddress());
 
         if(registeredUser != null){
@@ -73,10 +73,9 @@ public class GreetingController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserRegister> register(@Valid UserRegister userRegister) {
             iUserRegisterService
-                    .registerUserFromUserDetails(userRegister.getUsername(), userRegister.getPassword(),
-                userRegister.getIpaddress(), userRegister.getCountry());
+                    .registerUserFromUserDetails(userRegister);
         //login after register
-        UserRegister userRegister1 = iUserRegisterService.loginUserFromUsernameAndPasswordAndIpaddress(userRegister.getUsername(),
+        UserRegister userRegister1 = iUserRegisterService.loginUserFromEmailAndPasswordAndIpaddress(userRegister.getEmail(),
                 userRegister.getPassword(), userRegister.getIpaddress());
 
         if(userRegister1 == null){

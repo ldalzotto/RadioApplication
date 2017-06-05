@@ -29,14 +29,16 @@ var CurrentUser = (function () {
       // get form values
       var username = loginForm.find('#username').val()
       var password = loginForm.find('#password').val()
-      CurrentUser.login(username, password)
+      var email = loginForm.find('#email').val()
+      CurrentUser.login(username, email, password)
     })
 
     registerSubmitButton.click(function () {
       // get form values
       var username = loginForm.find('#username').val()
       var password = loginForm.find('#password').val()
-      CurrentUser.register(username, password)
+      var email = loginForm.find('#email').val()
+      CurrentUser.register(username, email, password)
     })
   })
 
@@ -89,7 +91,7 @@ var CurrentUser = (function () {
       }
       return currentUserDetail;
     },
-    login: function (username, password) {
+    login: function (username, email, password) {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
@@ -97,6 +99,7 @@ var CurrentUser = (function () {
           data: {
             username: username,
             password: password,
+            email: email,
             ipaddress: userInfo.ip,
             country: userInfo.country
           },
@@ -112,7 +115,7 @@ var CurrentUser = (function () {
               cutomModal.errorPopUp('You are trying to login with an unknown IP.')
               //show modal
               CurrentUser.getIpList(username, AddIpModal.showModalWithListIp, function(){
-                CurrentUser.addUser(username, password);
+                CurrentUser.addUser(username, email, password);
               });
             } else if (jqXHR.responseText == 'LOGIN_UNKNOWN_USER') {
               cutomModal.errorPopUp('Unknown user.')
@@ -123,7 +126,7 @@ var CurrentUser = (function () {
         })
       })
     },
-    register: function (username, password) {
+    register: function (username, email, password) {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
@@ -131,6 +134,7 @@ var CurrentUser = (function () {
           data: {
             username: username,
             password: password,
+            email: email,
             ipaddress: userInfo.ip,
             country: userInfo.country
           },
@@ -146,12 +150,11 @@ var CurrentUser = (function () {
               errorMessage = 'The user ' + username + ' is already registered.'
             }
             cutomModal.errorPopUp(errorMessage)
-            // isLogOutDispaly()
           }
         })
       })
     },
-    addUser: function (username, password) {
+    addUser: function (username, email, password) {
       fromCurrentIp(function(userInfo){
         $.ajax({
           method: 'POST',
@@ -159,6 +162,7 @@ var CurrentUser = (function () {
           data: {
             username: username,
             password: password,
+            email: email,
             ipaddress: userInfo.ip,
             country: userInfo.country
           },
@@ -166,7 +170,7 @@ var CurrentUser = (function () {
             AddIpModal.resetAndHide();
             cutomModal.hideModal();
             //do login with the newly added IP
-            CurrentUser.login(username, password);
+            CurrentUser.login(username, email, password);
             EventRoller.pushEvent("User successfully added !")
           },
           error: function(){
@@ -184,6 +188,7 @@ var CurrentUser = (function () {
           data: {
             username: currentUserDetail.username,
             password: currentUserDetail.password,
+            email: currentUserDetail.email,
             ipaddress: userInfo.ip,
             country: userInfo.country
           },

@@ -42,6 +42,7 @@ public class UserToUserBO implements IConverter<User, UserBO> {
 
         userBO.setPassword(user.getPassword());
         userBO.setUserName(user.getUsername());
+        userBO.setEmail(user.getEmail());
         userBO.setUserDetailBOS(userDetailBOS);
 
         return userBO;
