@@ -1,18 +1,25 @@
 var CurrentUser = (function () {
-  var cutomModal
+
 
   var loginModalElement
+  var loginCutomModal
+
+  var registerModalElement
+  var registerCutomModal
+
   var currentUserDetail
 
   var loginForm
   var loginSubmitButton
+
+  var registerForm
   var registerSubmitButton
 
   // check user status when document is ready
   $(document).ready(function () {
     // initiate login form
     loginModalElement = $('#login-modal')
-    cutomModal = new CustomModal(loginModalElement, {
+    loginCutomModal = new CustomModal(loginModalElement, {
       closable: true,
       resizable: false,
       draggable: false
@@ -20,38 +27,52 @@ var CurrentUser = (function () {
 
     loginForm = loginModalElement.find('#login-form')
     loginSubmitButton = loginForm.find('#login-submit')
-    registerSubmitButton = loginForm.find('#register-submit')
+
+    //register
+    registerModalElement = $('#register-modal')
+    registerCutomModal = new CustomModal(registerModalElement, {
+      closable: true,
+      resizable: false,
+      draggable: false
+    })
+
+    registerForm = registerModalElement.find('#register-form')
+    registerSubmitButton = registerForm.find('#register-submit')
 
       // get current user
     CurrentUser.retrieveCurrentUser()
 
     loginSubmitButton.click(function () {
       // get form values
-      var username = loginForm.find('#username').val()
       var password = loginForm.find('#password').val()
       var email = loginForm.find('#email').val()
-      CurrentUser.login(username, email, password)
+      CurrentUser.login(email, password)
     })
 
     registerSubmitButton.click(function () {
       // get form values
-      var username = loginForm.find('#username').val()
-      var password = loginForm.find('#password').val()
-      var email = loginForm.find('#email').val()
+      var username = registerForm.find('#username').val()
+      var password = registerForm.find('#password').val()
+      var email = registerForm.find('#email').val()
       CurrentUser.register(username, email, password)
     })
+
   })
 
   var isLogOutDispaly = function () {
     $('#logout-header-link').hide()
     $('#login-header-link').show()
-    cutomModal.hideModal()
+    $('#register-header-link').show()
+    loginCutomModal.hideModal()
+    registerCutomModal.hideModal()
   }
 
   var isLogInDispaly = function () {
     $('#logout-header-link').show()
     $('#login-header-link').hide()
-    cutomModal.hideModal()
+    $('#register-header-link').hide()
+    loginCutomModal.hideModal()
+    registerCutomModal.hideModal()
   }
 
   var fromCurrentIp = function (successCallback, errorCallback) {
@@ -91,13 +112,12 @@ var CurrentUser = (function () {
       }
       return currentUserDetail;
     },
-    login: function (username, email, password) {
+    login: function (email, password) {
       fromCurrentIp(function (userInfo) {
         $.ajax({
           method: 'POST',
           url: '/login',
           data: {
-            username: username,
             password: password,
             email: email,
             ipaddress: userInfo.ip,
@@ -112,15 +132,13 @@ var CurrentUser = (function () {
             console.error(jqXHR.responseText)
             if (jqXHR.responseText == 'LOGIN_UNKNOWN_IP') {
               // display new popup for adding
-              cutomModal.errorPopUp('You are trying to login with an unknown IP.')
+              loginCutomModal.errorPopUp('You are trying to login with an unknown IP.')
               //show modal
-              CurrentUser.getIpList(username, AddIpModal.showModalWithListIp, function(){
-                CurrentUser.addUser(username, email, password);
-              });
+              CurrentUser.getIpList(email, AddIpModal.showModalWithListIp);
             } else if (jqXHR.responseText == 'LOGIN_UNKNOWN_USER') {
-              cutomModal.errorPopUp('Unknown user.')
+              loginCutomModal.errorPopUp('Unknown user.')
             } else {
-              cutomModal.errorPopUp('An error occured on login.')
+              loginCutomModal.errorPopUp('An error occured on login.')
             }
           }
         })
@@ -149,7 +167,7 @@ var CurrentUser = (function () {
             if (jqXHR.responseText == 'ALREADY_REGISTERED') {
               errorMessage = 'The user ' + username + ' is already registered.'
             }
-            cutomModal.errorPopUp(errorMessage)
+            registerCutomModal.errorPopUp(errorMessage)
           }
         })
       })
@@ -168,9 +186,9 @@ var CurrentUser = (function () {
           },
           success: function(){
             AddIpModal.resetAndHide();
-            cutomModal.hideModal();
+            loginCutomModal.hideModal();
             //do login with the newly added IP
-            CurrentUser.login(username, email, password);
+            CurrentUser.login(email, password);
             EventRoller.pushEvent("User successfully added !")
           },
           error: function(){
@@ -210,25 +228,38 @@ var CurrentUser = (function () {
         return true
       }
     },
-    showModalOnEvent: function (event) {
-      cutomModal.showModal(event)
+    showLoginModalOnEvent: function (event) {
+      loginCutomModal.showModal(event)
     },
-    getIpList: function(username, actionOnList, addingUser){
+    showRegisterModalOnEvent: function (event) {
+      registerCutomModal.showModal(event)
+    },
+    getIpList: function(email, actionOnList){
         var returlListIp;
         $.ajax({
           method: 'GET',
-          url: ('/user/details/username/' + username ),
+          url: ('/user/details/email/' + email + '/'),
           success: function (listuserDetail) {
             //récupération de la liste des ip
             var listIp = []
+            var username
+            var password
             for (var i = 0; i < listuserDetail.length; i++) {
                 listIp.push(listuserDetail[i].ipaddress);
+                if(username == undefined){
+                  username = listuserDetail[i].username;
+                }
+                if(password == undefined){
+                  password = listuserDetail[i].password;
+                }
             }
             returlListIp = listIp;
 
             if(actionOnList != undefined){
               fromCurrentIp(function(userInfo){
-                actionOnList(returlListIp, userInfo.ip, addingUser);
+                actionOnList(returlListIp, userInfo.ip, function(){
+                  CurrentUser.addUser(username, email, password)
+                });
               })
             }
           }

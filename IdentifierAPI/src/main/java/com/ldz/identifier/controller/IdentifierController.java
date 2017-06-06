@@ -55,6 +55,16 @@ public class IdentifierController implements IdentifierClient {
     }
 
     @Override
+    public ResponseEntity<UserDTO> getPersonFromEmail(String email) {
+        UserDTO userDTO = IIdentifierService.getUserByEmail(email);
+        if (userDTO != null) {
+            return ResponseEntity.ok(userDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
     public ResponseEntity<UserDTO> addUserIpaddressFromUsernaem(@PathVariable("username") String username,
                                                                 @RequestBody @Valid UserDetailDTO userDetailDTO) {
         UserDetailBO userDetailBO = converterContainer.convert(userDetailDTO, UserDetailBO.class);

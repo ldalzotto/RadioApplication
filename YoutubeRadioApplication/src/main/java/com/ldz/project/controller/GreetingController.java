@@ -3,6 +3,7 @@ package com.ldz.project.controller;
 import com.ldz.project.exception.AlreadyRegistered;
 import com.ldz.project.exception.LoginWithUnknownIPException;
 import com.ldz.project.exception.LoginWithUnkownUser;
+import com.ldz.project.model.UserLogin;
 import com.ldz.project.model.UserRegister;
 import com.ldz.project.service.userregister.inter.IUserRegisterService;
 import org.slf4j.Logger;
@@ -40,9 +41,9 @@ public class GreetingController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> login(@Valid UserRegister userRegister) {
-        UserRegister registeredUser = iUserRegisterService.loginUserFromEmailAndPasswordAndIpaddress(userRegister.getEmail(),
-                userRegister.getPassword(), userRegister.getIpaddress());
+    public ResponseEntity<?> login(@Valid UserLogin userLogin) {
+        UserRegister registeredUser = iUserRegisterService.loginUserFromEmailAndPasswordAndIpaddress(userLogin.getEmail(),
+                userLogin.getPassword(), userLogin.getIpaddress());
 
         if(registeredUser != null){
             return ResponseEntity.ok(registeredUser);
@@ -99,9 +100,9 @@ public class GreetingController {
 
     }
 
-    @RequestMapping(value = "/user/details/username/{username}", method = RequestMethod.GET)
-    public ResponseEntity<List<UserRegister>> getUserdetailsFromUsername(@PathVariable("username") String username){
-        List<UserRegister> userRegisters = iUserRegisterService.getDetailsFromusername(username);
+    @RequestMapping(value = "/user/details/email/{email}", method = RequestMethod.GET)
+    public ResponseEntity<List<UserRegister>> getUserdetailsFromUsername(@PathVariable("email") String email){
+        List<UserRegister> userRegisters = iUserRegisterService.getDetailsFromEmail(email);
         if(userRegisters != null){
             return ResponseEntity.ok(userRegisters);
         } else {

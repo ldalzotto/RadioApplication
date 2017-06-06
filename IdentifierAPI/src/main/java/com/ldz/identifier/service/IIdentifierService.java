@@ -13,6 +13,8 @@ public interface IIdentifierService {
 
     UserDTO getUserByUsername(String username);
 
+    UserDTO getUserByEmail(String email);
+
     Boolean addUser(UserBO userBO);
 
     UserDTO addUserDetailFromUsername(String username, UserDetailBO userDetailBO);

@@ -14,6 +14,8 @@ public interface IUserRegisterService {
 
     public List<UserRegister> getDetailsFromusername(String username);
 
+    public List<UserRegister> getDetailsFromEmail(String email);
+
     public UserRegister getCurrentUserFromIpaddress(String ipaddress);
 
     public UserRegister addUserFromexisting(UserRegister userRegister);

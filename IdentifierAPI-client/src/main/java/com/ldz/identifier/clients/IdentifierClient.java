@@ -21,6 +21,9 @@ public interface IdentifierClient {
     @RequestMapping(method = RequestMethod.GET, path = "/user/email/{email}/password/{password}")
     ResponseEntity<UserDTO> getPersonFromEmailAndPassword(@PathVariable("email") String email, @PathVariable("password") String password);
 
+    @RequestMapping(method = RequestMethod.GET, path = "/user/email/{email}")
+    ResponseEntity<UserDTO> getPersonFromEmail(@PathVariable("email") String email);
+
     @RequestMapping(method = RequestMethod.POST, path = "/user")
     ResponseEntity<Object> postUser(@RequestBody UserDTO userDTO);
 

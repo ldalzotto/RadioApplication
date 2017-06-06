@@ -49,6 +49,17 @@ public class IdentifierServiceImpl implements IIdentifierService {
     }
 
     @Override
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findUserByEmail(email);
+
+        if (user == null)
+            return null;
+
+        return converterContainer.convert(converterContainer.convert(user, UserBO.class),
+                UserDTO.class);
+    }
+
+    @Override
     public Boolean addUser(UserBO userBO) {
         User userToSave = converterContainer.convert(userBO, User.class);
         //set hibernatedependency

@@ -108,7 +108,10 @@ var NavBar = (function () {
     $('#music-navbar-content').hide()
 
     $('#login-header-link').click(function (event) {
-      CurrentUser.showModalOnEvent(event)
+      CurrentUser.showLoginModalOnEvent(event)
+    })
+    $('#register-header-link').click(function (event) {
+      CurrentUser.showRegisterModalOnEvent(event)
     })
   })
 })()

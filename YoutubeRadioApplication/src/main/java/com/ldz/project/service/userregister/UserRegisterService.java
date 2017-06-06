@@ -184,6 +184,31 @@ public class UserRegisterService implements IUserRegisterService {
         return userRegisters;
     }
 
+    @Override
+    public List<UserRegister> getDetailsFromEmail(String email) {
+
+        UserDTO userDTO = identifierAPIClient.getPersonFromEmail(email).getBody();
+        List<UserRegister>  userRegisters = null;
+        if(userDTO != null){
+            String password = userDTO.getPassword();
+            String username = userDTO.getUserName();
+
+            if(userDTO.getUserDetailDTOS() != null){
+                userRegisters = userDTO.getUserDetailDTOS().stream().map(userDetailDTO -> {
+                    UserRegister userRegister = new UserRegister();
+                    userRegister.setUsername(username);
+                    userRegister.setPassword(password);
+                    userRegister.setIpaddress(userDetailDTO.getIpaddress());
+                    userRegister.setCountry(userDetailDTO.getCountry());
+                    return userRegister;
+                }).collect(Collectors.toList());
+            }
+        }
+
+        return userRegisters;
+    }
+
+
     private boolean registerIdentifier(String username, String password, String ipaddress, String email, String country) {
         LOGGER.info("Start executing identifier registering.");
 
