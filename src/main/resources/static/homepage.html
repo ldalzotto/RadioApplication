@@ -14,6 +14,7 @@
     <link href="css/styles.css" rel="stylesheet"></link>
     <link href="css/customModal.css" rel="stylesheet"></link>
     <link href="css/eventRoller.css" rel="stylesheet"></link>
+    <link href="css/tree.css" rel="stylesheet"></link>
     <!-- script references -->
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-ui.js"></script>
@@ -24,6 +25,7 @@
     <script src="js/addIp.js"></script>
     <script src="js/music/addMusic.js"></script>
     <script src="js/music/musicNavigation.js"></script>
+    <script src="js/tree.js"></script>
     <script src="js/homepage.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
@@ -71,6 +73,38 @@
 
 <!-- Music TAG -->
 <div id="music-navbar-content">
+
+    <div class="col-sm-3">
+      <div class="block-1">
+        <h2>Music Navigator : </h2>
+        <div class="tree">
+            <ul>
+                <li>
+                    <span><span class="glyphicon glyphicon-folder-open"></span> Music list</span>
+                    <ul>
+                        <li>
+                        	<span> Music1</span>
+                        </li>
+                        <li>
+                        	<span>Music2</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="block-2">
+        <h2>Music Manager : </h2>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="block-3">
+        <h2>Music Player : </h2>
+      </div>
+    </div>
 
     <!-- Add Music Form -->
     <div class="ui-widget ui-front ui-widget-content ui-corner-all ui-inline" id="add-music-modal">
