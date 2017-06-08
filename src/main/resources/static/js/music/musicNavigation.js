@@ -4,11 +4,18 @@ var MusicView = (function () {
   var musicPanelListElement
 
   var musicPanelInfoTemplateElement;
+  var addMusicButton;
 
   $(document).ready(function(){
     musicPanelListElement = $('#music-navbar-content').find('#music-panel-list');
     musicPanelInfoTemplateElement = $('#music-panel-info');
     musicPanelInfoTemplateElement.show();
+    addMusicButton = $('#add-music-button')
+    addMusicButton.click(function(){
+      AddMusicModal.showModal(function(){
+        refreshMusicListPanel()
+      });
+    })
   })
 
   var fromUsername = function(actionToDo){
@@ -36,7 +43,6 @@ var MusicView = (function () {
             }
             musicPanelListElement.show()
           } else {
-            AddMusicModal.showModal();
             //you have no music !
           }
 
