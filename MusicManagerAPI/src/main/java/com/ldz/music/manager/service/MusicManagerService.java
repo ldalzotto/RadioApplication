@@ -1,10 +1,10 @@
 package com.ldz.music.manager.service;
 
-import com.ldz.music.manager.model.UserMusicStatus;
 import com.ldz.converter.container.ConverterContainer;
 import com.ldz.external.api.ExternalAPIClient;
 import com.ldz.music.manager.constants.MusicTypes;
 import com.ldz.music.manager.model.MusicType;
+import com.ldz.music.manager.model.UserMusicStatus;
 import com.ldz.music.manager.model.bo.MusicTypeBO;
 import com.ldz.music.manager.model.bo.UserMusicStatusBO;
 import com.ldz.music.manager.repository.MusicTypeRepository;
