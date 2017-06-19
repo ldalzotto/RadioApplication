@@ -43,6 +43,6 @@ class SoundCloudController extends ExternalAPIClient{
 
     val outputMap = outputMapAccumulator(outpuSeq, Map())
 
-    ResponseEntity.ok(ExternalMusic(musicid, outputMap))
+    ResponseEntity.ok(ExternalMusic(musicid,iframe,outputMap))
   }
 }

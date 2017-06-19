@@ -66,7 +66,7 @@ public class MusicManagerService implements IMusicManagerService {
         switch (musicType) {
             case SOUNDCLOUD:
                 sourceUrl = externalAPIClient.getSoundcloudSourceurlFromRessource(url);
-                return sourceUrl.getBody().musicId();
+                return sourceUrl.getBody().iframeURL();
         }
 
         return null;
