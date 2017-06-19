@@ -1,5 +1,6 @@
 package com.ldz.external.api
 
+import com.ldz.external.api.model.ExternalMusic
 import org.springframework.cloud.netflix.feign.FeignClient
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.{RequestMapping, RequestMethod, RequestParam}
@@ -11,6 +12,6 @@ import org.springframework.web.bind.annotation.{RequestMapping, RequestMethod, R
 trait ExternalAPIClient {
 
   @RequestMapping(method = Array(RequestMethod.GET), path = Array("/soundcloud/sourceurl"))
-  def getSoundcloudSourceurlFromRessource(@RequestParam("ressource") ressource: String): ResponseEntity[String]
+  def getSoundcloudSourceurlFromRessource(@RequestParam("ressource") ressource: String): ResponseEntity[ExternalMusic]
 
 }
