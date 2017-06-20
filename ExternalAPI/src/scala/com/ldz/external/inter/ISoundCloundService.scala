@@ -8,7 +8,7 @@ import com.ldz.external.api.enumeration.ExternalMusicKey
 trait ISoundCloundService {
   def getMusicIdFromRessource(ressource: String): String
 
-  def getMusicparametersFromRessource(ressource: String): Seq[Tuple2[String, ExternalMusicKey.Value]]
+  def getMusicparametersFromRessource(ressource: String): Seq[Tuple2[ExternalMusicKey.Value, String]]
 
   def getIframeRessourceFromMusicId(musicId: String): String
 }

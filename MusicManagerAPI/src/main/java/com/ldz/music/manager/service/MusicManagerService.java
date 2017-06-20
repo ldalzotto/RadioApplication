@@ -2,7 +2,7 @@ package com.ldz.music.manager.service;
 
 import com.ldz.converter.container.ConverterContainer;
 import com.ldz.external.api.ExternalAPIClient;
-import com.ldz.external.api.model.ExternalMusic;
+import com.ldz.external.api.model.ExternalMusicDTO;
 import com.ldz.music.manager.constants.MusicTypes;
 import com.ldz.music.manager.model.MusicType;
 import com.ldz.music.manager.model.UserMusicStatus;
@@ -61,7 +61,7 @@ public class MusicManagerService implements IMusicManagerService {
 
     @Override
     public String getSourceurlFromUrlAndMusicType(String url, MusicTypes musicType) {
-        ResponseEntity<ExternalMusic> sourceUrl;
+        ResponseEntity<ExternalMusicDTO> sourceUrl;
 
         switch (musicType) {
             case SOUNDCLOUD:

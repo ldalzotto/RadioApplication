@@ -28,12 +28,12 @@ class SoundCloudService extends ISoundCloundService {
     getExtractedRessource(ressource, SOUNDCLOUD_MUSIC_FINDER_TOKEN, '"')
   }
 
-  override def getMusicparametersFromRessource(ressource: String): Seq[Tuple2[String, ExternalMusicKey.Value]] = {
+  override def getMusicparametersFromRessource(ressource: String): Seq[Tuple2[ExternalMusicKey.Value, String]] = {
     val title = getExtractedRessource(ressource, SOUNDLOUC_TITLE_CLASS, '"')
     val artist = getExtractedRessource(ressource, SOUNDCLOUD_USERNAME_CLASS, '"')
 
-      Seq((title, ExternalMusicKey.TITLE),
-        (artist, ExternalMusicKey.AUTHOR))
+      Seq((ExternalMusicKey.TITLE, title),
+        (ExternalMusicKey.AUTHOR, artist))
   }
 
   private def getExtractedRessource(ressource: String, pattern: Regex, delimiter: Char) = {
