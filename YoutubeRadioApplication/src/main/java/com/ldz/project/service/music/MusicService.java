@@ -18,7 +18,7 @@ public class MusicService implements IMusicService {
     @Override
     public Boolean addMusicFromUrlAndMusicPlatform(String username, String url, String musicPlatform) {
         String iframeUrl = musicManagerClient.getRessourceUrlFromUrlAndMusicplatform(url, musicPlatform).getBody();
-        return musicManagerClient.postMusicFromSiteurl(username, iframeUrl).getBody();
+        return (Boolean) musicManagerClient.postMusicFromSiteurl(username, iframeUrl).getBody();
     }
 
     @Override

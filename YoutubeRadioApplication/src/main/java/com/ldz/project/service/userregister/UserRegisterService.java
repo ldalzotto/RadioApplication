@@ -20,10 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -237,8 +234,7 @@ public class UserRegisterService implements IUserRegisterService {
 
     private boolean registerMusic(String username) {
         LOGGER.info("Start executing music registering.");
-        UserMusicStatusDTO musicManagerUserMusicStatus = new UserMusicStatusDTO();
-        musicManagerUserMusicStatus.setUsername(username);
+        UserMusicStatusDTO musicManagerUserMusicStatus = new UserMusicStatusDTO(username, null);
 
         musicManagerClient.postUser(musicManagerUserMusicStatus);
         LOGGER.info("End executing music registering.");
