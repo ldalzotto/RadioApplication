@@ -30,7 +30,10 @@ class MusicManagerController extends MusicTypeClient{
 
   override def postUser(  @RequestBody  @Valid userMusicStatusDTO: UserMusicStatusDTO): ResponseEntity[_] = {
 
-    val userMusicStatusBO = converterContainer.convert(userMusicStatusDTO, classOf[UserMusicStatusBO])
+    //TODO delete that mapping
+    val tempuserMusicStatus = UserMusicStatusDTO(userMusicStatusDTO.username, Seq())
+
+    val userMusicStatusBO = converterContainer.convert(tempuserMusicStatus, classOf[UserMusicStatusBO])
 
     try {
       iMusicManagerService.addUserMusicStatus(userMusicStatusBO)
