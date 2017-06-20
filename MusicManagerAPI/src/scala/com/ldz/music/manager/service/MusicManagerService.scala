@@ -69,6 +69,7 @@ class MusicManagerService extends IMusicManagerService{
     userMusicStatus match {
       case `userMusicStatus` if userMusicStatus != null => {
         val musicType = converterContainer.convert(MusicTypeBO(MusicTypes.SOUNDCLOUD, sourceUrl), classOf[MusicType])
+        musicType.setUserMusicStatus(userMusicStatus)
         musicTypeRepository.save(musicType)
         true
       }
