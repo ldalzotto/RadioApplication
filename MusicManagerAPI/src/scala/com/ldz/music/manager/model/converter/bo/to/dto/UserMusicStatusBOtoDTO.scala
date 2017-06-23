@@ -7,13 +7,14 @@ import com.ldz.music.manager.model.{MusicTypeDTO, UserMusicStatusDTO}
 import com.ldz.music.manager.model.bo.{MusicTypeBO, UserMusicStatusBO}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import scala.collection.JavaConverters._
 
 /**
   * Created by Loic on 20/06/2017.
   */
 @Component
 @BeanConverter(initialBeanClass = classOf[UserMusicStatusBO], targetBeanClass = classOf[UserMusicStatusDTO])
-class UserMusicStatusBOtoDTO extends IConverter[UserMusicStatusBO, UserMusicStatusDTO]{
+class UserMusicStatusBOtoDTO extends IConverter[UserMusicStatusBO, UserMusicStatusDTO] {
 
   @Autowired
   private val converterContainer: ConverterContainer = null
@@ -22,7 +23,7 @@ class UserMusicStatusBOtoDTO extends IConverter[UserMusicStatusBO, UserMusicStat
     userMusicStatusBO match {
       case `userMusicStatusBO` if userMusicStatusBO != null => {
         val musicDto = userMusicStatusBO.getMusicTypeBOs.map(a => converterContainer.convert(a, classOf[MusicTypeDTO]))
-        UserMusicStatusDTO(userMusicStatusBO.getUsername, musicDto)
+        UserMusicStatusDTO(userMusicStatusBO.getUsername, musicDto.asJava)
       }
       case _ => null
     }

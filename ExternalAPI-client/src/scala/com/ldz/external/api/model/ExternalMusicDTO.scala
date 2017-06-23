@@ -2,6 +2,7 @@ package com.ldz.external.api.model
 
 import com.ldz.external.api.enumeration.ExternalMusicKey
 
+import java.util.Map
 import scala.beans.BeanProperty
 
 /**

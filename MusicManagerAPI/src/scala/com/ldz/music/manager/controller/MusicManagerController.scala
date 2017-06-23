@@ -7,7 +7,7 @@ import javax.validation.Valid
 import com.ldz.converter.container.ConverterContainer
 import com.ldz.music.manager.MusicTypeClient
 import com.ldz.music.manager.constants.MusicTypes
-import com.ldz.music.manager.model.UserMusicStatusDTO
+import com.ldz.music.manager.model.{MusicTypeDTO, UserMusicStatusDTO}
 import com.ldz.music.manager.model.bo.UserMusicStatusBO
 import com.ldz.music.manager.service.IMusicManagerService
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,11 +16,13 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestBody, RequestParam}
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
+import scala.collection.JavaConverters._
+
 /**
   * Created by Loic on 20/06/2017.
   */
 @Controller
-class MusicManagerController extends MusicTypeClient{
+class MusicManagerController extends MusicTypeClient {
 
   @Autowired
   private val iMusicManagerService: IMusicManagerService = null
@@ -28,10 +30,10 @@ class MusicManagerController extends MusicTypeClient{
   @Autowired
   private val converterContainer: ConverterContainer = null
 
-  override def postUser(  @RequestBody  @Valid userMusicStatusDTO: UserMusicStatusDTO): ResponseEntity[_] = {
+  override def postUser(@RequestBody @Valid userMusicStatusDTO: UserMusicStatusDTO): ResponseEntity[_] = {
 
     //TODO delete that mapping
-    val tempuserMusicStatus = UserMusicStatusDTO(userMusicStatusDTO.username, Seq())
+    val tempuserMusicStatus = UserMusicStatusDTO(userMusicStatusDTO.username, Seq[MusicTypeDTO]().asJava)
 
     val userMusicStatusBO = converterContainer.convert(tempuserMusicStatus, classOf[UserMusicStatusBO])
 
