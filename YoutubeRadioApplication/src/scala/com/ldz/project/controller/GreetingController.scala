@@ -12,6 +12,7 @@ import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.{HttpStatus, MediaType, ResponseEntity}
 import org.springframework.stereotype.Controller
+import org.springframework.validation.Validator
 import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, RequestMapping, RequestMethod}
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
@@ -30,9 +31,11 @@ class GreetingController {
 
   @RequestMapping(value = Array("/login"), method = Array(RequestMethod.POST), consumes = Array(MediaType.APPLICATION_FORM_URLENCODED_VALUE), produces = Array(MediaType.APPLICATION_JSON_VALUE))
   def login(@Valid userLogin: UserLogin): ResponseEntity[_] = {
-    val registeredUser = iUserRegisterService.loginUserFromEmailAndPasswordAndIpaddress(userLogin.getEmail, userLogin.getPassword, userLogin.getIpaddress)
-    if (registeredUser != null) ResponseEntity.ok(registeredUser)
-    else ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
+    Option(iUserRegisterService.loginUserFromEmailAndPasswordAndIpaddress(userLogin.getEmail, userLogin.getPassword, userLogin.getIpaddress))
+        match {
+      case Some(userRegister) => ResponseEntity.ok(userRegister)
+      case None => ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
+    }
   }
 
   @RequestMapping(value = Array("/logout"), method = Array(RequestMethod.POST), consumes = Array(MediaType.APPLICATION_FORM_URLENCODED_VALUE), produces = Array(MediaType.APPLICATION_JSON_VALUE))
@@ -43,33 +46,39 @@ class GreetingController {
 
   @RequestMapping(value = Array("/user/current/ipaddress/{ipaddress}"), method = Array(RequestMethod.GET))
   def getCurrentUserFromIpaddress(@PathVariable(name = "ipaddress") ipaddress: String): ResponseEntity[_] = {
-    val userRegister = iUserRegisterService.getCurrentUserFromIpaddress(ipaddress)
-    if (userRegister != null) ResponseEntity.ok(userRegister)
-    else ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+    Option(iUserRegisterService.getCurrentUserFromIpaddress(ipaddress)) match {
+      case Some(userRegister) => ResponseEntity.ok(userRegister)
+      case None => ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+    }
   }
 
   @RequestMapping(value = Array("/register/user"), method = Array(RequestMethod.POST), consumes = Array(MediaType.APPLICATION_FORM_URLENCODED_VALUE), produces = Array(MediaType.APPLICATION_JSON_VALUE))
   def register(@Valid userRegister: UserRegister): ResponseEntity[_] = {
     iUserRegisterService.registerUserFromUserDetails(userRegister)
     //login after register
-    val userRegister1 = iUserRegisterService.loginUserFromEmailAndPasswordAndIpaddress(userRegister.getEmail, userRegister.getPassword, userRegister.getIpaddress)
-    if (userRegister1 == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-    val location = ServletUriComponentsBuilder.fromCurrentRequestUri.build.toUri
-    ResponseEntity.created(location).body(userRegister)
+    Option(iUserRegisterService.loginUserFromEmailAndPasswordAndIpaddress(userRegister.getEmail, userRegister.getPassword, userRegister.getIpaddress))
+        match {
+      case Some(`userRegister`) =>
+        val location = ServletUriComponentsBuilder.fromCurrentRequestUri.build.toUri
+        ResponseEntity.created(location).body(`userRegister`)
+      case None => ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
+    }
   }
 
   @RequestMapping(value = Array("/register/add/user"), method = Array(RequestMethod.POST), consumes = Array(MediaType.APPLICATION_FORM_URLENCODED_VALUE), produces = Array(MediaType.APPLICATION_JSON_VALUE))
   def addUser(@Valid userRegister: UserRegister): ResponseEntity[_] = {
-    val userRegister1 = iUserRegisterService.addUserFromexisting(userRegister)
-    if (userRegister1 != null) ResponseEntity.ok(userRegister1)
-    else ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
+    Option(iUserRegisterService.addUserFromexisting(userRegister)) match {
+      case Some(`userRegister`) => ResponseEntity.ok(`userRegister`)
+      case None => ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
+    }
   }
 
   @RequestMapping(value = Array("/user/details/email/{email}"), method = Array(RequestMethod.GET))
   def getUserdetailsFromUsername(@PathVariable("email") email: String): ResponseEntity[_] = {
-    val userRegisters = iUserRegisterService.getDetailsFromEmail(email)
-    if (userRegisters != null) ResponseEntity.ok(userRegisters)
-    else ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
+    Option(iUserRegisterService.getDetailsFromEmail(email)) match {
+      case Some(userRegisters) => ResponseEntity.ok(userRegisters)
+      case None => ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build()
+    }
   }
 
   @ExceptionHandler(Array(classOf[LoginWithUnknownIPException]))

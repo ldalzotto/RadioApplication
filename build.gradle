@@ -53,7 +53,7 @@ build.mustRunAfter clean
 dependencies {
 
     //compile group: 'ExternalAPI', name:'ExternalApi', version: '1.0-SNAPSHOT', configuration: 'compile'
-    compile project(':ExternalApi')
+    compile project(':ExternalAPI')
     compile project(':MusicManagerAPI')
     compile project(':TokenManagerAPI')
     compile project(':YoutubeRadioApplication')
