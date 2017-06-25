@@ -19,9 +19,19 @@ apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'scalajs-plugin'
+
 
 configurations {
     compile
+}
+
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/scala']
+        }
+    }
 }
 
 sourceCompatibility = 1.8
@@ -47,7 +57,16 @@ publishing {
     }
 }
 
-task stage(dependsOn: ['build', 'clean'])
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.gtache:scalajs-plugin:sjs0.6_2.12_0.3.0'
+    }
+}
+
+task stage(dependsOn: ['NoOptJS', 'build'])
 build.mustRunAfter clean
 
 dependencies {
@@ -61,6 +80,11 @@ dependencies {
     compile project(':converter-container-common')
     compile project(':TokenReInitializer')
     //for local purpose only
+
+    compile group: 'org.scala-js', name: 'scalajs-dom_sjs0.6_2.12', version: '0.9.2'
+    compile group: 'be.doeraene', name: 'scalajs-jquery_sjs0.6_2.12', version: '0.9.1'
+
+
     compile group: 'com.h2database', name: 'h2', version: '1.4.195'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.2.RELEASE'
