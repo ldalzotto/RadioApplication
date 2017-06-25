@@ -2,6 +2,7 @@ package com.ldz.music.navigation.jquery
 
 import com.ldz.music.navigation.Model.JsUserMusicStatus
 import com.ldz.music.navigation.MusicNavigation
+import com.ldz.treeMusic.TreeMusic
 import org.scalajs.jquery.JQueryAjaxSettings
 
 import scala.scalajs.js
@@ -35,6 +36,9 @@ object RefreshMusicJQuery {
           case Some(i) if i == 0 =>
           case None =>
         }
+
+        //refrach tree
+        TreeMusic.refreshTree(userMusicStatus)
 
       }}
     ).asInstanceOf[JQueryAjaxSettings]
