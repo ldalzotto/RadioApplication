@@ -13,7 +13,9 @@ class UserMusicStatus {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id") private var id: Long = 0L
+
   @Column(name = "username") private var username: String = _
+
   @OneToMany(cascade = Array(CascadeType.ALL), mappedBy = "userMusicStatus")
   private var musicTypes: java.util.List[MusicType] = _
 

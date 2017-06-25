@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 class MusicTypeDTOtoBO extends IConverter[MusicTypeDTO, MusicTypeBO]{
   override def apply(musicTypeDto: MusicTypeDTO): MusicTypeBO = {
     musicTypeDto match {
-      case `musicTypeDto` if musicTypeDto != null => MusicTypeBO(musicTypeDto.musicType, musicTypeDto.sourceUrl)
+      case `musicTypeDto` if musicTypeDto != null => MusicTypeBO(musicTypeDto.musicType, musicTypeDto.sourceUrl, musicTypeDto.getMusicParameters)
       case _ => null
     }
   }

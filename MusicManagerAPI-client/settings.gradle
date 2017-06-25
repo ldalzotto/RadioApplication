@@ -2,3 +2,6 @@ rootProject.name = 'MusicManagerAPI-client'
 
 include(':custom-validation-common')
 project(':custom-validation-common').projectDir = new File("custom-validation-common")
+
+include(':constants-common')
+project(':constants-common').projectDir = new File("constants-common")

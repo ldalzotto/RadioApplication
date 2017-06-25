@@ -1,6 +1,8 @@
 package com.ldz.music.manager.model
 
-import javax.persistence.{_}
+import javax.persistence._
+
+import com.ldz.enumeration.ExternalMusicKey
 
 /**
   * Created by Loic on 20/06/2017.
@@ -18,6 +20,11 @@ class MusicType {
   @Column(name = "type") private var `type`: String = _
 
   @Column(name = "source_url") private var sourceUrl : String = _
+
+  @ElementCollection(targetClass = classOf[ExternalMusicKey.Value])
+  @MapKeyColumn(name = "musicParameters")
+  @Column(name = "musicParamKey")
+  private var musicParameters: java.util.Map[ExternalMusicKey.Value, String] = _
 
   def getId: Long = id
 
@@ -43,6 +50,11 @@ class MusicType {
     this.userMusicStatus = userMusicStatus
   }
 
+  def getMusicParameters: java.util.Map[ExternalMusicKey.Value, String] = musicParameters
+
+  def setMusicParameters(musicparameters : java.util.Map[ExternalMusicKey.Value, String]) = {
+    this.musicParameters = musicparameters
+  }
 
 
 }

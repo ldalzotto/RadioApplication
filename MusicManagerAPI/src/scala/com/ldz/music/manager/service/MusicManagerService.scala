@@ -1,6 +1,7 @@
 package com.ldz.music.manager.service
 
 import com.ldz.converter.container.ConverterContainer
+import com.ldz.enumeration.ExternalMusicKey
 import com.ldz.external.api.ExternalAPIClient
 import com.ldz.music.manager.constants.MusicTypes
 import com.ldz.music.manager.model.{MusicType, UserMusicStatus}
@@ -29,6 +30,9 @@ class MusicManagerService extends IMusicManagerService{
   private val userMusicStatusRepository: UserMusicStatusRepository = null
 
   @Autowired
+  private val musicParametersFromRessourceService: IMusicParametersFromressource = null
+
+  @Autowired
   private val converterContainer: ConverterContainer = null
 
   override def addUserMusicStatus(userMusicStatusBO: UserMusicStatusBO): Unit = {
@@ -53,27 +57,27 @@ class MusicManagerService extends IMusicManagerService{
     converterContainer.convert( userMusicStatusRepository.findByUsername(username), classOf[UserMusicStatusBO])
   }
 
-  override def getSourceurlFromUrlAndMusicType(url: String, musicType: MusicTypes.Value): String = {
-
-    musicType match {
-      case MusicTypes.SOUNDCLOUD => externalAPIClient.getSoundcloudSourceurlFromRessource(url).getBody.iframeURL
-      case _ => null
-    }
-
+  override def getMusicparametersFromUrlAndMusicType(url: String, musicType: MusicTypes.Value): MusicTypeBO = {
+    musicParametersFromRessourceService.getMusicSourceFromRessource(musicType, url)
   }
 
-  override def postMusicFromUsernameAndSourceurl(username: String, sourceUrl: String): Boolean = {
+  override def postMusicFromUsernameAndSourceurl(username: String, musicDetail: MusicTypeBO): MusicTypeBO = {
 
-    val userMusicStatus = userMusicStatusRepository.findByUsername(username)
+    val musicType =
+        Option(userMusicStatusRepository.findByUsername(username)) match {
+          case Some(userMusicStatus) => {
+            val musicType = converterContainer.convert(musicDetail, classOf[MusicType])
+            musicType.setType(musicType.getType)
+            musicType.setUserMusicStatus(userMusicStatus)
+            musicType.setMusicParameters(musicDetail.getMusicParameters.asJava)
+            Option(musicTypeRepository.save(musicType))
+          }
+          case None => None
+        }
 
-    userMusicStatus match {
-      case `userMusicStatus` if userMusicStatus != null => {
-        val musicType = converterContainer.convert(MusicTypeBO(MusicTypes.SOUNDCLOUD, sourceUrl), classOf[MusicType])
-        musicType.setUserMusicStatus(userMusicStatus)
-        musicTypeRepository.save(musicType)
-        true
-      }
-      case _ => false
+    musicType match {
+      case Some(mt) => converterContainer.convert(mt, classOf[MusicTypeBO])
+      case None => throw new RuntimeException(s"An error occured wile saving ${musicDetail}")
     }
 
   }

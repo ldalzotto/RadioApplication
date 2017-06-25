@@ -1,7 +1,7 @@
 package com.ldz.external.controllers
 
 import com.ldz.external.api.ExternalAPIClient
-import com.ldz.external.api.enumeration.ExternalMusicKey
+import com.ldz.enumeration.ExternalMusicKey
 import com.ldz.external.api.model.ExternalMusicDTO
 import com.ldz.external.inter.ISoundCloundService
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,6 +30,6 @@ class SoundCloudController extends ExternalAPIClient {
     val iframe = soundcloudService.getIframeRessourceFromMusicId(musicid)
     val outpuSeq = soundcloudService.getMusicparametersFromRessource(xmlRessource).toMap
 
-    ResponseEntity.ok(ExternalMusicDTO(musicid, iframe, outpuSeq.asJava))
+    ResponseEntity.ok(ExternalMusicDTO(iframe, outpuSeq.asJava))
   }
 }

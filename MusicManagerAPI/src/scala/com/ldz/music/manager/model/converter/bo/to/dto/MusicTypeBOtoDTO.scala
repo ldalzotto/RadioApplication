@@ -15,7 +15,7 @@ class MusicTypeBOtoDTO extends IConverter[MusicTypeBO, MusicTypeDTO]{
 
   override def apply(musicTypeBO: MusicTypeBO): MusicTypeDTO = {
     musicTypeBO match {
-      case `musicTypeBO` if musicTypeBO != null => MusicTypeDTO(musicTypeBO.getMusicTypes, musicTypeBO.getSourceUrl)
+      case `musicTypeBO` if musicTypeBO != null => MusicTypeDTO(musicTypeBO.getMusicTypes, musicTypeBO.getSourceUrl, musicTypeBO.getMusicParameters)
       case _ => null
     }
   }

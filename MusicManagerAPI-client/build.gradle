@@ -42,6 +42,8 @@ dependencies {
     compile 'org.scala-lang:scala-library:2.12.0'
 
     compile project(':custom-validation-common')
+    compile project(':constants-common')
+
 
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka', version: '1.3.0.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.2.RELEASE'

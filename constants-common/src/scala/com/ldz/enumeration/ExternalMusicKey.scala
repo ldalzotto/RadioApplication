@@ -1,4 +1,4 @@
-package com.ldz.external.api.enumeration
+package com.ldz.enumeration
 
 /**
   * Created by Loic on 19/06/2017.

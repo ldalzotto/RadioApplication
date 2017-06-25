@@ -35,3 +35,6 @@ project(':YoutubeRadioApplication').projectDir = new File("YoutubeRadioApplicati
 
 include(':TokenReInitializer')
 project(':TokenReInitializer').projectDir = new File("TokenReInitializer")
+
+include(':constants-common')
+project(':constants-common').projectDir = new File("constants-common")

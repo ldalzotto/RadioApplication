@@ -1,6 +1,7 @@
 package com.ldz.music.manager
 
-import com.ldz.music.manager.model.UserMusicStatusDTO
+import com.ldz.music.manager.model.{MusicTypeDTO, UserMusicStatusDTO}
+import com.ldz.enumeration.ExternalMusicKey
 import org.springframework.cloud.netflix.feign.FeignClient
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation._
@@ -20,8 +21,8 @@ trait MusicTypeClient {
   def deleteUser(@PathVariable("username") username: String): ResponseEntity[_]
 
   @RequestMapping(method = Array(RequestMethod.GET), path = Array("/music/musicplatform/{musicplatform}/ressource-url"))
-  def getRessourceUrlFromUrlAndMusicplatform(@RequestParam("url") url: String, @PathVariable("musicplatform") musicplatform: String): ResponseEntity[String]
+  def getMusicParametersFromUrlAndMusicplatform(@RequestParam("url") url: String, @PathVariable("musicplatform") musicplatform: String): ResponseEntity[MusicTypeDTO]
 
-  @RequestMapping(method = Array(RequestMethod.POST), path = Array("/music/username/{username}/from-source-url"))
-  def postMusicFromSiteurl(@PathVariable("username") username: String, @RequestParam("sourceurl") sourceUrl: String): ResponseEntity[Boolean]
+  @RequestMapping(method = Array(RequestMethod.PUT), path = Array("/music/user/username/{username}"))
+  def postMusicFromSiteurl(@PathVariable("username") username: String, @RequestBody musicType: MusicTypeDTO): ResponseEntity[MusicTypeDTO]
 }

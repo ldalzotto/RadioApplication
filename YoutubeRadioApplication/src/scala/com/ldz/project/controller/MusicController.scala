@@ -25,9 +25,13 @@ class MusicController {
 
   @RequestMapping(value = Array("user/{username}/music/musicplatform/{musicplatform}"), method = Array(RequestMethod.POST))
   def addMusicFromRessourceUrl(@PathVariable("username") username: String, @PathVariable("musicplatform") musicPlatform: String, @QueryParam("url") url: String): ResponseEntity[_] = {
-    iMusicService.addMusicFromUrlAndMusicPlatform(username, url, musicPlatform)
-    val location = ServletUriComponentsBuilder.fromCurrentRequestUri.build.toUri
-    ResponseEntity.created(location).build()
+    iMusicService.addMusicFromUrlAndMusicPlatform(username, url, musicPlatform) match {
+      case true =>
+        val location = ServletUriComponentsBuilder.fromCurrentRequestUri.build.toUri
+        ResponseEntity.created(location).build()
+      case false =>
+        ResponseEntity.unprocessableEntity().build()
+    }
   }
 
   @RequestMapping(value = Array("user/{username}/music/all"), method = Array(RequestMethod.GET))

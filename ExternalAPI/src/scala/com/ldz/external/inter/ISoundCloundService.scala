@@ -1,6 +1,6 @@
 package com.ldz.external.inter
 
-import com.ldz.external.api.enumeration.ExternalMusicKey
+import com.ldz.enumeration.ExternalMusicKey
 
 /**
   * Created by Loic on 14/06/2017.

@@ -37,6 +37,9 @@ publishing {
 }
 
 dependencies {
+
+    compile project(':constants-common')
+
     compile 'org.scala-lang:scala-library:2.12.0'
 
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-feign', version: '1.3.0.RELEASE'

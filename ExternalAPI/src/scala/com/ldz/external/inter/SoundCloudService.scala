@@ -4,7 +4,7 @@ import java.util
 import java.util.{ArrayList, List}
 import java.util.regex.{Matcher, Pattern}
 
-import com.ldz.external.api.enumeration.ExternalMusicKey
+import com.ldz.enumeration.ExternalMusicKey
 import org.springframework.stereotype.Service
 
 import scala.collection.mutable.ListBuffer

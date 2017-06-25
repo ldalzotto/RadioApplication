@@ -6,6 +6,8 @@ import com.ldz.music.manager.constants.MusicTypes
 import com.ldz.music.manager.model.MusicType
 import com.ldz.music.manager.model.bo.MusicTypeBO
 import org.springframework.stereotype.Component
+import collection.JavaConverters._
+
 
 /**
   * Created by Loic on 20/06/2017.
@@ -14,9 +16,12 @@ import org.springframework.stereotype.Component
 @BeanConverter(initialBeanClass = classOf[MusicType], targetBeanClass = classOf[MusicTypeBO])
 class MusicTypeModelToBO extends IConverter[MusicType, MusicTypeBO]{
   override def apply(musicType: MusicType): MusicTypeBO = {
-    musicType match {
-      case `musicType` if musicType != null =>  MusicTypeBO(MusicTypes.withName(musicType.getType), musicType.getSourceUrl)
-      case _ => null
+
+    Option(musicType) match {
+      case Some(mt) => MusicTypeBO(MusicTypes.withName(mt.getType), mt.getSourceUrl,
+        mt.getMusicParameters.asScala.toMap)
+      case None => null
     }
+
   }
 }

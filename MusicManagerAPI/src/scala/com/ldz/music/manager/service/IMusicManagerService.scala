@@ -1,7 +1,8 @@
 package com.ldz.music.manager.service
 
+import com.ldz.enumeration.ExternalMusicKey
 import com.ldz.music.manager.constants.MusicTypes
-import com.ldz.music.manager.model.bo.UserMusicStatusBO
+import com.ldz.music.manager.model.bo.{MusicTypeBO, UserMusicStatusBO}
 
 /**
   * Created by Loic on 20/06/2017.
@@ -13,7 +14,7 @@ trait IMusicManagerService {
 
   def getMusicStatusFromUsername(username: String): UserMusicStatusBO
 
-  def getSourceurlFromUrlAndMusicType(url: String, musicType: MusicTypes.Value): String
+  def getMusicparametersFromUrlAndMusicType(url: String, musicType: MusicTypes.Value): MusicTypeBO
 
-  def postMusicFromUsernameAndSourceurl(username: String, sourceUrl: String): Boolean
+  def postMusicFromUsernameAndSourceurl(username: String, musicDetail: MusicTypeBO): MusicTypeBO
 }

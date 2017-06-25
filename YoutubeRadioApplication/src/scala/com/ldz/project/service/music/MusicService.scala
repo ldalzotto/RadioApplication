@@ -15,8 +15,11 @@ class MusicService extends IMusicService {
   private val musicManagerClient: MusicTypeClient = null
 
   override def addMusicFromUrlAndMusicPlatform(username: String, url: String, musicPlatform: String): Boolean = {
-    val iframeUrl = musicManagerClient.getRessourceUrlFromUrlAndMusicplatform(url, musicPlatform)
-    musicManagerClient.postMusicFromSiteurl(username, iframeUrl.getBody).getBody
+    val iframeUrl = musicManagerClient.getMusicParametersFromUrlAndMusicplatform(url, musicPlatform)
+    Option(musicManagerClient.postMusicFromSiteurl(username, iframeUrl.getBody)) match {
+      case Some(result) => true
+      case None => false
+    }
   }
 
   override def getMusicStatusOfCurrentClient(username: String): UserMusicStatusDTO = {
