@@ -11,7 +11,7 @@ import scala.beans.BeanProperty
   * Created by Loic on 20/06/2017.
   */
 case class UserMusicStatusDTO(@(NotNull@field) @BeanProperty username: String,
-                              @(Size@field)(min = 0) @Valid @BeanProperty musicTypeDTO: List[MusicTypeDTO]) {
+                              @(Size@field)(min = 0) @Valid @BeanProperty musicTypeDTO: java.util.List[MusicTypeDTO]) {
 
   def this() {
     this(null, null)

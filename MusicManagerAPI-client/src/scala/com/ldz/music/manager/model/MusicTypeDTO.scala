@@ -14,7 +14,7 @@ import scala.beans.BeanProperty
 */
 case class MusicTypeDTO(@(NotNull@field) @BeanProperty musicType: MusicTypes.Value,
                         @(NotNull@field) @(Pattern@field)(regexp = "(^(https:\\/\\/)|(http:\\/\\/)).+") @BeanProperty sourceUrl: String,
-                       @BeanProperty musicParameters: Map[ExternalMusicKey.Value, String] ) {
+                       @BeanProperty musicParameters: java.util.Map[ExternalMusicKey.Value, String] ) {
 
   def this() {
     this(null, null, null)

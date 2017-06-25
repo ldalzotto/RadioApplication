@@ -52,6 +52,7 @@ dependencies {
     compile project(':MusicManagerAPI-client')
     compile project(':TokenManagerAPI-client')
     compile project(':IdentifierAPI-client')
+    compile project(':converter-container-common')
 
     compile 'org.scala-lang:scala-library:2.12.0'
 

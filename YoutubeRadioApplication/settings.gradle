@@ -8,3 +8,7 @@ project(':TokenManagerAPI-client').projectDir = new File("TokenManagerAPI-client
 
 include(':IdentifierAPI-client')
 project(':IdentifierAPI-client').projectDir = new File("IdentifierAPI-client")
+
+
+include(':converter-container-common')
+project(':converter-container-common').projectDir = new File('converter-container-common')

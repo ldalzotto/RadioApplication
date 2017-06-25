@@ -5,6 +5,7 @@ import com.ldz.converter.container.inter.IConverter
 import com.ldz.music.manager.model.MusicTypeDTO
 import com.ldz.music.manager.model.bo.MusicTypeBO
 import org.springframework.stereotype.Component
+import collection.JavaConverters._
 
 /**
   * Created by Loic on 20/06/2017.
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component
 class MusicTypeDTOtoBO extends IConverter[MusicTypeDTO, MusicTypeBO]{
   override def apply(musicTypeDto: MusicTypeDTO): MusicTypeBO = {
     musicTypeDto match {
-      case `musicTypeDto` if musicTypeDto != null => MusicTypeBO(musicTypeDto.musicType, musicTypeDto.sourceUrl, musicTypeDto.getMusicParameters)
+      case `musicTypeDto` if musicTypeDto != null => MusicTypeBO(musicTypeDto.musicType, musicTypeDto.sourceUrl, musicTypeDto.getMusicParameters.asScala.toMap)
       case _ => null
     }
   }
