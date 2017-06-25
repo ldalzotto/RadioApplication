@@ -49,7 +49,7 @@ object TreeMusic {
     val artists =
         oartists.map(oArtist => {
           oArtist.getOrElse("")
-        }).filter(s => s.equals(""))
+        }).filter(s => !s.equals(""))
 
     //for each artist we add a branch
     artists.foreach(artist => {
