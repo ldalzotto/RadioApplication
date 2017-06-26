@@ -1,7 +1,8 @@
 package com.ldz.treeMusic
 
 
-import com.ldz.music.navigation.Model.UserMusicStatus
+import com.ldz.enumeration.ExternalMusicKey
+import com.ldz.music.navigation.Model.{MusicParametersKey, UserMusicStatus}
 
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scala.scalajs.js._
@@ -33,29 +34,20 @@ object TreeMusic {
 
   @JSExport
   def refreshTree(userMusicStatus: UserMusicStatus):Unit = {
+    //clear element
     artistsTreeElement.empty()
 
-    //get the list of artists
-    val oartists =
-        Option(userMusicStatus) match {
-          case Some(UserMusicStatus(username, musicTypeDTO)) =>
-            for(musicType <- musicTypeDTO;
-                musicParameters = musicType.musicParameters
-                if musicParameters != null)
-              yield musicParameters.get("AUTHOR")
-          case None => List()
-        }
-
-    val artists =
-        oartists.map(oArtist => {
-          oArtist.getOrElse("")
-        }).filter(s => !s.equals(""))
-
-    //for each artist we add a branch
-    artists.foreach(artist => {
-      artistsTreeElement.append(getTemplateFromArtist(artist))
-    })
-
+    Option(userMusicStatus) match {
+      case Some(UserMusicStatus(username, musicTypeDTO)) => {
+        for (musicType <- musicTypeDTO;
+             author = musicType.musicParameters.getOrElse(MusicParametersKey.AUTHOR, "")
+             if !author.equals("")) yield author
+      }.distinct.foreach(artist => {
+        //write to DOM
+        artistsTreeElement.append(getTemplateFromArtist(artist))
+      })
+      case None =>
+    }
   }
 
 }

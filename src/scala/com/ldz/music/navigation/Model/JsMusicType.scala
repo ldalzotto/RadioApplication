@@ -18,13 +18,15 @@ object JsMusicType {
       = js.Dynamic.literal(musicType = musicType, sourceUrl = sourceUrl, musicParameters = musicParameters).asInstanceOf[JsMusicType]
 
   def unapply(arg: JsMusicType): MusicType = {
-    MusicType(arg.musicType.toOption.get, arg.sourceUrl.toOption.get, arg.musicParameters.toOption.get.toMap[String, String])
+    val musicParameters = arg.musicParameters.toOption.get.toMap.map(value =>
+        (MusicParametersKey.withName(value._1), value._2))
+    MusicType(arg.musicType.toOption.get, arg.sourceUrl.toOption.get, musicParameters)
   }
 }
 
 
 case class MusicType(  musicType: String,
                       sourceUrl: String,
-                      musicParameters: Map[String, String]) {
+                      musicParameters: Map[MusicParametersKey.Value, String]) {
 
 }

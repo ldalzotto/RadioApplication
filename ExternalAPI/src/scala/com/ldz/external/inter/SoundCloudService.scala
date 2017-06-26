@@ -18,8 +18,12 @@ import scala.util.matching.Regex.Match
 class SoundCloudService extends ISoundCloundService {
 
   private val SOUNDCLOUD_MUSIC_FINDER_TOKEN = "soundcloud://sounds:".r
+
   private val SOUNDCLOUD_USERNAME_CLASS = "\"full_name\":\"".r
+  private val SOUNDCLOUD_USERNAME_CLASS_2 = "\"username\":\"".r
+
   private val SOUNDLOUC_TITLE_CLASS = "\"title\":\"".r
+
 
   private val SOUNDCLOUD_IFRAME_SRC_URL_FORMAT = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{IDENTIFIANT}&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"
 
@@ -30,7 +34,12 @@ class SoundCloudService extends ISoundCloundService {
 
   override def getMusicparametersFromRessource(ressource: String): Seq[Tuple2[ExternalMusicKey.Value, String]] = {
     val title = getExtractedRessource(ressource, SOUNDLOUC_TITLE_CLASS, '"')
-    val artist = getExtractedRessource(ressource, SOUNDCLOUD_USERNAME_CLASS, '"')
+
+    val artist =
+      getExtractedRessource(ressource, SOUNDCLOUD_USERNAME_CLASS, '"') match {
+        case "" => getExtractedRessource(ressource, SOUNDCLOUD_USERNAME_CLASS_2, '"') //second try to find the author
+        case value => value
+      }
 
       Seq((ExternalMusicKey.TITLE, title),
         (ExternalMusicKey.AUTHOR, artist))
