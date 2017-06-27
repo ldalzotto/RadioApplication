@@ -29,7 +29,7 @@ configurations {
 sourceSets {
     main {
         scala {
-            srcDirs = ['src/scala']
+            srcDirs = ['src/scala', 'YoutubeRadioApplication/src/scala', 'constants-common/src/scala']
         }
     }
 }

@@ -2,12 +2,15 @@ package com.ldz.treeMusic
 
 
 import com.ldz.enumeration.ExternalMusicKey
-import com.ldz.music.navigation.Model.{MusicParametersKey, UserMusicStatus}
+import com.ldz.project.model.RawMusicStatus
 
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scala.scalajs.js._
 import org.scalajs.jquery.{JQuery, jQuery}
 import org.scalajs.dom.document
+
+import collection.JavaConverters._
+
 
 /**
   * Created by Loic on 25/06/2017.
@@ -33,14 +36,14 @@ object TreeMusic {
   }
 
   @JSExport
-  def refreshTree(userMusicStatus: UserMusicStatus):Unit = {
+  def refreshTree(userMusicStatus: RawMusicStatus):Unit = {
     //clear element
     artistsTreeElement.empty()
 
     Option(userMusicStatus) match {
-      case Some(UserMusicStatus(username, musicTypeDTO)) => {
-        for (musicType <- musicTypeDTO;
-             author = musicType.musicParameters.getOrElse(MusicParametersKey.AUTHOR, "")
+      case Some(RawMusicStatus(username, musicTypeDTO)) => {
+        for (musicType <- musicTypeDTO.asScala;
+             author = musicType.musicParameters.asScala.getOrElse(ExternalMusicKey.AUTHOR, "")
              if !author.equals("")) yield author
       }.distinct.foreach(artist => {
         //write to DOM

@@ -4,6 +4,8 @@ import com.ldz.music.navigation.Model.JsUserMusicStatus
 import com.ldz.music.navigation.MusicNavigation
 import com.ldz.treeMusic.TreeMusic
 import org.scalajs.jquery.JQueryAjaxSettings
+import collection.JavaConverters._
+
 
 import scala.scalajs.js
 
@@ -24,7 +26,7 @@ object RefreshMusicJQuery {
         Option(userMusicStatus.musicTypeDTO.size) match {
           case Some(i) if i != 0 =>
             MusicNavigation.musicPanelListElement.empty()
-            userMusicStatus.musicTypeDTO.foreach(musicType => {
+            userMusicStatus.musicTypeDTO.asScala.foreach(musicType => {
               Option(MusicNavigation.musicPanelInfoTemplateElement.clone().removeClass("'out-of-bound'"))
                   match {
                       case Some(templateElement) =>
