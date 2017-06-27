@@ -13,10 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 /**
  * Created by ldalzotto on 14/04/2017.
@@ -81,8 +79,7 @@ public class IdentifierController implements IdentifierClient {
     @Override
     public ResponseEntity<Object> postUser(@RequestBody @Valid UserDTO userDTO) {
         IIdentifierService.addUser(converterContainer.convert(userDTO, UserBO.class));
-        URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.ok().build();
     }
 
     @Override
