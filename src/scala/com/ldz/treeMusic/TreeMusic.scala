@@ -18,6 +18,9 @@ import collection.JavaConverters._
 @JSExportTopLevel("TreeMusic")
 object TreeMusic {
 
+  var musicSearchinput: JQuery = null
+  var musicSearchButton: JQuery = null
+
   var treeElement: JQuery = null
   var rootTreeElement: JQuery = null
   var artistsTreeElement: JQuery = null
@@ -26,13 +29,29 @@ object TreeMusic {
     treeElement = jQuery(".tree")
     rootTreeElement = jQuery("#root-tree-element")
     artistsTreeElement = rootTreeElement.find("#artists-tree-elements")
+
+    musicSearchinput = jQuery("#music-search-input")
+    musicSearchButton = jQuery("#music-search-button")
+
+    musicSearchButton.click(() => {
+      val researchRequest = musicSearchinput.get(0).innerHTML.replaceAll("\\s", "")
+      getAllDisplayedArtistsName().filter(artist => !artist.matches(researchRequest))
+          .map(artistName => jQuery(s"#li-${artistName}"))
+            .foreach(liNode => liNode.css("display", "none"))
+    })
+
   })
 
   private def getTemplateFromArtist(artist: String): Array[Any] = {
-    jQuery.parseHTML(   s"""<li>
+    jQuery.parseHTML(   s"""<li id="li-${artist}">
                            | <span> ${artist}</span>
                            |</li>"""
       .stripMargin)
+  }
+
+  private def getAllDisplayedArtistsName(): Seq[String] = {
+    for(spanElem <- rootTreeElement.find("li").find("span").get())
+        yield spanElem.innerHTML.replaceAll("\\s", "")
   }
 
   @JSExport
