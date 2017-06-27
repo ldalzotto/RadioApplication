@@ -46,7 +46,8 @@ class MusicManagerController extends MusicTypeClient {
     }
 
 
-    ResponseEntity.ok().build()
+    val location = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri()
+    ResponseEntity.created(location).build()
   }
 
   override def getUserFromUsername(@PathVariable(name = "username") username: String): ResponseEntity[UserMusicStatusDTO] = {
