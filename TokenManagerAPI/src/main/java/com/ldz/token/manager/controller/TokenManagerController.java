@@ -1,9 +1,8 @@
 package com.ldz.token.manager.controller;
 
+import com.ldz.token.manager.client.TokenManagerClient;
 import com.ldz.token.manager.model.TokenDTO;
 import com.ldz.token.manager.service.inter.ITokenCacheService;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.ldz.token.manager.client.TokenManagerClient;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +29,7 @@ public class TokenManagerController implements TokenManagerClient {
     public ResponseEntity<?> postTokenWithIpaddress(@PathVariable(name = "ipaddress") String ipaddress,
                                                     @RequestBody Map<String, String> genericInfo) {
         iTokenCacheService.addCacheDataFromIpaddress(ipaddress, genericInfo);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<Map<String, Map<String, String>>> getTokenFromIpaddress(@PathVariable(name = "ipaddress") String ipaddress) {

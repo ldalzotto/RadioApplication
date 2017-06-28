@@ -11,6 +11,7 @@ spring.jpa.hibernate.ddl-auto: create-drop
 spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
 
 spring.h2.console.enabled: true
+camel.springboot.main-run-controller: true
 
 parser.date-time-format: "dd/MM/yyyy HH:mm:ss"
 
