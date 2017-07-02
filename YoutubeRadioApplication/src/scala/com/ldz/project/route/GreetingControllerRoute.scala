@@ -42,5 +42,9 @@ class GreetingControllerRoute extends RouteBuilder{
 
     from("direct:user/music/all")
           .bean(musicController, "getAllMusicUrls")
+
+    from("direct:user/music/artists/all-distinct")
+        .bean(musicController, "getAllDistictMusicArtists")
+
   }
 }

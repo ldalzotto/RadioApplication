@@ -9,4 +9,6 @@ trait IMusicService {
   def addMusicFromUrlAndMusicPlatform(username: String, url: String, musicPlatform: String): Boolean
 
   def getMusicStatusOfCurrentClient(username: String): UserMusicStatusDTO
+
+  def getAllDistinctArtistsFromClient(username: String): Seq[String]
 }

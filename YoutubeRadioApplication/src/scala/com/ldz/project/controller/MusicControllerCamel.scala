@@ -3,14 +3,15 @@ package com.ldz.project.controller
 import javax.ws.rs.QueryParam
 
 import com.ldz.converter.container.ConverterContainer
+import com.ldz.project.exception.{AlreadyRegistered, LoginWithUnknownIPException, LoginWithUnkownUser}
 import com.ldz.project.model.RawMusicStatus
 import com.ldz.project.service.music.IMusicService
-import org.apache.camel.ProducerTemplate
+import org.apache.camel.{CamelExecutionException, ProducerTemplate}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.ResponseEntity
+import org.springframework.http.{HttpStatus, ResponseEntity}
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, RequestMethod}
+import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, RequestMapping, RequestMethod}
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 /**
@@ -33,5 +34,19 @@ class MusicControllerCamel {
       producerTemplate.sendBody("direct:user/music/all", username).asInstanceOf[ResponseEntity[RawMusicStatus]]
   }
 
+  @RequestMapping(value = Array("user/{username}/music/artists/all-distinct"), method = Array(RequestMethod.GET))
+  def getAllDistictMusicArtists(@PathVariable("username") username: String): ResponseEntity[java.util.List[String]] = {
+    producerTemplate.sendBody("direct:user/music/artists/all-distinct", username).asInstanceOf[ResponseEntity[java.util.List[String]]]
+  }
+
+
+  @ExceptionHandler(Array{classOf[CamelExecutionException]})
+  def camelExecutionError(camelExeption: CamelExecutionException) = {
+    camelExeption.getCause match {
+      case e: Exception =>
+        val errorCode = "AN_ERROR_OCCURED"
+        ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorCode)
+    }
+  }
 
 }

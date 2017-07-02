@@ -5,7 +5,6 @@ var AddMusicModal = (function(){
   var addModalElement;
 
   var submitButton;
-  var submitButtonCallback;
 
   var fromUsername = function(actionToDo){
     var currentUser = CurrentUser.retrieveCurrentUser()
@@ -22,11 +21,9 @@ var AddMusicModal = (function(){
         },
         success: function (iframeUrl) {
           EventRoller.pushEvent('Music successfully imported !')
-          if(submitButtonCallback != undefined){
-            submitButtonCallback()
-          }
+          MusicView.displayMusicPanel()
+          TreeMusic.refreshTree()
           genericPopUpModal.hideModal()
-          submitButtonCallback = undefined
         }
       })
     })
@@ -50,13 +47,11 @@ var AddMusicModal = (function(){
   })
 
   return {
-    showModal: function(onSuccessCallback){
+    showModal: function(){
       genericPopUpModal.showModal()
-      submitButtonCallback = onSuccessCallback
     },
     hideModal: function(){
       genericPopUpModal.hideModal()
-      submitButtonCallback = undefined
     }
   }
 })()

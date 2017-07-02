@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, RequestMethod}
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import collection.JavaConverters._
+
 
 /**
   * Created by ldalzotto on 24/06/2017.
@@ -41,6 +43,11 @@ class MusicController {
   @RequestMapping(value = Array("user/{username}/music/all"), method = Array(RequestMethod.GET))
   def getAllMusicUrls(@PathVariable("username") username: String): ResponseEntity[RawMusicStatus] = {
     ResponseEntity.ok(converterContainer.convert(iMusicService.getMusicStatusOfCurrentClient(username), classOf[RawMusicStatus]))
+  }
+
+  @RequestMapping(value = Array("user/{username}/music/artists/all-distinct"), method = Array(RequestMethod.GET))
+  def getAllDistictMusicArtists(@PathVariable("username") username: String): ResponseEntity[java.util.List[String]] = {
+      ResponseEntity.ok(iMusicService.getAllDistinctArtistsFromClient(username).asJava)
   }
 
 }

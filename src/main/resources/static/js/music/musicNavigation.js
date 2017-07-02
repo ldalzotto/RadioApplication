@@ -12,9 +12,7 @@ var MusicView = (function () {
     musicPanelInfoTemplateElement.show();
     addMusicButton = $('#add-music-button')
     addMusicButton.click(function(){
-      AddMusicModal.showModal(function(){
-        refreshMusicListPanel()
-      });
+      AddMusicModal.showModal();
     })
   })
 
@@ -42,6 +40,7 @@ var MusicView = (function () {
               musicPanelListElement.append(musicPanelInfo)
             }
             musicPanelListElement.show()
+            TreeMusic.refreshTree()
           } else {
             //you have no music !
           }

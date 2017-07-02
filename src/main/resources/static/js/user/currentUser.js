@@ -266,6 +266,9 @@ var CurrentUser = (function () {
         })
 
         return returlListIp;
+      },
+      getUserName: function() {
+        return CurrentUser.retrieveCurrentUser().username
       }
   }
 })()
