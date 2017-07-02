@@ -11,4 +11,6 @@ trait IMusicService {
   def getMusicStatusOfCurrentClient(username: String): UserMusicStatusDTO
 
   def getAllDistinctArtistsFromClient(username: String): Seq[String]
+
+  def getFilteredArtistsFromInput(username: String, musicInput: String): Seq[String]
 }

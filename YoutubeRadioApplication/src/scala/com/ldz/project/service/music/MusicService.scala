@@ -49,4 +49,10 @@ class MusicService extends IMusicService {
       }
     }
   }
+
+  override def getFilteredArtistsFromInput(username: String, musicInput: String): Seq[String] = {
+    getAllDistinctArtistsFromClient(username).filter(artistName => {
+      artistName.toLowerCase.replace(" ", "").startsWith(artistName.toLowerCase().replace(" ", ""))
+    })
+  }
 }

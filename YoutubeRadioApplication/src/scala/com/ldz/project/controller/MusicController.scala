@@ -50,4 +50,9 @@ class MusicController {
       ResponseEntity.ok(iMusicService.getAllDistinctArtistsFromClient(username).asJava)
   }
 
+  @RequestMapping(value = Array("user/{username}/music/artists/search/{artist-input}"), method = Array(RequestMethod.GET))
+  def researchArtistFromInput(@PathVariable("username") username: String, @PathVariable("artist-input") artistInput: String): ResponseEntity[java.util.List[String]] = {
+    ResponseEntity.ok(iMusicService.getFilteredArtistsFromInput(username, artistInput).asJava)
+  }
+
 }
