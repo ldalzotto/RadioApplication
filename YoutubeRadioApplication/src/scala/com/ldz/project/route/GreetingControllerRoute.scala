@@ -19,15 +19,18 @@ class GreetingControllerRoute extends RouteBuilder{
 
   override def configure(): Unit = {
     from("direct:greeting/login")
+          .threads(1,1,"LOGIN")
         .bean(greetingController, "login")
 
     from("direct:greeting/logout")
+          .threads(1,1,"LOGOUT")
       .bean(greetingController, "logout")
 
     from("direct:greeting/userfromcurrentipaddress")
       .bean(greetingController, "getCurrentUserFromIpaddress")
 
     from("direct:register/user")
+          .threads(3,3,"REGISTER")
       .bean(greetingController, "register")
 
     from("direct:register/add/user")
