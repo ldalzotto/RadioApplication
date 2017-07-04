@@ -6,7 +6,7 @@ var TreeMusic = (function(){
   var artistsTreeElements
 
   var researchArtistInput
-  var timeoutResearch
+  var researchAbstract
 
   var templateTreeElement = "<li id=artist-{elementId}><span>{arstistName}</span></li>"
 
@@ -16,35 +16,24 @@ var TreeMusic = (function(){
     artistsTreeElements = rootTreeElement.find("#artists-tree-elements")
 
     researchArtistInput = $("#music-search-input")
+    researchAbstract = new InputResearch(researchArtistInput, function(artistInput){
+      if(artistInput != "") {
+        $.ajax({
+          method: "GET",
+          url: "user/" + CurrentUser.getUserName() + "/music/artists/search/" + artistInput,
+          success: function(artistList){
+            console.log("Success call");
+            artistsTreeElements.find("li").remove()
+            artistList.forEach(function(artist){
+              artistsTreeElements.append(getElementTemplateFromArtist(artist))
+            })
 
-    //gestion de la recherche
-    researchArtistInput.keyup(function(event) {
-      //récupère la donnée de l'input & appel ajax
-      if(timeoutResearch != undefined) {
-        clearTimeout(timeoutResearch)
+          }
+        })
+      } else {
+        refreshTreeMusic()
       }
-      timeoutResearch =
-          setTimeout(function(){
-            var artistInput = researchArtistInput.val()
-            if(artistInput != "") {
-              $.ajax({
-                method: "GET",
-                url: "user/" + CurrentUser.getUserName() + "/music/artists/search/" + artistInput,
-                success: function(artistList){
-                  console.log("Success call");
-                  artistsTreeElements.find("li").remove()
-                  artistList.forEach(function(artist){
-                    artistsTreeElements.append(getElementTemplateFromArtist(artist))
-                  })
-
-                }
-              })
-            } else {
-              refreshTreeMusic()
-            }
-          }, 500)
-
-    })
+    },500)
 
   })
 
