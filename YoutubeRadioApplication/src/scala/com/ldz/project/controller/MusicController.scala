@@ -4,7 +4,6 @@ import java.net.URI
 import javax.ws.rs.QueryParam
 
 import com.ldz.converter.container.ConverterContainer
-import com.ldz.music.manager.model.UserMusicStatusDTO
 import com.ldz.project.model.RawMusicStatus
 import com.ldz.project.service.music.IMusicService
 import org.slf4j.{Logger, LoggerFactory}
